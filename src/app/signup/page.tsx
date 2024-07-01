@@ -1,6 +1,9 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import axios from "axios";
+import CustomInput from "@/components/CustomInput";
+import CustomButton from "@/components/CustomButton";
+import Link from "next/link";
 
 function SignupPage() {
   const [details, setDetails] = useState({
@@ -33,29 +36,41 @@ function SignupPage() {
   };
 
   return (
-    <div>
-      <input
+    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-[#EBEBFF] p-[2rem] rounded-[12px] outline-[] outline-[#00013d1d]">
+      <h3 className="text-[1.5rem] font-medium mb-[0.5rem]">
+        Let's onboard you
+      </h3>
+      <CustomInput
         type="text"
         name="name"
-        placeholder="name"
+        placeholder="tyler durden"
         value={details.name}
         onChange={handleChange}
-      />
-      <input
+        label="Name"
+      ></CustomInput>
+      <CustomInput
         type="email"
         name="email"
         placeholder="email"
         value={details.email}
         onChange={handleChange}
-      />
-      <input
+        label="Email"
+      ></CustomInput>
+      <CustomInput
         type="password"
         name="password"
         placeholder="password"
         value={details.password}
         onChange={handleChange}
+        label="Password"
       />
-      <button onClick={signup}>Sign Up</button>
+      <CustomButton label="Signin" onClick={signup}></CustomButton>
+      <p className="text-[14px] text-center">
+        Already user here ?{" "}
+        <Link className="underline underline-offset-2" href={"/signin"}>
+          Signin
+        </Link>
+      </p>
     </div>
   );
 }

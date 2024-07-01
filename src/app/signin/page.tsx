@@ -35,7 +35,7 @@ function SigninPage() {
   };
 
   return (
-    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1.5rem] bg-[#EBEBFF] p-[2rem] rounded-[12px]">
+    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-[#EBEBFF] p-[2rem] rounded-[12px] outline-[] outline-[#00013d1d]">
       <h3 className="text-[1.5rem] font-medium mb-[0.5rem]">Welcome Back</h3>
       <CustomInput
         type="email"
@@ -54,7 +54,12 @@ function SigninPage() {
         label="Password"
       />
       <CustomButton label="Signin" onClick={signin}></CustomButton>
-      <p className="text-[14px] text-center">New to FeedbackSpace ? <Link className="underline underline-offset-2" href={'/signup'}>Signup</Link></p>
+      <p className="text-[14px] text-center">
+        New to FeedbackSpace ?{" "}
+        <Link className="underline underline-offset-2" href={"/signup"}>
+          Signup
+        </Link>
+      </p>
     </div>
   );
 }
