@@ -1,6 +1,10 @@
 "use client";
+import Navbar from "@/components/Navbar";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import SideBar from "./SideBar";
+import MainBar from "./MainBar";
+import AdBar from "./AdBar";
 
 function DashboardPage() {
   const [login, setLogin] = useState(false);
@@ -24,7 +28,17 @@ function DashboardPage() {
 
     fetch();
   }, []);
-  return <div>hii</div>;
+  return (
+    <div className="max-w-[80rem] mx-auto mt-[2rem]">
+      <Navbar></Navbar>
+      <div className="flex py-[2rem] justify-between gap-[1.5rem] text-[14px] text-[#4747FF] ">
+        <SideBar></SideBar>
+
+        <MainBar></MainBar>
+        <AdBar></AdBar>
+      </div>
+    </div>
+  );
 }
 
 export default DashboardPage;
