@@ -5,15 +5,15 @@ import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import MainBar from "./MainBar";
 import AdBar from "./AdBar";
-import CustomInput from "@/components/CustomInput";
 import { currentProjectState } from "../recoilContextProvider";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function DashboardPage() {
-  //const [currentProject, setCurrentProject] = useRecoilState(currentProjectState);
+  const [currentProject, setCurrentProject] = useRecoilState(currentProjectState);
 
-  const currentProject = useRecoilValue(currentProjectState);
-  console.log(currentProject);
+  useEffect(() => {
+    console.log(currentProject);
+  }, [currentProject]);
 
   const [login, setLogin] = useState(false);
   const [responses, setResponses] = useState([]);
@@ -43,7 +43,7 @@ function DashboardPage() {
     <div className="max-w-[80rem] mx-auto mt-[2rem]">
       <Navbar></Navbar>
       <div className="relative flex py-[2rem] justify-between gap-[1.5rem] text-[14px] text-[#4747FF] ">
-        {addProj && (
+        {/* {addProj && (
           <div className="absolute m-auto left-0 right-0 top-0 bottom-0 flex flex-col gap-[1rem] p-[1rem] bg-[#e8e8f6] rounded-[12px]">
             <h2 className="font-medium text-[1.1rem]">Create Project</h2>
 
@@ -53,7 +53,7 @@ function DashboardPage() {
               type={"text"}
             ></CustomInput>
           </div>
-        )}
+        )} */}
         <SideBar></SideBar>
         <MainBar></MainBar>
         <AdBar></AdBar>
@@ -63,7 +63,3 @@ function DashboardPage() {
 }
 
 export default DashboardPage;
-function useRecoilState(currentProjectState: any): [any, any] {
-  throw new Error("Function not implemented.");
-}
-

@@ -1,94 +1,74 @@
 "use client";
+import CustomDiv from "@/components/CustomDiv";
+import CustomSelect from "@/components/CustomSelect";
 import React, { useState } from "react";
+import { currentProjectState } from "../recoilContextProvider";
+import { useRecoilState } from "recoil";
 
 function SideBar() {
-  const [projects, setProjects] = useState(false);
+  const [currentProject, setCurrentProject] =
+    useRecoilState(currentProjectState);
+  //const [projects, setProjects] = useState(false);
+
+  const createProject = () => {
+    try {
+      // const response = await axios.put()
+    } catch (error) {}
+  };
+
+  const [modal, setModal] = useState(false);
+
+  const handleFunction = (name: string) => {
+    if (name.startsWith("Create")) {
+      setModal(true);
+    } else {
+      console.log(name);
+      setCurrentProject(name);
+    }
+  };
+
+  const options = [
+    {
+      name: "PotionAi",
+      onClick: () => handleFunction("PotionAi"),
+    },
+    {
+      name: "SiteGPT",
+      onClick: () => handleFunction("SiteGPT"),
+    },
+    {
+      name: "Create New Project",
+      onClick: () => handleFunction("Create New Project"),
+      icon: "plus",
+    },
+  ];
 
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
-      <div className="relative flex flex-col  gap-[0.1rem]">
-        <button
-          onClick={() => setProjects(!projects)}
-          className="flex justify-between items-center rounded-[12px] px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium"
-        >
-          <h3>PotionAI</h3>
-          <img src="/images/dropdown.svg" alt="" />
-        </button>
-        {projects && (
-          <button className="absolute top-[3rem] rounded-[12px] w-[100%] flex justify-center px-[1rem] py-[14px] bg-[#e8e8f6] font-medium text-[#4747FF] shadow-md">
-            <div className="flex gap-[8px]">
-              <img src="/images/plus.svg" alt="" />
-              <p>Create new view</p>
-            </div>
-          </button>
-        )}
+      <CustomSelect options={options} default={"PotionAi"}></CustomSelect>
+
+      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
+        <CustomDiv label={"All"} number={17} color="#4747FF"></CustomDiv>
+
+        <CustomDiv label={"Issue"} number={3} color="#FF4D4D"></CustomDiv>
+
+        <CustomDiv label={"Suggestion"} number={4} color="#FF9933"></CustomDiv>
+
+        <CustomDiv label={"Love"} number={9} color="#FA52DF"></CustomDiv>
+
+        <CustomDiv label={"Other"} number={0} color="#BFBFBF"></CustomDiv>
       </div>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <p>All</p>
-          <span>17</span>
-        </button>
-
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#FF0000]">
-          <p>Issue</p>
-          <span>3</span>
-        </button>
-
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#FF8000]">
-          <p>Suggestion</p>
-          <span>1</span>
-        </button>
-
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#DF07BC]">
-          <p>Loved</p>
-          <span>9</span>
-        </button>
-
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#858585]">
-          <p>Other</p>
-          <span>0</span>
-        </button>
+        <CustomDiv label={"Collection 1"} number={6}></CustomDiv>
+        <CustomDiv label={"Liked"} number={6}></CustomDiv>
+        <CustomDiv label={"Create a new view"} icon="plus"></CustomDiv>
       </div>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <p>Only Best ones</p>
-          <span>17</span>
-        </button>
-
-        <button className="flex justify-between px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <p>Both</p>
-          <span>3</span>
-        </button>
-
-        <button className="flex justify-center px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <div className="flex gap-[8px]">
-            <img src="/images/plus.svg" alt="" />
-            <p>Create new view</p>
-          </div>
-        </button>
-      </div>
-
-      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
-        <button className="flex justify-start px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <div className="flex gap-[8px]">
-            <img src="/images/help.svg" alt="" />
-            <p>Help</p>
-          </div>
-        </button>
-        <button className="flex justify-start px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <div className="flex gap-[8px]">
-            <img src="/images/help.svg" alt="" />
-            <p>Form</p>
-          </div>
-        </button>
-        <button className="flex justify-start px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium text-[#4747FF]">
-          <div className="flex gap-[8px]">
-            <img src="/images/help.svg" alt="" />
-            <p>Setting</p>
-          </div>
-        </button>
+        <CustomDiv label={"Help"} icon="help"></CustomDiv>
+        <CustomDiv label={"Form"} icon="help"></CustomDiv>
+        <CustomDiv label={"Setting"} icon="help"></CustomDiv>
       </div>
     </div>
   );
