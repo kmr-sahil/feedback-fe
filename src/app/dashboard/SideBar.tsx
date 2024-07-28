@@ -1,11 +1,27 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 function SideBar() {
+  const [projects, setProjects] = useState(false);
+
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
-      <div className="flex justify-between rounded-[12px] px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium">
-        <h3>PotionAI</h3>
-        <img src="/images/dropdown.svg" alt="" />
+      <div className="relative flex flex-col  gap-[0.1rem]">
+        <button
+          onClick={() => setProjects(!projects)}
+          className="flex justify-between items-center rounded-[12px] px-[1rem] py-[14px] bg-[#4747FF] bg-opacity-[8%] font-medium"
+        >
+          <h3>PotionAI</h3>
+          <img src="/images/dropdown.svg" alt="" />
+        </button>
+        {projects && (
+          <button className="absolute top-[3rem] rounded-[12px] w-[100%] flex justify-center px-[1rem] py-[14px] bg-[#e8e8f6] font-medium text-[#4747FF] shadow-md">
+            <div className="flex gap-[8px]">
+              <img src="/images/plus.svg" alt="" />
+              <p>Create new view</p>
+            </div>
+          </button>
+        )}
       </div>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
