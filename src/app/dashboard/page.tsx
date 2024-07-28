@@ -6,11 +6,20 @@ import SideBar from "./SideBar";
 import MainBar from "./MainBar";
 import AdBar from "./AdBar";
 import CustomInput from "@/components/CustomInput";
+import { currentProjectState } from "../recoilContextProvider";
+import { useRecoilValue } from "recoil";
 
 function DashboardPage() {
+  //const [currentProject, setCurrentProject] = useRecoilState(currentProjectState);
+
+  const currentProject = useRecoilValue(currentProjectState);
+  console.log(currentProject);
+
   const [login, setLogin] = useState(false);
   const [responses, setResponses] = useState([]);
   const [addProj, setAddProj] = useState(true);
+
+  console.log(currentProject);
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,3 +63,7 @@ function DashboardPage() {
 }
 
 export default DashboardPage;
+function useRecoilState(currentProjectState: any): [any, any] {
+  throw new Error("Function not implemented.");
+}
+
