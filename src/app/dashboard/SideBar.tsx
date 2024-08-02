@@ -10,12 +10,6 @@ function SideBar() {
     useRecoilState(currentProjectState);
   //const [projects, setProjects] = useState(false);
 
-  const createProject = () => {
-    try {
-      // const response = await axios.put()
-    } catch (error) {}
-  };
-
   const [modal, setModal] = useState(false);
 
   const handleFunction = (name: string) => {
@@ -28,14 +22,14 @@ function SideBar() {
   };
 
   const options = [
-    {
-      name: "PotionAi",
-      onClick: () => handleFunction("PotionAi"),
-    },
-    {
-      name: "SiteGPT",
-      onClick: () => handleFunction("SiteGPT"),
-    },
+    // {
+    //   name: "PotionAi",
+    //   onClick: () => handleFunction("PotionAi"),
+    // },
+    // {
+    //   name: "SiteGPT",
+    //   onClick: () => handleFunction("SiteGPT"),
+    // },
     {
       name: "Create New Project",
       onClick: () => handleFunction("Create New Project"),
@@ -45,7 +39,7 @@ function SideBar() {
 
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
-      <CustomSelect options={options} default={"PotionAi"}></CustomSelect>
+      <CustomSelect options={options} default={currentProject}></CustomSelect>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
         <CustomDiv label={"All"} number={17} color="#4747FF"></CustomDiv>
