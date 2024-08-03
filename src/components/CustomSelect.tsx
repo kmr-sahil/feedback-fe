@@ -9,7 +9,7 @@ interface Option {
 
 interface ISelectCompProps {
   options: Option[];
-  default?: string;
+  default?: any;
 }
 
 const CustomSelect: React.FC<ISelectCompProps> = (props) => {

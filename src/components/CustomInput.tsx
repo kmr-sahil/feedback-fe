@@ -26,7 +26,7 @@ function CustomInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="px-[0.75rem] py-[0.5rem] rounded-[8px] ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#0401E4]"
+        className="px-[0.75rem] py-[0.5rem] rounded-[8px] text-textColor bg-priColor ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accColor"
       />
     </div>
   );

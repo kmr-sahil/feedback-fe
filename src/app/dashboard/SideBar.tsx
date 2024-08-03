@@ -2,19 +2,18 @@
 import CustomDiv from "@/components/CustomDiv";
 import CustomSelect from "@/components/CustomSelect";
 import React, { useState } from "react";
-import { currentProjectState } from "../recoilContextProvider";
+import { createProjectModalState, currentProjectState } from "../recoilContextProvider";
 import { useRecoilState } from "recoil";
 
 function SideBar() {
   const [currentProject, setCurrentProject] =
     useRecoilState(currentProjectState);
   //const [projects, setProjects] = useState(false);
-
-  const [modal, setModal] = useState(false);
+  const [createProjectModal, setCreateProjectModal] = useRecoilState(createProjectModalState);
 
   const handleFunction = (name: string) => {
     if (name.startsWith("Create")) {
-      setModal(true);
+      setCreateProjectModal(true);
     } else {
       console.log(name);
       setCurrentProject(name);
@@ -39,7 +38,7 @@ function SideBar() {
 
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
-      <CustomSelect options={options} default={currentProject}></CustomSelect>
+      <CustomSelect options={options} default={"Select Project"}></CustomSelect>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
         <CustomDiv label={"All"} number={17} color="#4747FF"></CustomDiv>
