@@ -35,8 +35,8 @@ function SigninPage() {
   };
 
   return (
-    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-[#EBEBFF] p-[2rem] rounded-[12px] outline-[] outline-[#00013d1d]">
-      <h3 className="text-[1.5rem] font-medium mb-[0.5rem]">Welcome Back</h3>
+    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-bgColor p-[2rem] rounded-[16px] outline-[] outline-gray-200 shadow-[0_20px_35px_0px_rgba(0,0,210,0.2)]">
+      <h3 className="text-[1.5rem] font-medium mb-[0.5rem] text-accColor">Welcome Back</h3>
       <CustomInput
         type="email"
         name="email"
@@ -54,7 +54,7 @@ function SigninPage() {
         label="Password"
       />
       <CustomButton label="Signin" onClick={signin}></CustomButton>
-      <p className="text-[14px] text-center">
+      <p className="text-[14px] text-textColor text-center">
         New to FeedbackSpace ?{" "}
         <Link className="underline underline-offset-2" href={"/signup"}>
           Signup

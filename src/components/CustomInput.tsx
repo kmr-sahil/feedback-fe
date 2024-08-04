@@ -18,7 +18,7 @@ function CustomInput({
   onChange,
 }: CustomInput) {
   return (
-    <div className="flex flex-col gap-[0.5rem]">
+    <div className="flex flex-col gap-[0.5rem] text-textColor">
       <label className="font-medium">{label}</label>
       <input
         type={type}

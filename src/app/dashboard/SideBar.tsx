@@ -2,33 +2,27 @@
 import CustomDiv from "@/components/CustomDiv";
 import CustomSelect from "@/components/CustomSelect";
 import React, { useState } from "react";
-import { createProjectModalState, currentProjectState } from "../recoilContextProvider";
-import { useRecoilState } from "recoil";
 
 function SideBar() {
-  const [currentProject, setCurrentProject] =
-    useRecoilState(currentProjectState);
-  //const [projects, setProjects] = useState(false);
-  const [createProjectModal, setCreateProjectModal] = useRecoilState(createProjectModalState);
 
   const handleFunction = (name: string) => {
     if (name.startsWith("Create")) {
-      setCreateProjectModal(true);
+      //setCreateProjectModal(true);
     } else {
       console.log(name);
-      setCurrentProject(name);
+      //setCurrentProject(name);
     }
   };
 
   const options = [
-    // {
-    //   name: "PotionAi",
-    //   onClick: () => handleFunction("PotionAi"),
-    // },
-    // {
-    //   name: "SiteGPT",
-    //   onClick: () => handleFunction("SiteGPT"),
-    // },
+    {
+      name: "PotionAi",
+      onClick: () => handleFunction("PotionAi"),
+    },
+    {
+      name: "SiteGPT",
+      onClick: () => handleFunction("SiteGPT"),
+    },
     {
       name: "Create New Project",
       onClick: () => handleFunction("Create New Project"),
