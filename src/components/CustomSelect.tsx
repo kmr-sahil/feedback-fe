@@ -4,21 +4,29 @@ import CustomDiv from "./CustomDiv";
 interface Option {
   name: string;
   icon?: string;
-  onClick?: () => void;
+  value: string;
+  description?: string;
 }
 
 interface ISelectCompProps {
   options: Option[];
   default?: any;
+  onOptionSelect: (value: string) => void;
 }
 
 const CustomSelect: React.FC<ISelectCompProps> = (props) => {
-  const { options, default: defaultOption } = props;
+  const { options, default: defaultOption, onOptionSelect } = props;
   const [activeOption, setActiveOption] = useState(
     defaultOption || options[0].name
   );
 
   const [toggle, setToggle] = useState(false);
+
+  const handleOptionClick = (option: Option) => {
+    setActiveOption(option.name);
+    setToggle(false);
+    onOptionSelect(option.value);
+  };
 
   return (
     <div className="relative flex flex-col">
@@ -38,12 +46,13 @@ const CustomSelect: React.FC<ISelectCompProps> = (props) => {
           {options
             .filter((option) => option.name !== activeOption)
             .map((option, index) => (
-              <CustomDiv
+              <div
                 key={index}
-                label={option.name}
-                onClick={option.onClick}
-                icon={option.icon}
-              />
+                onClick={() => handleOptionClick(option)}
+                className="flex w-[100%] justify-between px-[1rem] py-[12px] bg-priColor font-medium "
+              >
+                <CustomDiv label={option.name} icon={option.icon} />
+              </div>
             ))}
         </div>
       )}

@@ -1,38 +1,61 @@
 "use client";
 import CustomDiv from "@/components/CustomDiv";
 import CustomSelect from "@/components/CustomSelect";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchProjects } from "../slices/projectSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 function SideBar() {
+  const dispatch = useAppDispatch();
+  const projects = useAppSelector((state) => state.projectState.projectData);
+  const isLoading = useAppSelector((state) => state.projectState.isLoading);
+  const isError = useAppSelector((state) => state.projectState.isError);
+  const error = useAppSelector((state) => state.projectState.error);
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
   const handleFunction = (name: string) => {
     if (name.startsWith("Create")) {
-      //setCreateProjectModal(true);
+      // setCreateProjectModal(true);
     } else {
       console.log(name);
-      //setCurrentProject(name);
+      // setCurrentProject(name);
     }
   };
 
   const options = [
-    {
-      name: "PotionAi",
-      onClick: () => handleFunction("PotionAi"),
-    },
-    {
-      name: "SiteGPT",
-      onClick: () => handleFunction("SiteGPT"),
-    },
+    ...projects.map((project) => ({
+      name: project.name,
+      value: project.projectId,
+    })),
     {
       name: "Create New Project",
-      onClick: () => handleFunction("Create New Project"),
+      value: "0",
       icon: "plus",
     },
   ];
 
+  const onOptionSelect = (projectId: string) => {
+    localStorage.setItem("projectId", projectId);
+  };
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (isError) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
-      <CustomSelect options={options} default={"Select Project"}></CustomSelect>
+      <CustomSelect
+        options={options}
+        default={"Select Project"}
+        onOptionSelect={onOptionSelect}
+      ></CustomSelect>
 
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
         <CustomDiv label={"All"} number={17} color="#4747FF"></CustomDiv>
