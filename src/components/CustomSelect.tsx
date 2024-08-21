@@ -16,8 +16,9 @@ interface ISelectCompProps {
 
 const CustomSelect: React.FC<ISelectCompProps> = (props) => {
   const { options, default: defaultOption, onOptionSelect } = props;
+  console.log(defaultOption)
   const [activeOption, setActiveOption] = useState(
-    defaultOption || options[0].name
+    defaultOption
   );
 
   const [toggle, setToggle] = useState(false);

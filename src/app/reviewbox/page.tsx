@@ -1,6 +1,7 @@
 "use client";
 import CustomButton from "@/components/CustomButton";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 function ReviewBox() {
@@ -9,6 +10,12 @@ function ReviewBox() {
     content: "",
     star: 0,
   });
+
+  const searchParams = useSearchParams()
+ 
+  const search = searchParams.get('id')
+
+  console.log(search)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
