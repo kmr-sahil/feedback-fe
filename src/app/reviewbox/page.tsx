@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import CustomButton from "@/components/CustomButton";
 import axios from "axios";
 import React, { useState } from "react";
 
 function ReviewBox() {
   const [details, setDetails] = useState({
-    type: 'Issue',
+    type: "Issue",
     content: "",
     star: 0,
   });
@@ -36,7 +36,9 @@ function ReviewBox() {
   return (
     <div className="p-4 bg-white rounded shadow-md max-w-md mx-auto">
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Star</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Star
+        </label>
         <input
           type="number"
           name="star"
@@ -49,7 +51,9 @@ function ReviewBox() {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Type
+        </label>
         <select
           name="type"
           value={details.type}
@@ -62,7 +66,9 @@ function ReviewBox() {
         </select>
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Content
+        </label>
         <textarea
           name="content"
           value={details.content}

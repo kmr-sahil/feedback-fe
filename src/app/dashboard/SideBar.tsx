@@ -6,15 +6,15 @@ import { fetchProjects } from "../slices/projectSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 function SideBar() {
-  const dispatch = useAppDispatch();
-  const projects = useAppSelector((state) => state.projectState.projectData);
-  const isLoading = useAppSelector((state) => state.projectState.isLoading);
-  const isError = useAppSelector((state) => state.projectState.isError);
-  const error = useAppSelector((state) => state.projectState.error);
+  // const dispatch = useAppDispatch();
+  // const projects = useAppSelector((state) => state.projectState.projectData);
+  // const isLoading = useAppSelector((state) => state.projectState.isLoading);
+  // const isError = useAppSelector((state) => state.projectState.isError);
+  // const error = useAppSelector((state) => state.projectState.error);
 
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchProjects());
+  // }, [dispatch]);
 
   const handleFunction = (name: string) => {
     if (name.startsWith("Create")) {
@@ -26,10 +26,10 @@ function SideBar() {
   };
 
   const options = [
-    ...projects.map((project) => ({
-      name: project.name,
-      value: project.projectId,
-    })),
+    // ...projects.map((project) => ({
+    //   name: project.name,
+    //   value: project.projectId,
+    // })),
     {
       name: "Create New Project",
       value: "0",
@@ -41,13 +41,13 @@ function SideBar() {
     localStorage.setItem("projectId", projectId);
   };
 
-  if (isLoading) {
-    return null;
-  }
+  // if (isLoading) {
+  //   return null;
+  // }
 
-  if (isError) {
-    return <div>Error: {error}</div>;
-  }
+  // if (isError) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem]">
@@ -69,17 +69,18 @@ function SideBar() {
         <CustomDiv label={"Other"} number={0} color="#BFBFBF"></CustomDiv>
       </div>
 
-      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
+      {/* <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
         <CustomDiv label={"Collection 1"} number={6}></CustomDiv>
         <CustomDiv label={"Liked"} number={6}></CustomDiv>
         <CustomDiv label={"Create a new view"} icon="plus"></CustomDiv>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
+      {/* <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
         <CustomDiv label={"Help"} icon="help"></CustomDiv>
         <CustomDiv label={"Form"} icon="help"></CustomDiv>
         <CustomDiv label={"Setting"} icon="help"></CustomDiv>
-      </div>
+      </div> */}
+      
     </div>
   );
 }

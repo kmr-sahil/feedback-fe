@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import MainBar from "./MainBar";
-import AdBar from "./AdBar";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 
@@ -31,7 +30,6 @@ function DashboardPage() {
         )}
         <SideBar />
         <MainBar />
-        <AdBar />
       </div>
     </div>
   );
