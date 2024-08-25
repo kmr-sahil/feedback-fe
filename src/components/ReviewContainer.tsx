@@ -14,7 +14,7 @@ function ReviewContainer({ data }: any) {
         <img className="" src="/images/bookmark.svg" alt="" />
       </div>
       <div className="flex flex-col text-textColor">
-        <h3 className="font-medium">Sahil Kumar</h3>
+        <h3 className="font-medium">Kumar</h3>
         <p className="text-[12px] font-light">11.sahil.kmr@gmail.com</p>
       </div>
       <p className="text-textColor">{data?.content}</p>
