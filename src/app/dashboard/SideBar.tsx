@@ -6,7 +6,7 @@ import CustomModal from "@/components/CustomModal";
 import CustomInput from "@/components/CustomInput";
 import axios from "axios";
 
-function SideBar() {
+function SideBar({setProjectId}:any) {
   const [project, setProject] = useState<any[]>([]);
   const [defaultProject, setDefaultProject] = useState("Select Project");
   const [loading, setLoading] = useState(true);
@@ -98,6 +98,7 @@ function SideBar() {
       const selectedProject = project.find((p) => p.projectId === projectId);
       setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
       localStorage.setItem("projectId", projectId);
+      setProjectId(projectId)
     }
   };
 
