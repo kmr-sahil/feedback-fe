@@ -30,7 +30,7 @@ function MainBar({ data, projectId }: any) {
           <div className="w-[300px] flex items-center justify-center rounded-[10px] bg-gray-600 bg-opacity-30 border-[2px] border-blue-900 p-[0.5rem] truncate">
             <p className="truncate">{`https://localhost:3000/reviewbox/${projectId}`}</p>
             <button
-              className="rounded-[4px] bg-backgroundOne p-1"
+              className="rounded-[4px] bg-slate-200 p-1"
               onClick={copyToClipboard}
             >
               <Copy size={16} />
