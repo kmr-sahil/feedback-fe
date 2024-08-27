@@ -3,21 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 4, 10, 15;
-  --background-start-rgb: 4, 10, 15;
-  --background-end-rgb: 4, 10, 15;
+  --foreground-rgb: 127, 154, 70;
 }
 
-
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.dark {
+  --foreground-rgb: 0, 0, 15;
 }
 
 @layer utilities {

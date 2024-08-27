@@ -17,10 +17,11 @@ const config: Config = {
         "bgColor": "#2100011",
         "priColor": "#212237",
         "textColor": "#E0E0FF",
-        "accColor": "#1310E7",
+        "accColor": "rgba(var(--foreground-rgb))",
       },
     },
   },
+  darkMode: 'class',
   plugins: [],
 };
 export default config;
