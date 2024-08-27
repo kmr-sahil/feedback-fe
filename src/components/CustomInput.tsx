@@ -18,15 +18,15 @@ function CustomInput({
   onChange,
 }: CustomInput) {
   return (
-    <div className="flex flex-col gap-[0.5rem] text-textColor">
-      <label className="font-medium">{label}</label>
+    <div className="flex flex-col gap-[0.5rem] text-textOne">
+      <label className="font-medium text-textTwo">{label}</label>
       <input
         type={type}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="px-[0.75rem] py-[0.5rem] rounded-[8px] text-textColor bg-priColor ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accColor"
+        className="px-[0.75rem] py-[0.5rem] rounded-[8px] text-textColor bg-backgroundTwo ring-1 ring-inset ring-backgroundThree placeholder:text-textTwo focus:ring-1 focus:ring-inset focus:ring-accentOne focus:shadow-[0px_0px_4px_1px] focus:shadow-accentOne"
       />
     </div>
   );
