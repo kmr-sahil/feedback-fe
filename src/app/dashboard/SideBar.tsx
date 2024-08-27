@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CustomModal from "@/components/CustomModal";
 import CustomInput from "@/components/CustomInput";
 import axios from "axios";
+import { Plus } from "@phosphor-icons/react";
 
 function SideBar({setProjectId}:any) {
   const [project, setProject] = useState<any[]>([]);
@@ -83,7 +84,7 @@ function SideBar({setProjectId}:any) {
     {
       name: "Create New Project",
       value: "0",
-      icon: "plus",
+      icon: <Plus size={16} />,
     },
   ];
 
@@ -137,10 +138,10 @@ function SideBar({setProjectId}:any) {
         onOptionSelect={onOptionSelect}
       />
 
-      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[0.1rem]">
+      <div className="flex flex-col rounded-[12px] overflow-hidden gap-[6px] p-[6px] bg-backgroundOne border-special border-backgroundTwo">
         <CustomDiv label={"All"} number={17} color="#4747FF" />
         <CustomDiv label={"Issue"} number={3} color="#FF4D4D" />
-        <CustomDiv label={"Suggestion"} number={4} color="#FF9933" />
+        <CustomDiv label={"Suggestion"} number={4} color="#FF9933" isSpotlight={true}/>
         <CustomDiv label={"Love"} number={9} color="#FA52DF" />
         <CustomDiv label={"Other"} number={0} color="#BFBFBF" />
       </div>
