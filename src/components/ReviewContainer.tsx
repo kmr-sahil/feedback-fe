@@ -1,31 +1,39 @@
 import React from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+// Extend Day.js with the relativeTime plugin
+dayjs.extend(relativeTime);
 
 function ReviewContainer({ data }: any) {
+  // Parse the createdAt date string
+  const createdAt = dayjs(data.createdAt);
+
+  // Determine if the date is less than 24 hours ago
+  const isLessThan24HoursAgo = dayjs().diff(createdAt, "hour") < 24;
+
   return (
     <div
       key={data.responseId}
-      className="flex flex-col bg-[#4747FF] bg-opacity-[8%] rounded-[12px] px-[1.2rem] py-[1rem] gap-[1rem]"
+      className="flex flex-col bg-backgroundOne border-special border-backgroundTwo rounded-[12px] p-[1.5rem] gap-[1rem] text-textOne"
     >
-      <div className="flex justify-between">
-        <div className="flex gap-[0.5rem] items-center">
-          <span className="w-2 h-2 rounded-full bg-pink-600"></span>
-          <p className="text-pink-600">{data?.type}</p>
-        </div>
-        <img className="" src="/images/bookmark.svg" alt="" />
+      <div className="flex gap-[0.5rem] items-center">
+        <span className="w-2 h-2 rounded-full bg-textTwo"></span>
+        <p className="text-textTwo">{data?.type}</p>
       </div>
-      <div className="flex flex-col text-textColor">
-        <h3 className="font-medium">Kumar</h3>
-        <p className="text-[12px] font-light">11.sahil.kmr@gmail.com</p>
+      <div className="flex flex-col gap-[0.25rem]">
+        <h3 className="font-medium text-textTwo">
+          {data.name ? data.name : "Anonymous"}
+        </h3>
+        <p className="text-[16px]">{data?.content}</p>
       </div>
-      <p className="text-textColor">{data?.content}</p>
       <div className="flex justify-between">
-        <div className="flex gap-[0.25rem]">
-          <img className="w-[14px]" src="/images/star.svg" alt="" />
-          <img className="w-[14px]" src="/images/star.svg" alt="" />
-          <img className="w-[14px]" src="/images/star.svg" alt="" />
-        </div>
-
-        <p className="text-[12px] font-light">10 hours ago</p>
+        <p className="text-[12px] font-light text-textTwo">
+          {isLessThan24HoursAgo
+            ? createdAt.fromNow() // Shows "12 hours ago" for recent dates
+            : createdAt.format("YYYY-MM-DD")}{" "}
+          {/* Shows date in YYYY-MM-DD format for older dates */}
+        </p>
       </div>
     </div>
   );
