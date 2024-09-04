@@ -4,26 +4,33 @@ import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import MainBar from "./MainBar";
 import axios from "axios";
+import ParentLayout from "@/components/ParentLayout";
+import ChildLayout from "@/components/ChildLayout";
+import PageLayout from "@/components/PageLayout";
 
 function DashboardPage() {
   const [reveiwData, setReviewData] = useState([]);
   const [projectId, setProject] = useState<string | null>();
+  const [loading, setLoading] = useState(false);
 
   const fetchReviews = async () => {
+    setLoading(true);
     try {
       const storedProjectId = localStorage.getItem("projectId");
       setProject(storedProjectId);
       console.log(projectId);
       const res = await axios.get(
-        `http://localhost:8080/v1/responses?projectId=${projectId}`,
+        `http://localhost:8080/v1/responses?projectId=${storedProjectId}`,
         {
           withCredentials: true,
         }
       );
       console.log(res);
       setReviewData(res.data.responses);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -32,13 +39,17 @@ function DashboardPage() {
   }, [projectId]);
 
   return (
-    <div className="max-w-[80rem] mx-auto mt-[2rem] relative">
+    <ParentLayout>
       <Navbar />
-      <div className="relative flex py-[2rem] justify-between gap-[1.5rem] text-[14px] text-[#4747FF]">
+      <ChildLayout>
         <SideBar setProjectId={setProject} />
-        <MainBar data={reveiwData} projectId={projectId}/>
-      </div>
-    </div>
+        {!loading && (
+          <PageLayout>
+            <MainBar data={reveiwData} projectId={projectId} />
+          </PageLayout>
+        )}
+      </ChildLayout>
+    </ParentLayout>
   );
 }
 

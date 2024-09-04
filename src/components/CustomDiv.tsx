@@ -5,7 +5,7 @@ interface IDivCompProps {
   key?: number;
   number?: number;
   color?: string;
-  icon?: string;
+  icon?: JSX.Element;
   onClick?: () => void;
   isSpotlight?: boolean;
 }
@@ -16,11 +16,14 @@ const CustomDiv: React.FC<IDivCompProps> = (props) => {
   return (
     <button
       onClick={onClick}
-      className={`flex w-[100%] justify-between px-[14px] py-[10px] ${isSpotlight ? "bg-backgroundTwo":"bg-backgroundOne"} font-medium rounded-[8px]`}
-      style={{ color: color || "#D6D6D9" }}
+      className={`flex w-[100%] justify-between px-[14px] py-[10px] ${
+        color ? color : "text-textOne"
+      } ${
+        isSpotlight ? "bg-backgroundTwo" : "bg-backgroundOne"
+      } font-medium rounded-[8px] `}
     >
       <div className="flex gap-[8px]">
-        {icon && <img src={`/images/${icon}.svg`} alt={icon} />}
+        {icon}
         <p>{label}</p>
       </div>
       {number !== undefined && <span>{number}</span>}
