@@ -55,7 +55,7 @@ const CustomSelect: React.FC<ISelectCompProps> = (props) => {
         />
       </button>
       {toggle && (
-        <div className="absolute top-[4rem] flex flex-col gap-[6px] p-[6px] rounded-[12px] w-[100%] shadow-[0_16px_30px_5px_] shadow-backgroundThree bg-backgroundOne border-special border-backgroundTwo z-10 overflow-hidden">
+        <div className="absolute top-[4rem] flex flex-col gap-[6px] p-[6px] rounded-[12px] w-[100%] bg-backgroundOne border-special border-backgroundTwo z-10 overflow-hidden">
           {options.map((option, index) => (
             <div
               key={index}

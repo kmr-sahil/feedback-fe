@@ -2,18 +2,18 @@ import CustomDiv from "@/components/CustomDiv";
 import React from "react";
 
 const Sidebar = ({ setType }: any) => {
+
   return (
     <div className="w-[20%] flex flex-col gap-[1.5rem] mt-[2rem]">
       <div className="flex flex-col rounded-[12px] overflow-hidden gap-[6px] p-[6px] bg-backgroundOne border-special border-backgroundTwo">
         <CustomDiv
-          label={"Wall of Love"}
-          onClick={() => setType("walloflove")}
+          label={"Profile"}
+          onClick={() => setType("profile")}
         />
         <CustomDiv
-          label={"Integrate Snippets"}
-          onClick={() => setType("snippet")}
+          label={"Theme"}
+          onClick={() => setType("theme")}
         />
-        <CustomDiv label={"API"} onClick={() => setType("api")} />
       </div>
     </div>
   );

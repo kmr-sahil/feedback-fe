@@ -19,7 +19,7 @@ function MainBar({ data, projectId }: any) {
   };
 
   return (
-    <div className="flex-grow w-[40%] flex flex-col gap-[1.25rem]">
+    <div className="flex flex-col gap-[1.25rem]">
       {data.length > 0 ? (
         data.map((item: { responseId: any }) => (
           <ReviewContainer key={item.responseId} data={item} />
