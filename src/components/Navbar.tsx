@@ -4,48 +4,48 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Bell, Plus, User } from "@phosphor-icons/react";
 import axios from "axios";
 import CustomSelect from "./CustomSelect";
+import CustomModal from "./CustomModal";
 import { useRouter } from "next/navigation";
 
 function Navbar() {
-  const router = useRouter()
-  const [project, setProject] = useState<any[]>([]);
+  const router = useRouter();
+  const [projects, setProjects] = useState<any[]>([]);
   const [defaultProject, setDefaultProject] = useState("Select Project");
   const [loading, setLoading] = useState(true);
+  const [details, setDetails] = useState<{ name: string; description: string }>({
+    name: "",
+    description: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchProject = useCallback(async () => {
+  // Fetch projects from API or local storage
+  const fetchProjects = useCallback(async () => {
     const cachedProjects = localStorage.getItem("projects");
     const cachedProjectId = localStorage.getItem("projectId");
 
     if (cachedProjects) {
       const parsedProjects = JSON.parse(cachedProjects);
-      setProject(parsedProjects);
+      setProjects(parsedProjects);
 
       const selectedProject = parsedProjects.find(
         (p: any) => p.projectId === cachedProjectId
       );
-
-      setDefaultProject(
-        selectedProject ? selectedProject.name : "Select Project"
-      );
+      setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
     } else {
       try {
         const response = await axios.get("http://localhost:8080/v1/project", {
           withCredentials: true,
         });
-        const projects = response.data.projects || [];
-        setProject(projects);
-        localStorage.setItem("projects", JSON.stringify(projects));
+        const fetchedProjects = response.data.projects || [];
+        setProjects(fetchedProjects);
+        localStorage.setItem("projects", JSON.stringify(fetchedProjects));
 
-        // Set default to the first project or "Select Project"
-        const selectedProject = projects.find(
+        const selectedProject = fetchedProjects.find(
           (p: any) => p.projectId === cachedProjectId
         );
-
-        setDefaultProject(
-          selectedProject ? selectedProject.name : "Select Project"
-        );
+        setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
       } catch (error) {
-        console.log(error);
+        console.error("Failed to fetch projects:", error);
       }
     }
 
@@ -53,37 +53,38 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    fetchProject();
-  }, [fetchProject]);
+    fetchProjects();
+  }, [fetchProjects]);
 
-  const [details, setDetails] = useState<any>({
-    name: "",
-    description: "",
-  });
-
+  // Create new project
   const onProjectCreate = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:8080/v1/project",
-        details,
-        {
-          withCredentials: true,
-        }
-      );
-      // Refresh projects after creation
+      await axios.post("http://localhost:8080/v1/project", details, {
+        withCredentials: true,
+      });
       localStorage.clear();
-      fetchProject();
+      fetchProjects();
     } catch (error) {
-      console.log(error);
+      console.error("Failed to create project:", error);
     }
   };
 
-  const [isModal, setIsModal] = useState(false);
+  // Handle option selection from dropdown
+  const onOptionSelect = (projectId: string) => {
+    if (projectId === "0") {
+      setIsModalOpen(true);
+    } else {
+      const selectedProject = projects.find((p) => p.projectId === projectId);
+      setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
+      localStorage.setItem("projectId", projectId);
+    }
+  };
 
-  const options = [
-    ...project.map((project: { name: any; projectId: any }) => ({
-      name: project.name,
-      value: project.projectId,
+  // Prepare options for CustomSelect component
+  const selectOptions = [
+    ...projects.map((p: { name: any; projectId: any }) => ({
+      name: p.name,
+      value: p.projectId,
     })),
     {
       name: "Create New Project",
@@ -92,34 +93,25 @@ function Navbar() {
     },
   ];
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  const onOptionSelect = (projectId: string) => {
-    if (projectId === "0") {
-      setIsModal(true);
-    } else {
-      const selectedProject = project.find((p) => p.projectId === projectId);
-      setDefaultProject(
-        selectedProject ? selectedProject.name : "Select Project"
-      );
-      localStorage.setItem("projectId", projectId);
-    }
-  };
-
   return (
     <div className="flex justify-between items-center px-[1rem]">
-      <img onClick={() => router.push("/dashboard")} className="w-[12rem]" src="/images/feedback-logoFull.svg" alt="" />
+      {isModalOpen && <CustomModal buttonLabel="Submit" />}
+      <img
+        onClick={() => router.push("/dashboard")}
+        className="w-[12rem]"
+        src="/images/feedback-logoFull.svg"
+        alt="Feedback Logo"
+      />
       <div className="flex gap-[1rem] cursor-pointer text-textOne">
         <div className="w-[200px]">
-          <CustomSelect
-            options={options}
-            default={defaultProject}
-            onOptionSelect={onOptionSelect}
-          />
+          {!loading && (
+            <CustomSelect
+              options={selectOptions}
+              default={defaultProject}
+              onOptionSelect={onOptionSelect}
+            />
+          )}
         </div>
-
         <div className="flex justify-center items-center rounded-[8px] px-[0.75rem] py-[10px] bg-backgroundOne border-special border-backgroundTwo">
           <Bell size={16} weight="bold" />
         </div>

@@ -5,13 +5,15 @@ import Sidebar from "./Sidebar";
 import WallOfLove from "./SubPages/wallOfLove";
 import Snippet from "./SubPages/snippet";
 import ApiInt from "./SubPages/apiInt";
+import ParentLayout from "@/components/ParentLayout";
+import ChildLayout from "@/components/ChildLayout";
 
 const IntegrationPage = () => {
   const [type, setType] = useState("");
   return (
-    <div className="max-w-[80rem] mx-auto mt-[2rem] relative">
+    <ParentLayout>
       <Navbar />
-      <div className="flex gap-[2rem]">
+      <ChildLayout>
         <Sidebar setType={setType} />
 
         <div className="flex-grow w-[40%] flex flex-col gap-[1.25rem]">
@@ -19,8 +21,8 @@ const IntegrationPage = () => {
           {type == "snippet" && <Snippet />}
           {type == "api" && <ApiInt />}
         </div>
-      </div>
-    </div>
+      </ChildLayout>
+    </ParentLayout>
   );
 };
 
