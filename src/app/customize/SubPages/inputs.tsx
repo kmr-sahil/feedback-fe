@@ -1,45 +1,56 @@
+"use client";
+import CustomButton from "@/components/CustomButton";
 import CustomSwitch from "@/components/CustomSwitch";
+import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
+import { toast } from "sonner";
 
 // Define type for adjustInputs state
-type AdjustInputs = {
+interface AdjustInputs {
   isEmailReq: boolean;
+  isNameInputReq: boolean;
   isNameReq: boolean;
-};
+}
 
-const Inputs: React.FC = () => {
-  const [adjustInputs, setAdjustInputs] = useState<AdjustInputs>({
-    isEmailReq: false,
-    isNameReq: false,
-  });
+interface InputsProps {
+  intialDetails: AdjustInputs;
+}
 
-  const isFirstLoad = useRef(true); // To skip the first load
+const Inputs: React.FC<InputsProps> = ({ intialDetails }) => {
+  const [adjustInputs, setAdjustInputs] = useState<AdjustInputs>(intialDetails);
+  console.log(intialDetails);
+  const [isDisable, setIsDisable] = useState(true)
 
-  // Load initial state from localStorage on component mount
-  useEffect(() => {
-    const storedInputs = localStorage.getItem("adjustInputs");
-    console.log("Loaded from localStorage:", storedInputs); // Log what’s loaded
-    if (storedInputs) {
-      setAdjustInputs(JSON.parse(storedInputs));
+  // useEffect(() => {
+  //   console.log(adjustInputs);
+  //   updateAdjustForm();
+  // }, [adjustInputs]);
+
+  const updateAdjustForm = async () => {
+    try {
+      const projectId = localStorage.getItem("projectId");
+      const response = await axios.put(
+        `http://localhost:8080/v1/project`,
+        { projectId: projectId, adjustForm: adjustInputs },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      toast("Error fetching project");
     }
-  }, []);
-
-  // Update localStorage after the first load
-  useEffect(() => {
-    if (isFirstLoad.current) {
-      isFirstLoad.current = false;
-      return;
-    }
-    console.log("Saving to localStorage:", adjustInputs); // Log what’s being saved
-    localStorage.setItem("adjustInputs", JSON.stringify(adjustInputs));
-  }, [adjustInputs]);
+  };
 
   // Add type annotations for key and value
   const handleSwitchChange = (key: keyof AdjustInputs, value: boolean) => {
-    setAdjustInputs((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    setAdjustInputs((prev) => {
+      const updatedInputs = { ...prev, [key]: value };
+      const isDifferent = JSON.stringify(updatedInputs) !== JSON.stringify(intialDetails);
+      setIsDisable(!isDifferent);
+      return updatedInputs;
+    });
   };
 
   return (
@@ -48,13 +59,21 @@ const Inputs: React.FC = () => {
         <CustomSwitch
           checked={adjustInputs.isEmailReq}
           setChecked={(value) => handleSwitchChange("isEmailReq", value)}
-          label="Make email input compulsory for customer"
+          label="Make EMAIL input compulsory for customer"
+        />
+        <CustomSwitch
+          checked={adjustInputs.isNameInputReq}
+          setChecked={(value) => handleSwitchChange("isNameInputReq", value)}
+          label="Make NAME input Visible for customer"
         />
         <CustomSwitch
           checked={adjustInputs.isNameReq}
           setChecked={(value) => handleSwitchChange("isNameReq", value)}
-          label="Make name input compulsory for customer"
+          label="Make NAME input compulsory for customer"
         />
+        <div className="w-[2rem]">
+          <CustomButton label={"Save"} disabled={isDisable}  onClick={() => updateAdjustForm()} />
+        </div>
       </div>
     </div>
   );

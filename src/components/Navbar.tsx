@@ -33,7 +33,7 @@ function Navbar() {
       setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
     } else {
       try {
-        const response = await axios.get("http://localhost:8080/v1/project", {
+        const response = await axios.get("http://localhost:8080/v1/projects", {
           withCredentials: true,
         });
         const fetchedProjects = response.data.projects || [];
