@@ -11,8 +11,8 @@ function CustomButton({ label, onClick, type, disabled }: CustomButton) {
   return (
     <button
       disabled={disabled}
-      className={`${type == "secondary" ? "bg-accentThree" : "bg-accentOne"} ${
-        type == "secondary" ? "border-special border-accentTwo" : ""
+      className={`${type == "secondary" ? "bg-blue-950" : "bg-accentOne"} ${
+        type == "secondary" ? "" : ""
       }  text-textOne font-medium px-[1rem] py-[0.5rem]  rounded-[8px] hover:opacity-90 focus:opacity-90 disabled:opacity-20`}
       onClick={onClick}
     >

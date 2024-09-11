@@ -6,13 +6,20 @@ import axios from "axios";
 import CustomSelect from "./CustomSelect";
 import CustomModal from "./CustomModal";
 import { useRouter } from "next/navigation";
+import CustomInput from "./CustomInput";
+import FileUpload from "./FileUpload";
 
 function Navbar() {
   const router = useRouter();
   const [projects, setProjects] = useState<any[]>([]);
   const [defaultProject, setDefaultProject] = useState("Select Project");
   const [loading, setLoading] = useState(true);
-  const [details, setDetails] = useState<{ name: string; description: string }>({
+  const [details, setDetails] = useState<{
+    logoUrl: string;
+    name: string;
+    description: string;
+  }>({
+    logoUrl: "",
     name: "",
     description: "",
   });
@@ -30,7 +37,9 @@ function Navbar() {
       const selectedProject = parsedProjects.find(
         (p: any) => p.projectId === cachedProjectId
       );
-      setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
+      setDefaultProject(
+        selectedProject ? selectedProject.name : "Select Project"
+      );
     } else {
       try {
         const response = await axios.get("http://localhost:8080/v1/projects", {
@@ -43,7 +52,9 @@ function Navbar() {
         const selectedProject = fetchedProjects.find(
           (p: any) => p.projectId === cachedProjectId
         );
-        setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
+        setDefaultProject(
+          selectedProject ? selectedProject.name : "Select Project"
+        );
       } catch (error) {
         console.error("Failed to fetch projects:", error);
       }
@@ -59,6 +70,7 @@ function Navbar() {
   // Create new project
   const onProjectCreate = async () => {
     try {
+      console.log(details);
       await axios.post("http://localhost:8080/v1/project", details, {
         withCredentials: true,
       });
@@ -75,7 +87,9 @@ function Navbar() {
       setIsModalOpen(true);
     } else {
       const selectedProject = projects.find((p) => p.projectId === projectId);
-      setDefaultProject(selectedProject ? selectedProject.name : "Select Project");
+      setDefaultProject(
+        selectedProject ? selectedProject.name : "Select Project"
+      );
       localStorage.setItem("projectId", projectId);
     }
   };
@@ -93,9 +107,45 @@ function Navbar() {
     },
   ];
 
+  const contentJsx = (
+    <>
+      <FileUpload setDetails={setDetails} />
+      <CustomInput
+        label={"Name"}
+        type={"text"}
+        value={details.name}
+        onChange={(e) =>
+          setDetails((prevDetails) => ({
+            ...prevDetails,
+            name: e.target.value,
+          }))
+        }
+      />
+      <CustomInput
+        label={"Description"}
+        type={"text"}
+        value={details.description}
+        onChange={(e) =>
+          setDetails((prevDetails) => ({
+            ...prevDetails,
+            description: e.target.value,
+          }))
+        }
+      />
+    </>
+  );
+
   return (
     <div className="flex justify-between items-center px-[1rem]">
-      {isModalOpen && <CustomModal buttonLabel="Submit" />}
+      {isModalOpen && (
+        <CustomModal
+          title="Create Project"
+          content={contentJsx}
+          onSubmitButton={() => onProjectCreate()}
+          buttonLabel="Submit"
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       <img
         onClick={() => router.push("/dashboard")}
         className="w-[12rem]"
