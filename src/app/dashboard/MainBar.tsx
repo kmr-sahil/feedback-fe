@@ -6,12 +6,12 @@ import { toast } from "sonner";
 function MainBar({ data, projectId }: any) {
   console.log(data);
   const copyToClipboard = () => {
-    const textToCopy = `http://localhost:3000/reviewbox/${projectId}`;
+    const textToCopy = `http://localhost:3000/feedback/simple/${projectId}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
         // Optionally, you can show a success message or tooltip here
-        toast("Link Copied")
+        toast("Link Copied");
       })
       .catch((err) => {
         console.error("Failed to copy text: ", err);
@@ -29,14 +29,14 @@ function MainBar({ data, projectId }: any) {
           No responses yet? No problem. <br></br> Share the link below and start
           collecting review.
           <div className="max-w-[400px] flex items-center justify-center rounded-[10px] bg-backgroundOne border-special border-backgroundTwo p-[0.5rem] truncate">
-            <p className="truncate">{`https://localhost:3000/reviewbox/${projectId}`}</p>
+            <p className="truncate">{`https://localhost:3000/feedback/simple/${projectId}`}</p>
             <button
               className="rounded-[4px] bg-backgroundTwo p-1"
               onClick={copyToClipboard}
             >
               <Copy size={16} />
             </button>
-          </div>   
+          </div>
         </div>
       )}
     </div>
