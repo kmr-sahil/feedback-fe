@@ -17,6 +17,7 @@ function DashboardPage() {
     setLoading(true);
     try {
       const storedProjectId = localStorage.getItem("projectId");
+      console.log(storedProjectId)
       setProject(storedProjectId);
       console.log(projectId);
       const res = await axios.get(
@@ -43,7 +44,7 @@ function DashboardPage() {
       <Navbar />
       <ChildLayout>
         <SideBar setProjectId={setProject} />
-        {!loading && (
+        {!loading && projectId && (
           <PageLayout>
             <MainBar data={reveiwData} projectId={projectId} />
           </PageLayout>
