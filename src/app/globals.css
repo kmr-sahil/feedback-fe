@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --body-color: 242, 242, 242;
+  --background-1: 245, 245, 245;
+  --background-2: 235,235,235;
+  --background-3: 224, 224, 224;
+  --accent-1: 22, 64, 214;
+  --accent-2: 224, 244, 255;
+  --accent-3: 173, 226, 255;
+  --text-1: 34,34,34;
+  --text-2: 118,118, 136;
+  --stroke: 4px;
+}
+
+.dark {
+  --body-color: 37,32,32;
+  --background-1: 49, 43, 43;
+  --background-2: 52, 52, 52;
+  --background-3: 77, 66, 66;
+  --accent-1: 22, 64, 214;
+  --accent-2: 224, 244, 255;
+  --accent-3: 173, 226, 255;
+  --text-1: 235, 235, 239;
+  --text-2: 159,159,173;
+  --stroke: 4px;
+}
+
+body {
+  color: rgb(var(--text-1));
+  background: rgb(var(--body-color));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+input:focus {
+  outline: none;
+}
