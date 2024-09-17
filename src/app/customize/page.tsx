@@ -11,6 +11,8 @@ import ChildLayout from "@/components/ChildLayout";
 import PageLayout from "@/components/PageLayout";
 import axios from "axios";
 import { toast } from "sonner";
+import { ArrowLeft } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
 
 interface AdjustInputs {
   isEmailReq: boolean;
@@ -29,6 +31,7 @@ interface ProjectDetails {
 }
 
 const CustomizePage = () => {
+  const router = useRouter();
   const [type, setType] = useState<string>("");
   const [projectDetails, setProjectDetails] = useState<
     ProjectDetails | undefined
@@ -58,6 +61,14 @@ const CustomizePage = () => {
   return (
     <ParentLayout>
       <Navbar />
+      {/* <div
+        onClick={() => router.back()}
+        className="cursor-pointer m-[1rem] w-[20%] mr-auto flex justify-start items-center gap-[0.5rem] p-[1rem] hover:bg-backgroundTwo rounded-[12px] text-[14px]"
+      >
+        {" "}
+        <ArrowLeft size={16} /> Back to Dashboard
+      </div> */}
+
       <ChildLayout>
         <Sidebar setType={setType} />
 

@@ -68,7 +68,7 @@ const Snippet: React.FC = () => {
   const reviewsToShow = reviewData.slice(0, 3); // Limit to 3 reviews
 
   return (
-    <div className="mt-[2rem] relative bg-backgroundOne border-special border-backgroundTwo rounded-[12px] p-[1rem] flex flex-col items-center justify-center gap-[1rem]">
+    <div className="relative bg-backgroundOne border-special border-backgroundTwo rounded-[12px] p-[1rem] flex flex-col items-center justify-center gap-[1rem]">
       {loading ? (
         <p>Loading...</p>
       ) : reviewsToShow.length > 0 ? (
@@ -76,7 +76,7 @@ const Snippet: React.FC = () => {
           {reviewsToShow.map((review, index) => (
             <div
               key={index}
-              className="p-[1rem] w-[30%] flex flex-col rounded-[8px] bg-backgroundThree"
+              className="p-[1rem] w-[32%] flex flex-col rounded-[8px] bg-backgroundThree"
             >
               <span className="text-textTwo">
                 {review.name ? review.name : "Anonymous"}

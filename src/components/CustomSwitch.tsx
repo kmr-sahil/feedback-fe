@@ -23,9 +23,9 @@ const CustomSwitch: React.FC<ICustomSwitchProps> = ({ label, checked, setChecked
         onClick={handleClick}  // Add onClick handler
       >
         <motion.div
-          initial={{ x: checked ? 0 : 24 }}
+          initial={{ x: checked ? 0 : 22 }}
           animate={{
-            x: checked ? 24 : 0,
+            x: checked ? 22 : 0,
           }}
           transition={{ duration: 0.3 }}
           className="h-[20px] w-[20px] block rounded-full bg-white shadow-md"
