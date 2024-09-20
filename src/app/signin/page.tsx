@@ -5,7 +5,7 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast, Toaster } from "sonner";
+import toast from "react-hot-toast";
 
 function SigninPage() {
   const router = useRouter();

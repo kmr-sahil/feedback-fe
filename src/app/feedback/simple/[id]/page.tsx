@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import StartInput from "./components/starInput";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface IDetailsToSend {
   projectId: string;

@@ -1,8 +1,9 @@
+"use client"
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { ShareNetwork } from "@phosphor-icons/react";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 // Extend Day.js with the relativeTime plugin
 dayjs.extend(relativeTime);

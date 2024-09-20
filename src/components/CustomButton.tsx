@@ -1,3 +1,4 @@
+"use client"
 import { CircleNotch, Spinner } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import React from "react";

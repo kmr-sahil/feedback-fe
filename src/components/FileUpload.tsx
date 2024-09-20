@@ -1,6 +1,7 @@
+"use client"
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface FileUploadProps {
   setDetails: React.Dispatch<
