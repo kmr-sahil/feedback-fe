@@ -30,6 +30,10 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
   };
 
   useEffect(() => {
+    setActiveOption(defaultOption);
+  }, [defaultOption]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         selectRef.current &&
@@ -46,7 +50,7 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
     <div className="relative" ref={selectRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-[100%] flex justify-between items-center px-4 py-2 bg-backgroundOne border-2 border-backgroundThree rounded-[12px]"
+        className="w-[100%] flex justify-between items-center px-4 py-2 bg-backgroundTwo border-2 border-backgroundThree rounded-[8px]"
       >
         {activeOption || "Select option"}
         <span className={`ml-2 ${open ? "rotate-180" : ""}`}>

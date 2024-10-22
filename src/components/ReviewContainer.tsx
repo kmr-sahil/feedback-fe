@@ -26,14 +26,14 @@ function ReviewContainer({ data }: any) {
   return (
     <div
       key={data.responseId}
-      className="w-[100%] flex flex-col bg-backgroundOne border-special border-backgroundTwo rounded-[12px] p-[1.5rem] gap-[1rem] text-textOne"
+      className="w-[100%] flex flex-col bg-backgroundOne border-2 border-backgroundThree rounded-[12px] p-[1.5rem] gap-[1rem] text-textOne"
     >
       <div className="flex gap-[0.5rem] items-center">
         <span className="w-2 h-2 rounded-full bg-textTwo"></span>
-        <p className="text-textTwo">{data?.type}</p>
+        <p className="text-textTwo text-[0.75rem]">{data?.type}</p>
       </div>
       <div className="flex flex-col gap-[0.25rem]">
-        <h3 className="font-medium text-textTwo">
+        <h3 className="font-semibold text-textTwo">
           {data.name ? data.name : "Anonymous"}
         </h3>
         <p className="text-[16px]">{data?.content}</p>
