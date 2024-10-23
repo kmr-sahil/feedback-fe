@@ -12,7 +12,10 @@ function SigninPage() {
   const [details, setDetails] = useState({
     email: "",
     password: "",
+    otp: 0
   });
+
+  const [isSignupDone, setIsSignupDone] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,11 +34,30 @@ function SigninPage() {
           withCredentials: true,
         }
       );
-      toast.success("Login Successful");
+      toast.success("OTP sent successfully");
       console.log(response.data);
-      router.push("/dashboard");
+      setIsSignupDone(true)
     } catch (error: any) {
       console.error("Signin error:", error);
+      toast.error(`Error: ${error.response.data.error}`);
+    }
+  };
+
+  const otpSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/v1/auth/check",
+        { email: details.email, otp: details.otp },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Login Successful");
+      localStorage.setItem("isLogin", "true");
+      router.push("/inbox")
+      console.log(response.data);
+    } catch (error: any) {
+      console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.error}`);
     }
   };
@@ -61,7 +83,15 @@ function SigninPage() {
         onChange={handleChange}
         label="Password"
       />
-      <CustomButton label="Signin" onClick={signin}></CustomButton>
+      <CustomInput
+        type="number"
+        name="otp"
+        placeholder="otp"
+        value={details.otp}
+        onChange={handleChange}
+        label="OTP"
+      />
+      <CustomButton label="Signin" onClick={isSignupDone ? otpSubmit : signin}></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
         New to FeedbackSpace ?{" "}
         <Link

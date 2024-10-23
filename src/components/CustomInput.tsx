@@ -6,7 +6,7 @@ interface CustomInput {
   type: string;
   name?: string;
   placeholder?: string;
-  value?: string;
+  value?: any;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
