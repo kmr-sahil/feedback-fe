@@ -18,7 +18,7 @@ export default function CompanyReviewPage() {
             <div className="text-3xl font-bold">4.3</div>
             <div className="flex">
               {[1, 2, 3, 4, 5].map((star) => (
-                <Star size={32} />
+                <Star key={star} size={32} /> // Added the key here
               ))}
             </div>
             <div className="text-sm text-gray-600">27,431 reviews</div>
@@ -66,7 +66,7 @@ export default function CompanyReviewPage() {
 
           <div className="space-y-6">
             {[1, 2, 3].map((review) => (
-              <div key={review} className="border p-4 rounded-lg">
+              <div key={review} className="border p-4 rounded-lg"> {/* Added the key here */}
                 <div className="flex items-center mb-2">
                   <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-2">
                     <span className="text-white font-semibold">JD</span>
@@ -81,7 +81,7 @@ export default function CompanyReviewPage() {
                 </div>
                 <div className="flex mb-2">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Star size={32} />
+                    <Star key={star} size={32} /> 
                   ))}
                 </div>
                 <p className="mb-2">

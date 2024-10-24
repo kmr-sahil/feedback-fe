@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+"use client"
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import ReviewContainer from "@/components/ReviewContainer";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -23,33 +23,37 @@ export default function InboxPage() {
   });
   const [loading, setLoading] = useState(true); // Load state
 
-  const fetchReviews = async (appendData = false) => {
-    if (!projectId) return; // Ensure projectId is set before making the request
-    setLoading(true); // Start loading
+  // Memoize fetchReviews using useCallback
+  const fetchReviews = useCallback(
+    async (appendData = false) => {
+      if (!projectId) return; // Ensure projectId is set before making the request
+      setLoading(true); // Start loading
 
-    try {
-      const res = await axios.get(
-        `http://localhost:8080/v1/responses?projectId=${projectId}&skip=${skip}&take=${take}&filter=${filter}&getStats=${isStats}`,
-        { withCredentials: true }
-      );
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/v1/responses?projectId=${projectId}&skip=${skip}&take=${take}&filter=${filter}&getStats=${isStats}`,
+          { withCredentials: true }
+        );
 
-      const { responses } = res.data;
+        const { responses } = res.data;
 
-      if (isStats) {
-        const { stats } = res.data;
-        setStats(stats);
+        if (isStats) {
+          const { stats } = res.data;
+          setStats(stats);
+        }
+        setReviewData((prev) =>
+          appendData ? [...prev, ...responses] : responses
+        );
+        setHasMore(responses.length === take);
+        setIsStats(false);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      } finally {
+        setLoading(false); // Stop loading after the request is done
       }
-      setReviewData((prev) =>
-        appendData ? [...prev, ...responses] : responses
-      );
-      setHasMore(responses.length === take);
-      setIsStats(false);
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-    } finally {
-      setLoading(false); // Stop loading after the request is done
-    }
-  };
+    },
+    [projectId, skip, take, filter, isStats] // Add dependencies
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -62,7 +66,7 @@ export default function InboxPage() {
 
   useEffect(() => {
     fetchReviews(skip !== 0);
-  }, [projectId, skip, filter]); // Refetch reviews when filter changes
+  }, [projectId, skip, filter, fetchReviews]); // Add fetchReviews as a dependency
 
   return (
     <DashboardLayout filter={filter} setFilter={setFilter}>

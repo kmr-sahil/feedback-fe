@@ -2,7 +2,7 @@
 import { Star } from "@phosphor-icons/react";
 import axios from "axios";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 // Define an interface for the feedback data
 interface FeedbackData {
@@ -19,7 +19,7 @@ const SureefyFeedback = () => {
   // Use the FeedbackData interface for typing the state
   const [data, setData] = useState<FeedbackData | null>(null); // Initialize with `null` to handle loading state
 
-  const fetchFeedback = async () => {
+  const fetchFeedback = useCallback(async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/v1/sureefy?responseId=${id}`
@@ -30,11 +30,11 @@ const SureefyFeedback = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]); // Memoize the function and ensure it updates when `id` changes
 
   useEffect(() => {
     fetchFeedback();
-  }, [id]); // Refetch when the id changes
+  }, [fetchFeedback]); // Use the memoized fetchFeedback as a dependency
 
   if (!data) {
     return <div></div>; // Handle loading state before data is fetched
