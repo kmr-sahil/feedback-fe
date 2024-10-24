@@ -12,7 +12,7 @@ function SigninPage() {
   const [details, setDetails] = useState({
     email: "",
     password: "",
-    otp: 0
+    otp: 0,
   });
 
   const [isSignupDone, setIsSignupDone] = useState(false);
@@ -36,7 +36,7 @@ function SigninPage() {
       );
       toast.success("OTP sent successfully");
       console.log(response.data);
-      setIsSignupDone(true)
+      setIsSignupDone(true);
     } catch (error: any) {
       console.error("Signin error:", error);
       toast.error(`Error: ${error.response.data.error}`);
@@ -54,7 +54,7 @@ function SigninPage() {
       );
       toast.success("Login Successful");
       localStorage.setItem("isLogin", "true");
-      router.push("/inbox")
+      router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
@@ -83,15 +83,20 @@ function SigninPage() {
         onChange={handleChange}
         label="Password"
       />
-      <CustomInput
-        type="number"
-        name="otp"
-        placeholder="otp"
-        value={details.otp}
-        onChange={handleChange}
-        label="OTP"
-      />
-      <CustomButton label="Signin" onClick={isSignupDone ? otpSubmit : signin}></CustomButton>
+      {isSignupDone && (
+        <CustomInput
+          type="number"
+          name="otp"
+          placeholder="otp"
+          value={details.otp}
+          onChange={handleChange}
+          label="OTP"
+        />
+      )}
+      <CustomButton
+        label={"Signin"}
+        onClick={isSignupDone ? otpSubmit : signin}
+      ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
         New to FeedbackSpace ?{" "}
         <Link
@@ -102,11 +107,11 @@ function SigninPage() {
         </Link>
       </p>
       <Link
-          className="text-[14px] text-center underline underline-offset-2 text-accentOne"
-          href={"/forgetpassword"}
-        >
-          Forgot Password
-        </Link>
+        className="text-[14px] text-center underline underline-offset-2 text-accentOne"
+        href={"/forgetpassword"}
+      >
+        Forgot Password
+      </Link>
     </div>
   );
 }

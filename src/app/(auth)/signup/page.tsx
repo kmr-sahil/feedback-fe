@@ -59,7 +59,7 @@ function SignupPage() {
       );
       toast.success("Login Successful");
       localStorage.setItem("isLogin", "true");
-      router.push("/inbox")
+      router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
@@ -96,14 +96,16 @@ function SignupPage() {
         onChange={handleChange}
         label="Password"
       />
-      <CustomInput
-        type="number"
-        name="otp"
-        placeholder="otp"
-        value={details.otp}
-        onChange={handleChange}
-        label="OTP"
-      />
+      {isSignupDone && (
+        <CustomInput
+          type="number"
+          name="otp"
+          placeholder="otp"
+          value={details.otp}
+          onChange={handleChange}
+          label="OTP"
+        />
+      )}
       <CustomButton
         label="Signin"
         onClick={isSignupDone ? otpSubmit : signup}
