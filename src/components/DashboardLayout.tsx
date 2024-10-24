@@ -5,6 +5,7 @@ import CustomSelect from "./CustomSelect";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation"; // Import usePathname to detect the current route
 import ThemeSwitch from "./ThemeSwitch";
+import CreateProject from "./CreateProject";
 
 export default function DashboardLayout({ children, filter, setFilter }: any) {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
   const [projects, setProjects] = useState<any[]>([]);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isCreate, setIsCreate] = useState(false);
 
   // Fetch projects from API or local storage
   useEffect(() => {
@@ -48,12 +50,14 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
   const onOptionSelect = (projectId: string) => {
     if (projectId === "0") {
       // Logic for creating a new project
+      setIsCreate(true)
     } else {
       const selectedProject = projects.find((p) => p.projectId === projectId);
       setActiveProject(
         selectedProject ? selectedProject.name : "Select Project"
       );
       localStorage.setItem("projectId", projectId);
+      window.location.reload();
     }
   };
 
@@ -83,10 +87,12 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
 
   return (
     <div className="h-screen flex text-textOne">
+      {isCreate && <CreateProject setIsCreate={setIsCreate}/>}
+
       {/* Sidebar */}
       <aside className="w-[16rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem]">
         <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
-          trustko.in
+          trusteek.com
         </h1>
         <div className="relative">
           <CustomSelect

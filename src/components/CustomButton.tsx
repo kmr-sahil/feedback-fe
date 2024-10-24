@@ -23,7 +23,7 @@ function CustomButton({
       disabled={disabled}
       className={`${type == "secondary" ? "bg-backgroundTwo" : "bg-accentOne"} ${
         type == "secondary" ? "border-2 border-backgroundThree" : ""
-      } text-[0.9rem] text-textOne px-[1rem] py-[0.5rem]  rounded-[8px] hover:opacity-90 focus:opacity-90 disabled:opacity-20 flex gap-[1rem] items-center`}
+      } text-[0.9rem] text-textOne px-[1rem] py-[0.5rem]  rounded-[8px] hover:opacity-90 focus:opacity-90 disabled:opacity-20 flex gap-[1rem] items-center justify-center`}
       onClick={onClick}
     >
       {label}{" "}
