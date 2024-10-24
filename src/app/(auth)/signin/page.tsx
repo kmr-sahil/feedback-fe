@@ -101,6 +101,12 @@ function SigninPage() {
           Signup
         </Link>
       </p>
+      <Link
+          className="text-[14px] text-center underline underline-offset-2 text-accentOne"
+          href={"/forgetpassword"}
+        >
+          Forgot Password
+        </Link>
     </div>
   );
 }
