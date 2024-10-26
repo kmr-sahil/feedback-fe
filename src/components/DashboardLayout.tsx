@@ -6,6 +6,8 @@ import axios from "axios";
 import { useRouter, usePathname } from "next/navigation"; // Import usePathname to detect the current route
 import ThemeSwitch from "./ThemeSwitch";
 import CreateProject from "./CreateProject";
+import CustomButton from "./CustomButton";
+import toast from "react-hot-toast";
 
 export default function DashboardLayout({ children, filter, setFilter }: any) {
   const router = useRouter();
@@ -50,7 +52,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
   const onOptionSelect = (projectId: string) => {
     if (projectId === "0") {
       // Logic for creating a new project
-      setIsCreate(true)
+      setIsCreate(true);
     } else {
       const selectedProject = projects.find((p) => p.projectId === projectId);
       setActiveProject(
@@ -81,16 +83,27 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
     }
   };
 
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `http://localhost:3000/feedback/${localStorage.getItem("projectId")}`
+      );
+      toast.success("Copied")
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
   if (loading) {
     return <div></div>;
   }
 
   return (
     <div className="h-screen flex text-textOne">
-      {isCreate && <CreateProject setIsCreate={setIsCreate}/>}
+      {isCreate && <CreateProject setIsCreate={setIsCreate} />}
 
       {/* Sidebar */}
-      <aside className="w-[16rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem]">
+      <aside className="w-[16rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
         <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
           trusteek.com
         </h1>
@@ -176,6 +189,16 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
             >
               Integrate
             </span>
+          </div>
+
+          <div className="w-full max-w-md mx-auto bg-backgroundTwo rounded-lg shadow-md overflow-hidden border-[2px] border-backgroundThree">
+            <div className="p-[1rem] flex flex-col h-full">
+              <h2 className="text-[0.9rem] text-start mb-4">
+                Start collecting reviews
+              </h2>
+              <div className="flex-grow"></div>
+              <CustomButton label={"Copy Link"} onClick={() => handleCopyLink()} type="secondary"/>
+            </div>
           </div>
         </nav>
       </aside>

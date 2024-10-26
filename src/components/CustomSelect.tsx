@@ -58,7 +58,7 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
         </span>
       </button>
       {open && (
-        <div className="absolute mt-[0.5rem] flex flex-col gap-[0.25rem] w-full bg-backgroundOne border-2 border-backgroundThree rounded-[12px] z-10 p-[0.25rem]">
+        <div className="absolute mt-[0.5rem] flex flex-col gap-[0.25rem] w-full max-h-[10rem] overflow-y-scroll bg-backgroundOne border-2 border-backgroundThree rounded-[12px] z-10 p-[0.25rem]">
           {options.map((option) => (
             <div
               key={option.value}

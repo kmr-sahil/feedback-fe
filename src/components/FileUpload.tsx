@@ -9,6 +9,9 @@ interface FileUploadProps {
       logoUrl: string;
       name: string;
       description: string;
+      website: string;
+      country: string;
+      category: string;
     }>
   >;
 }
