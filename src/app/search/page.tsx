@@ -25,28 +25,45 @@ interface Company {
 }
 
 export default function CompanySearch() {
-  const router = useRouter()
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const [companies, setCompanies] = useState<Company[]>([]);
 
+  const [offset, setOffset] = useState<number>(0);
+  const [limit] = useState<number>(10); // Limit can be constant
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
   // Fetch companies from API
-  const fetchCompanies = async () => {
+  const fetchCompanies = async (reset = false) => {
     try {
-      const res = await axios.get<{ message: string; response: Company[] }>(
-        "http://localhost:8080/v1/companies"
-      );
-      setCompanies(res.data.response);
+      const res = await axios.get("http://localhost:8080/v1/companies", {
+        params: {
+          searchTerm,
+          category,
+          location,
+          rating,
+          offset: reset ? 0 : offset,
+          limit,
+        },
+      });
+
+      const newCompanies = res.data.response;
+      setCompanies(reset ? newCompanies : [...companies, ...newCompanies]);
+
+      // Update offset and hasMore state
+      setOffset(reset ? newCompanies.length : offset + newCompanies.length);
+      setHasMore(newCompanies.length >= limit);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   useEffect(() => {
-    fetchCompanies();
-  }, []);
+    fetchCompanies(true); // Reset data on filter change
+  }, [searchTerm, category, location, rating]);
 
   const filteredCompanies = companies.filter((company) => {
     return (
@@ -60,7 +77,10 @@ export default function CompanySearch() {
 
   return (
     <div className="container max-w-[60rem] mx-auto p-4 font-sans">
-      <div className="mb-8 space-y-4">
+      <div className="mb-8 space-y-4 bg-[#379777] px-[2rem] pb-[2rem] rounded-[8px] text-[#45474B]">
+        <h1 className="text-end text-xl font-bold text-[#F4CE14] pt-[1rem]">
+          TrustFlag.in
+        </h1>
         <input
           type="text"
           placeholder="Search for a company..."
@@ -88,7 +108,7 @@ export default function CompanySearch() {
             className="p-2 border border-gray-300 rounded"
           />
           <div className="flex items-center">
-            <span className="mr-2">Rating:</span>
+            <span className="mr-2 text-[#F5F7F8]">Rating:</span>
             <div className="flex">
               {[1, 2, 3, 4, 5].map((value) => (
                 <button
@@ -101,7 +121,9 @@ export default function CompanySearch() {
                   } ${value === 1 ? "rounded-l" : ""} ${
                     value === 5 ? "rounded-r" : ""
                   }`}
-                  aria-label={`${value} star${value !== 1 ? "s" : ""} and above`}
+                  aria-label={`${value} star${
+                    value !== 1 ? "s" : ""
+                  } and above`}
                 >
                   {value}
                 </button>
@@ -113,9 +135,9 @@ export default function CompanySearch() {
       <div className="space-y-4">
         {filteredCompanies.map((company) => (
           <div
-          onClick={() => router.push(`review/${company.website}`)}
             key={company.projectId}
-            className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm"
+            onClick={() => router.push(`review/${company.website}`)}
+            className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}
@@ -140,7 +162,7 @@ export default function CompanySearch() {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <span className="ml-1 font-semibold">
-                  { company.avgRating ? company.avgRating.toFixed(1) : 0}
+                  {company.avgRating ? company.avgRating.toFixed(1) : 0}
                 </span>
               </div>
               <a
@@ -154,6 +176,15 @@ export default function CompanySearch() {
             </div>
           </div>
         ))}
+
+        {hasMore && (
+          <button
+            onClick={() => fetchCompanies(false)} // Load more data
+            className="w-full p-2 mt-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Load More
+          </button>
+        )}
       </div>
     </div>
   );
