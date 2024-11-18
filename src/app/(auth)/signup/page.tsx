@@ -7,12 +7,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-function SigninPage() {
+function SignupPage() {
   const router = useRouter();
   const [details, setDetails] = useState({
+    name: "",
     email: "",
     password: "",
+    otp: 0,
   });
+
+  const [isSignupDone, setIsSignupDone] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,20 +26,43 @@ function SigninPage() {
     }));
   };
 
-  const signin = async () => {
+  const signup = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/signin",
-        details,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
+        {
+          name: details.name,
+          email: details.email,
+          password: details.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("OTP sent Successful");
+      console.log(response.data);
+      setIsSignupDone(true);
+    } catch (error: any) {
+      console.error("Signup error:", error);
+      toast.error(`Error: ${error.response.data.error}`);
+    }
+  };
+
+  const otpSubmit = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
+        { email: details.email, otp: details.otp },
         {
           withCredentials: true,
         }
       );
       toast.success("Login Successful");
+      localStorage.setItem("isLogin", "true");
+      router.push("/inbox");
       console.log(response.data);
-      router.push("/dashboard");
     } catch (error: any) {
-      console.error("Signin error:", error);
+      console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.error}`);
     }
   };
@@ -43,8 +70,16 @@ function SigninPage() {
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">
-        Welcome Back
+        Let's onboard you
       </h3>
+      <CustomInput
+        type="text"
+        name="name"
+        placeholder="tyler durden"
+        value={details.name}
+        onChange={handleChange}
+        label="Name"
+      ></CustomInput>
       <CustomInput
         type="email"
         name="email"
@@ -61,12 +96,25 @@ function SigninPage() {
         onChange={handleChange}
         label="Password"
       />
-      <CustomButton label="Signin" onClick={signin}></CustomButton>
+      {isSignupDone && (
+        <CustomInput
+          type="number"
+          name="otp"
+          placeholder="otp"
+          value={details.otp}
+          onChange={handleChange}
+          label="OTP"
+        />
+      )}
+      <CustomButton
+        label="Signin"
+        onClick={isSignupDone ? otpSubmit : signup}
+      ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
-        New to FeedbackSpace ?{" "}
+        Already user here ?{" "}
         <Link
           className="underline underline-offset-2 text-accentOne"
-          href={"/signup"}
+          href={"/signin"}
         >
           Signup
         </Link>
@@ -75,4 +123,4 @@ function SigninPage() {
   );
 }
 
-export default SigninPage;
+export default SignupPage;

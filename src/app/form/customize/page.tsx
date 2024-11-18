@@ -45,7 +45,7 @@ const Customize: React.FC = () => {
 
   const getProjectDetail = async (projectId: string) => {
     try {
-      const response = await axios.get(`http://localhost:8080/v1/project`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project`, {
         params: { projectId },
       });
       const details = response.data;
@@ -63,7 +63,7 @@ const Customize: React.FC = () => {
     try {
       const projectId = localStorage.getItem("projectId");
       await axios.put(
-        `http://localhost:8080/v1/project`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/project`,
         { projectId: projectId, adjustForm: adjustInputs },
         { withCredentials: true }
       );

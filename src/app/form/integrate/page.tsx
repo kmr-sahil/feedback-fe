@@ -19,7 +19,7 @@ const IntegratePage: React.FC = () => {
       const storedProjectId = localStorage.getItem("projectId");
       setProject(storedProjectId);
       const res = await axios.get(
-        `http://localhost:8080/v1/responses?projectId=${storedProjectId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${storedProjectId}`,
         {
           withCredentials: true,
         }
