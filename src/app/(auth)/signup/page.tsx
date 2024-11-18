@@ -29,7 +29,7 @@ function SignupPage() {
   const signup = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/signup",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
         {
           name: details.name,
           email: details.email,
@@ -51,7 +51,7 @@ function SignupPage() {
   const otpSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/check",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
         { email: details.email, otp: details.otp },
         {
           withCredentials: true,

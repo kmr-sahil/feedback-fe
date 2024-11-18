@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -55,9 +55,9 @@ function ReviewContainer({ data }: any) {
             <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-backgroundTwo rounded-[8px] p-[0.5rem]">
               <span
                 className="hover:bg-backgroundThree rounded-[6px] text-[14px] w-[8rem] p-[0.5rem]"
-                onClick={() => 
-                  copyClipboard(`<iframe src="http://localhost:3000/${data.responseId}" width="100%" frameborder="0" height="400px" scrolling="no" title="W3Schools Free Online Web Tutorials">
-</iframe>`) 
+                onClick={() =>
+                  copyClipboard(`<iframe src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/${data.responseId}" width="100%" frameborder="0" height="400px" scrolling="no" title="W3Schools Free Online Web Tutorials">
+</iframe>`)
                 }
               >
                 Get embed link

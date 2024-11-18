@@ -67,9 +67,12 @@ export default function CompanyReviewPage() {
 
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:8080/v1/company/review`, {
-        params: { website, rating: ratingFilter || "", page },
-      });
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/company/review`,
+        {
+          params: { website, rating: ratingFilter || "", page },
+        }
+      );
       const newReviews = res.data.response[0]?.responses || [];
       if (append) {
         setReviews((prev) => [...prev, ...newReviews]); // Append to existing reviews
@@ -146,6 +149,7 @@ export default function CompanyReviewPage() {
                     {[...Array(5)].map((_, i) =>
                       i < (companyData.avgRating || 0) ? (
                         <svg
+                        key={i}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-8 w-8 text-yellow-400"
                           viewBox="0 0 20 20"
@@ -211,7 +215,7 @@ export default function CompanyReviewPage() {
             <div className="w-full md:w-3/4">
               <div className="mb-8">
                 <a
-                  href={`http://localhost:3000/feedback/${companyData.projectId}`}
+                  href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${companyData.projectId}`}
                   target="_blank"
                   className="bg-[#379777] text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
                 >
@@ -247,6 +251,7 @@ export default function CompanyReviewPage() {
                       {[...Array(5)].map((_, i) =>
                         i < (companyData.avgRating || 0) ? (
                           <svg
+                            key={i}
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8 text-[#379777]"
                             viewBox="0 0 20 20"

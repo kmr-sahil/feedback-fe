@@ -65,7 +65,7 @@ const categoryOptions = [
   const onProjectCreate = async () => {
     try {
       console.log(details);
-      await axios.post("http://localhost:8080/v1/project", details, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project`, details, {
         withCredentials: true,
       });
       //localStorage.clear();

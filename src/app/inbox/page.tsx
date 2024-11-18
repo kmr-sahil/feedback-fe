@@ -31,7 +31,7 @@ export default function InboxPage() {
 
       try {
         const res = await axios.get(
-          `http://localhost:8080/v1/responses?projectId=${projectId}&skip=${skip}&take=${take}&filter=${filter}&getStats=${isStats}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${projectId}&skip=${skip}&take=${take}&filter=${filter}&getStats=${isStats}`,
           { withCredentials: true }
         );
 

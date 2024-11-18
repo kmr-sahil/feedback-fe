@@ -22,7 +22,7 @@ const SureefyFeedback = () => {
   const fetchFeedback = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/v1/sureefy?responseId=${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sureefy?responseId=${id}`
       );
       console.log(response.data.response);
 

@@ -56,7 +56,7 @@ function SimpleFormPage() {
 
   const getProjectDetail = async (projectId: string) => {
     try {
-      const response = await axios.get(`http://localhost:8080/v1/project`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project`, {
         params: { projectId },
       });
       const details = response.data;
@@ -146,7 +146,7 @@ function SimpleFormPage() {
       }
 
       const response = await axios.post(
-        "http://localhost:8080/v1/responses",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses`,
         submitData,
         {
           withCredentials: true,

@@ -29,7 +29,7 @@ function ForgetPasswordPage() {
   const emailSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/forgotpass",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/forgotpass`,
         { email: details.email },
         {
           withCredentials: true,
@@ -47,7 +47,7 @@ function ForgetPasswordPage() {
   const otpSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/resetpass",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resetpass`,
         { email: details.email, otp: details.otp, newPassword: details.newpassword },
         {
           withCredentials: true,

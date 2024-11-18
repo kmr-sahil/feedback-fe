@@ -31,7 +31,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setDetails }) => {
     try {
       console.log(file);
       const response = await axios.post(
-        "http://localhost:8080/v1/s3/signed_url",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/s3/signed_url`,
         {
           content_type: file.type,
         }

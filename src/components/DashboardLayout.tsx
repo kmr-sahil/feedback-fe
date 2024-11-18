@@ -24,7 +24,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
       try {
         const projectId = localStorage.getItem("projectId") || null;
 
-        const response = await axios.get("http://localhost:8080/v1/projects", {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`, {
           withCredentials: true,
         });
 
@@ -86,7 +86,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(
-        `http://localhost:3000/feedback/${localStorage.getItem("projectId")}`
+        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${localStorage.getItem("projectId")}`
       );
       toast.success("Copied")
     } catch (err) {

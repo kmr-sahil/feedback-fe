@@ -39,7 +39,7 @@ export default function CompanySearch() {
   // Fetch companies from API
   const fetchCompanies = async (reset = false) => {
     try {
-      const res = await axios.get("http://localhost:8080/v1/companies", {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`, {
         params: {
           searchTerm,
           category,

@@ -28,7 +28,7 @@ function SigninPage() {
   const signin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/signin",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signin`,
         details,
         {
           withCredentials: true,
@@ -46,7 +46,7 @@ function SigninPage() {
   const otpSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/v1/auth/check",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
         { email: details.email, otp: details.otp },
         {
           withCredentials: true,
