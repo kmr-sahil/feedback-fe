@@ -1,6 +1,7 @@
+"use client"
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 
 interface FileUploadProps {
   setDetails: React.Dispatch<
@@ -8,6 +9,9 @@ interface FileUploadProps {
       logoUrl: string;
       name: string;
       description: string;
+      website: string;
+      country: string;
+      category: string;
     }>
   >;
 }
@@ -27,7 +31,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setDetails }) => {
     try {
       console.log(file);
       const response = await axios.post(
-        "http://localhost:8080/v1/s3/signed_url",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/s3/signed_url`,
         {
           content_type: file.type,
         }

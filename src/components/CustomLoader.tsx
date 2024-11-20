@@ -1,12 +1,13 @@
+"use client"
 import React from "react";
 
 function CustomLoader() {
   return (
-    <div className="bg-[#FFF7FC] p-[4] rounded-[8px]">
+    <div className=" p-[4] rounded-[8px]">
       <div role="status">
         <svg
           aria-hidden="true"
-          className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

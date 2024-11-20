@@ -3,7 +3,7 @@ import CustomButton from "@/components/CustomButton";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import StartInput from "./components/starInput";
+import StartInput from "./starInput";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
 
@@ -99,7 +99,7 @@ function SimpleFormPage() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const projectId = pathname.split("/")[3];
+    const projectId = pathname.split("/")[2];
     setDetails((prev) => ({ ...prev, projectId }));
     getProjectDetail(projectId);
   }, [pathname]);

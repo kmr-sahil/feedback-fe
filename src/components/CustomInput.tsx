@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 
 interface CustomInput {
@@ -5,7 +6,7 @@ interface CustomInput {
   type: string;
   name?: string;
   placeholder?: string;
-  value?: string;
+  value?: any;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -18,8 +19,8 @@ function CustomInput({
   onChange,
 }: CustomInput) {
   return (
-    <div className="flex flex-col gap-[0.5rem] text-textOne">
-      <label className="font-medium text-textTwo">{label}</label>
+    <div className="flex flex-col gap-[0.5rem] text-textOne text-[1rem]">
+      {label && <label className="font-medium text-textTwo">{label}</label>}
       <input
         type={type}
         name={name}
