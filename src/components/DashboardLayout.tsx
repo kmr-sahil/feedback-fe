@@ -171,8 +171,16 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
 
           <div className="flex flex-col">
             <h2 className="text-[0.85rem] font-semibold  mt-[2rem] text-textTwo">
-              Form
+              Collect and Display
             </h2>
+            <span
+              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+                pathname === "/form/widget" ? "bg-backgroundTwo" : ""
+              }`}
+              onClick={() => router.push("/form/widget")}
+            >
+              Widget
+            </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 pathname === "/form/customize" ? "bg-backgroundTwo" : ""
