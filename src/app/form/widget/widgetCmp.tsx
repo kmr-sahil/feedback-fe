@@ -25,12 +25,11 @@ interface ProjectDetails {
 }
 
 function WidgetComponent({
-  projectId,
-  onClose,
+  projectId
 }: {
   projectId: string;
-  onClose: () => void;
 }) {
+  const [toggle, setToggle] = useState(false);
   const [rating, setRating] = useState(0);
   const [step, setStep] = useState(1);
   const [errorMessages, setErrorMessages] = useState({
@@ -263,7 +262,7 @@ function WidgetComponent({
               🙏 Thank you for your feedback!
             </p>
             <button
-              onClick={onClose}
+              onClick={() => setToggle(false)}
               className=" bg-[#379979] text-[0.8rem] border-[2px] border-[#31876a] text-white px-[1rem] py-[0.25rem] rounded-[6px] hover:bg-[#2f8166] transition-colors"
             >
               Close
@@ -276,32 +275,38 @@ function WidgetComponent({
   };
 
   return (
-    <div className="max-w-[20rem] mx-auto p-3 bg-zinc-50 rounded-[14px] shadow-sm relative border-[2px] border-zinc-200">
-      {step < 4 && (
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-400 hover:text-gray-700"
-          aria-label="Close"
-        >
-          <X size={16} />
-        </button>
-      )}
-      {step > 1 && step < 4 && (
-        <button
-          onClick={handleBack}
-          className="absolute top-2 left-2 text-gray-400 hover:text-gray-700"
-          aria-label="Go back"
-        >
-          <ArrowLeft size={16} />
-        </button>
-      )}
-      {renderStepContent()}
-      <p className="mt-[0.35rem] text-[0.5rem] text-zinc-300 text-center">
-        Widget by{" "}
-        <a href="https://trustflag.in" className="text-[#399d7c95] underline">
-          TrustFlag.in
-        </a>
-      </p>
+    <div className="relative w-min">
+      <button className="px-[1rem] py-[0.5rem] bg-zinc-200 text-zinc-700 rounded-[8px] whitespace-nowrap" onClick={() => setToggle(true)}>
+        Give us Feedback
+      </button>
+
+      {toggle && <div className="absolute z-50 left-0 top-12 min-w-[18rem] mx-auto p-3 bg-zinc-50 rounded-[14px] shadow-sm border-[2px] border-zinc-200">
+        {step < 4 && (
+          <button
+            onClick={() => setToggle(false)}
+            className="absolute top-2 right-2 text-gray-400 hover:text-gray-700"
+            aria-label="Close"
+          >
+            <X size={16} />
+          </button>
+        )}
+        {step > 1 && step < 4 && (
+          <button
+            onClick={handleBack}
+            className="absolute top-2 left-2 text-gray-400 hover:text-gray-700"
+            aria-label="Go back"
+          >
+            <ArrowLeft size={16} />
+          </button>
+        )}
+        {renderStepContent()}
+        <p className="mt-[0.35rem] text-[0.5rem] text-zinc-300 text-center">
+          Widget by{" "}
+          <a href="https://trustflag.in" className="text-[#399d7c95] underline">
+            TrustFlag.in
+          </a>
+        </p>
+      </div>}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
-import CustomButton from "@/components/CustomButton";
+
 import axios from "axios";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import StartInput from "./starInput";
 import { AnimatePresence, motion } from "framer-motion";
@@ -30,9 +30,11 @@ interface ProjectDetails {
   name: string;
   projectId: string;
   userId: string;
+  website: string;
 }
 
 function SimpleFormPage() {
+  const router = useRouter();
   const [rating, setRating] = useState(0);
   const [showInputs, setShowInputs] = useState(false);
   const [submitted, setSubmitted] = useState(false); // New state for submission status
@@ -56,9 +58,12 @@ function SimpleFormPage() {
 
   const getProjectDetail = async (projectId: string) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project`, {
-        params: { projectId },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/project`,
+        {
+          params: { projectId },
+        }
+      );
       const details = response.data;
       console.log(details);
       setProjectDetails(details.project);
@@ -118,7 +123,7 @@ function SimpleFormPage() {
 
   const onSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const submitData = {
         ...details,
         star: rating,
@@ -158,20 +163,21 @@ function SimpleFormPage() {
     } catch (error) {
       console.log(error);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-zinc-100 p-[1rem]">
       <div className="relative max-w-[30rem] flex-grow flex flex-col justify-center items-center mt-[2rem]">
         <motion.img
+        onClick={() => router.push(`https://${projectDetails?.website}`)}
           transition={{ duration: 0.2, type: "spring" }}
           src={projectDetails?.logoUrl}
           className="absolute z-30 top-[-3rem] w-[6rem] h-[6rem] border-special border-zinc-200 rounded-[8px] object-cover"
         />
         <motion.div
           transition={{ duration: 0.2, type: "spring" }}
-          className={`w-[100%] p-[1.5rem] bg-gradient-to-r from-zinc-50 to-zinc-100 rounded-[1rem] text-zinc-700 flex flex-col gap-6 border-[2px] border-zinc-200 ${
+          className={`w-[100%] p-[1rem] sm:p-[1.5rem] bg-gradient-to-r from-zinc-50 to-zinc-100 rounded-[1rem] text-zinc-700 flex flex-col gap-[1rem] sm:gap-[1.5rem] border-[2px] border-zinc-200 ${
             showInputs ? "overflow-visible" : "overflow-hidden"
           }`}
           layout
@@ -180,9 +186,10 @@ function SimpleFormPage() {
             <motion.div
               className={`h-[5rem] ${
                 showInputs ? "scale-75" : "scale-100"
-              } mt-[3rem]`}
+              } mt-[2rem]`}
               transition={{ duration: 0.5 }}
             >
+              {/* <a href={projectDetails?.website} className="font-semibold text-[1rem] text-center">{projectDetails?.name}</a> */}
               <StartInput rating={rating} setRating={setRating} />
             </motion.div>
           )}
@@ -209,34 +216,7 @@ function SimpleFormPage() {
                     transition={{ duration: 0.5, type: "spring" }}
                   >
                     {/* Input Fields */}
-                    <div className="flex flex-col justify-start items-start gap-[0.5rem]">
-                      <label className="text-zinc-400 font-medium text-[0.95rem]">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        value={details.name}
-                        onChange={handleChange}
-                        placeholder="Enter your name"
-                        className="w-full bg-slate-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-zinc-400"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-start items-start gap-[0.5rem]">
-                      <label className="text-zinc-400 font-medium text-[0.95rem]">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        value={details.email}
-                        onChange={handleChange}
-                        placeholder={highlighter.email}
-                        className="w-full bg-slate-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-zinc-400"
-                      />
-                    </div>
-
-                    <div className="flex flex-col justify-start items-start gap-[0.5rem]">
+                    <div className="flex flex-col justify-start items-start gap-[0.35rem]">
                       <label className="text-zinc-400 font-medium text-[0.95rem]">
                         Content
                       </label>
@@ -246,7 +226,33 @@ function SimpleFormPage() {
                         value={details.content}
                         onChange={handleChange}
                         placeholder={highlighter.message}
-                        className="w-full bg-slate-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 focus:border-zinc-400 focus:outline-none"
+                        className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 focus:border-[#37977793] focus:outline-none"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-start items-start gap-[0.35rem]">
+                      <label className="text-zinc-400 font-medium text-[0.95rem]">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={details.name}
+                        onChange={handleChange}
+                        placeholder="Enter your name"
+                        className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-[#37977793]"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-start items-start gap-[0.35rem]">
+                      <label className="text-zinc-400 font-medium text-[0.95rem]">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={details.email}
+                        onChange={handleChange}
+                        placeholder={highlighter.email}
+                        className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-[#37977793]"
                       />
                     </div>
                   </motion.div>
@@ -267,10 +273,19 @@ function SimpleFormPage() {
 
           {showInputs && !submitted && (
             <div className="ml-auto">
-              <CustomButton label="Submit" onClick={onSubmit} loading={loading} disabled={loading}/>
+              <button
+                onClick={onSubmit}
+                className="bg-[#379979] text-[0.9rem] border-[2px] border-[#31876a] text-white px-[1rem] py-[0.35rem] rounded-[6px] hover:bg-[#2f8166] transition-colors"
+              >Submit</button>
             </div>
           )}
         </motion.div>
+        <p className="mt-[0.35rem] text-[0.65rem] text-zinc-300 text-center">
+          Widget by{" "}
+          <a href="https://trustflag.in" className="text-[#399d7c95] underline">
+            TrustFlag.in
+          </a>
+        </p>
       </div>
     </div>
   );
