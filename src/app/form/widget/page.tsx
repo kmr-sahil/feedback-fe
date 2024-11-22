@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import DashboardLayout from "@/components/DashboardLayout";
+import WidgetComponent from "./widgetCmp";
 
 export default function WidgetSetupGuide() {
   const [copied, setCopied] = useState(false);
@@ -21,7 +22,7 @@ export default function WidgetSetupGuide() {
     const fetchWidgetCode = async () => {
       try {
         // Fetch the content of code.text from the public folder
-        const response = await fetch("/code.text");
+        const response = await fetch("/widget.text");
         if (!response.ok) {
           throw new Error("Failed to fetch widget code");
         }
@@ -44,6 +45,7 @@ export default function WidgetSetupGuide() {
 
   return (
     <DashboardLayout>
+      <WidgetComponent projectId={"1"} onClose={() => console.log("close")} />
       <div className="container mx-auto py-10">
         <h1 className="text-3xl font-bold mb-6">
           How to Implement the Feedback Widget
