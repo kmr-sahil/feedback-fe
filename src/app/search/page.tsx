@@ -4,6 +4,15 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import PublicNavbar from "@/components/PublicNavbar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { categoryOptions, countryOptions } from "@/lib/options";
 
 interface Company {
   projectId: string;
@@ -38,17 +47,26 @@ export default function CompanySearch() {
 
   // Fetch companies from API
   const fetchCompanies = async (reset = false) => {
+    if(category == "all"){
+      setCategory('')
+    } 
+    if(location == "all"){
+      setLocation('')
+    }
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`, {
-        params: {
-          searchTerm,
-          category,
-          location,
-          rating,
-          offset: reset ? 0 : offset,
-          limit,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`,
+        {
+          params: {
+            searchTerm,
+            category,
+            location,
+            rating,
+            offset: reset ? 0 : offset,
+            limit,
+          },
+        }
+      );
 
       const newCompanies = res.data.response;
       setCompanies(reset ? newCompanies : [...companies, ...newCompanies]);
@@ -77,36 +95,42 @@ export default function CompanySearch() {
 
   return (
     <div className="container max-w-[60rem] mx-auto p-4 font-sans">
-      <div className="mb-8 space-y-4 bg-[#379777] px-[2rem] pb-[2rem] rounded-[8px] text-[#45474B]">
-        <h1 className="text-end text-xl font-bold text-[#F4CE14] pt-[1rem]">
-          TrustFlag.in
-        </h1>
+      <PublicNavbar />
+      <div className="my-8 space-y-4 bg-[#379777] px-[2rem] py-[2rem] rounded-[12px] text-[#45474B]">
         <input
           type="text"
           placeholder="Search for a company..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded-[6px]"
         />
         <div className="flex flex-wrap gap-4">
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
-          >
-            <option value="">All Categories</option>
-            {/* Assuming categories are hardcoded */}
-            <option value="Tech">Tech</option>
-            <option value="Healthcare">Healthcare</option>
-            {/* Add more categories as needed */}
-          </select>
-          <input
-            type="text"
-            placeholder="Country"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
-          />
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger className="w-[180px] bg-white">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+              {categoryOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={location} onValueChange={setLocation}>
+            <SelectTrigger className=" w-[180px] bg-white">
+              <SelectValue placeholder="Select a country" />
+            </SelectTrigger>
+            <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+              {countryOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <div className="flex items-center">
             <span className="mr-2 text-[#F5F7F8]">Rating:</span>
             <div className="flex">

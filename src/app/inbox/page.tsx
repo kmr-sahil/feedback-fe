@@ -77,7 +77,7 @@ export default function InboxPage() {
         </div>
 
         <div className="w-[100%] flex flex-col gap-[1.25rem] justify-center items-center">
-          {loading ? (
+          {loading && reviewData.length == 0 ? (
             <CustomLoader /> // You can use a custom loader component
           ) : (
             <>
@@ -88,10 +88,10 @@ export default function InboxPage() {
                   ))}
                   {hasMore && (
                     <button
-                      className="bg-backgroundOne rounded-[12px] px-[1rem] py-[0.5rem] mb-[2rem]"
+                      className="bg-backgroundOne border-[2px] border-zinc-200 rounded-[8px] px-[1rem] py-[0.5rem] mb-[2rem] text-sm "
                       onClick={() => setSkip((prev) => prev + take)}
                     >
-                      Load more
+                      {loading ? "Loading..." : "Load more" }
                     </button>
                   )}
                 </>
