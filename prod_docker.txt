@@ -1,0 +1,42 @@
+# Install dependencies only when needed
+FROM node:latest AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Rebuild the source code only when needed
+FROM node:latest AS builder
+WORKDIR /app
+
+# Pass the build arguments (these will come from GitHub Actions or your build context)
+ARG NEXT_PUBLIC_FRONTEND_URL
+ARG NEXT_PUBLIC_BACKEND_URL
+
+# Set them as environment variables for build time
+ENV NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+
+COPY . . 
+COPY --from=deps /app/node_modules ./node_modules
+
+# Ensure the build picks up the environment variables
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM node:latest AS runner
+WORKDIR /app
+
+# Set environment variables for runtime
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/src/app/robots.txt ./public/robots.txt
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
