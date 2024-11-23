@@ -56,15 +56,26 @@ function ReviewContainer({ data }: any) {
               <span
                 className="hover:bg-backgroundThree rounded-[6px] text-[14px] w-[8rem] p-[0.5rem]"
                 onClick={() =>
-                  copyClipboard(`<iframe src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/${data.responseId}" width="100%" frameborder="0" height="400px" scrolling="no" title="W3Schools Free Online Web Tutorials">
+                  copyClipboard(`<script type="text/javascript" src="https://unpkg.com/iframe-resizer/js/iframeResizer.min.js"></script>
+<iframe
+  id="my-embed-widget"
+  src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/embed/${data.responseId}"
+  frameborder="0"
+  scrolling="no"
+  width="100%"
+  style="border: none; border-radius: 8px"
+></iframe>
+<script type="text/javascript">
+  iFrameResize({ log: false, checkOrigin: false }, "#my-embed-widget");
+</script>>
 </iframe>`)
                 }
               >
                 Get embed link
               </span>
-              <span className="hover:bg-backgroundThree rounded-[6px] text-[10px] w-[8rem] p-[0.5rem]">
+              {/* <span className="hover:bg-backgroundThree rounded-[6px] text-[10px] w-[8rem] p-[0.5rem]">
                 More coming soon..
-              </span>
+              </span> */}
             </div>
           )}
         </span>
