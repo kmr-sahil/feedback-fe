@@ -56,7 +56,8 @@ function ReviewContainer({ data }: any) {
               <span
                 className="hover:bg-backgroundThree rounded-[6px] text-[14px] w-[8rem] p-[0.5rem]"
                 onClick={() =>
-                  copyClipboard(`<script type="text/javascript" src="https://unpkg.com/iframe-resizer/js/iframeResizer.min.js"></script>
+                  copyClipboard(`
+<script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script>
 <iframe
   id="my-embed-widget"
   src="${process.env.NEXT_PUBLIC_FRONTEND_URL}/embed/${data.responseId}"
@@ -67,7 +68,7 @@ function ReviewContainer({ data }: any) {
 ></iframe>
 <script type="text/javascript">
   iFrameResize({ log: false, checkOrigin: false }, "#my-embed-widget");
-</script>>
+</script>
 </iframe>`)
                 }
               >

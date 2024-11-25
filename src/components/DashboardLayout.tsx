@@ -103,7 +103,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
       {isCreate && <CreateProject setIsCreate={setIsCreate} />}
 
       {/* Sidebar */}
-      <aside className="w-[16rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
+      <aside className="max-w-[20rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
         {/* <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
           <img src="/images/logo.svg" alt="" />
           TrustFlag.in
