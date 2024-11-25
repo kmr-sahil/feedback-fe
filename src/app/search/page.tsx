@@ -94,7 +94,7 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="container max-w-[60rem] mx-auto p-4 font-sans">
+    <div className="container max-w-[80rem] mx-auto p-4 font-sans">
       <PublicNavbar />
       <div className="my-8 space-y-4 bg-[#379777] px-[2rem] py-[2rem] rounded-[12px] text-[#45474B]">
         <input
@@ -161,7 +161,7 @@ export default function CompanySearch() {
           <div
             key={company.projectId}
             onClick={() => router.push(`review/${company.website}`)}
-            className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
+            className="cursor-pointer flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}

@@ -11,6 +11,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import CustomLoader from "@/components/CustomLoader";
+import PublicNavbar from "@/components/PublicNavbar";
 
 // Interfaces for type safety
 interface AdjustForm {
@@ -109,14 +110,12 @@ export default function CompanyReviewPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 flex flex-col gap-[1rem]">
+    <div className="container mx-auto max-w-[80rem] p-4 flex flex-col gap-[1rem]">
+      <PublicNavbar />
       {companyData && (
         <>
           {/* Company Info */}
-          <div className="bg-[#379777] p-[1rem] rounded-[16px]">
-            <h1 className="text-end text-xl font-bold text-[#F4CE14] pr-[1rem]">
-              TrustFlag.in
-            </h1>
+          <div className="bg-[#379777] p-[1rem] md:p-[2rem] rounded-[16px]">
 
             <div className="flex flex-col md:flex-row justify-between items-center text-[#F5F7F8]">
               <div className="flex items-center mb-4 md:mb-0">
