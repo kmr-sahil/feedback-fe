@@ -110,68 +110,70 @@ export default function CompanyReviewPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-[80rem] p-4 flex flex-col gap-[1rem]">
+    <div className="container mx-auto max-w-[80rem] p-[1rem] sm:p-[2rem] md:p-[4rem] flex flex-col gap-[1rem] relative">
       <PublicNavbar />
       {companyData && (
         <>
           {/* Company Info */}
-          <div className="bg-[#379777] p-[1rem] md:p-[2rem] rounded-[16px]">
+          <div className="bg-[#379777] p-[0.75rem] md:p-[2rem] rounded-[16px] mt-[5rem] sm:mt-[4rem] md:mt-[2rem]">
 
-            <div className="flex flex-col md:flex-row justify-between items-center text-[#F5F7F8]">
-              <div className="flex items-center mb-4 md:mb-0">
-                <div className="w-16 h-16 bg-blue-500 rounded-full mr-4 overflow-hidden">
+            <div className="flex sm:flex-row justify-between items-center text-[#F5F7F8]">
+              <div className="flex items-center gap-[0.5rem]  md:gap-[1rem]">
+                <div className="w-10 h-10 sm:w-16 sm:h-16 bg-blue-500 rounded-full overflow-hidden">
                   <img
                     src={companyData.logoUrl || ""}
                     alt={`${companyData.name} logo`}
-                    className="w-16 h-16 object-cover"
+                    className="w-10 h-10 sm:w-16 sm:h-16 object-cover"
                   />
                 </div>
                 <div>
                   <a
                     href={`https://${companyData.website}`}
                     target="_blank"
-                    className="text-3xl font-bold flex gap-[0.5rem]"
+                    className="text-[1rem] sm:text-3xl font-bold flex gap-[0.5rem]"
                   >
                     {companyData.name}{" "}
                     <span>
                       <ArrowSquareOut size={16} />
                     </span>
                   </a>
-                  <p className="">
+                  <p className="text-[0.75rem] sm:text-[1rem] font-light">
                     {companyData.country} • {companyData.category}
                   </p>
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="mr-4">
+                <div className="">
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) =>
                       i < (companyData.avgRating || 0) ? (
                         <svg
                         key={i}
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-8 text-yellow-400"
+                          className="w-6 sm:h-8 sm:w-8 text-yellow-400"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ) : (
+                        <span className="text-[21px] sm:text-[29px]">
                         <Star
                           key={i}
-                          size={26}
+                          //size={window.innerWidth >= 640 ? 28 : 21} // Dynamically set size
                           fill={
                             i < (companyData.avgRating || 0)
                               ? "#FFD700"
                               : "#ccc"
                           }
                         />
+                        </span>
                       )
                     )}
                   </div>
-                  <div className="text-3xl font-bold">
+                  <div className="text-end text-xl sm:text-3xl font-bold">
                     {companyData.avgRating || 0}{" "}
-                    <span className="text-sm font-extralight">
+                    <span className="text-xs sm:text-sm font-extralight">
                       {companyData.totalReviews} reviews
                     </span>
                   </div>
@@ -181,7 +183,7 @@ export default function CompanyReviewPage() {
           </div>
 
           {/* Filters and Reviews */}
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-8 p-[1rem]">
             <div className="w-full md:w-1/4">
               <h2 className="text-xl font-semibold mb-4">Filter Reviews</h2>
               <div className="space-y-2">
