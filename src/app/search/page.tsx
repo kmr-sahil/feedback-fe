@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categoryOptions, countryOptions } from "@/lib/options";
+import { ChevronDown, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Company {
   projectId: string;
@@ -35,6 +37,7 @@ interface Company {
 
 export default function CompanySearch() {
   const router = useRouter();
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [location, setLocation] = useState<string>("");
@@ -47,11 +50,11 @@ export default function CompanySearch() {
 
   // Fetch companies from API
   const fetchCompanies = async (reset = false) => {
-    if(category == "all"){
-      setCategory('')
-    } 
-    if(location == "all"){
-      setLocation('')
+    if (category == "all") {
+      setCategory("");
+    }
+    if (location == "all") {
+      setLocation("");
     }
     try {
       const res = await axios.get(
@@ -94,74 +97,96 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="container max-w-[80rem] mx-auto p-4 font-sans">
+    <div className="flex flex-col relative gap-[1rem] justify-center items-center">
       <PublicNavbar />
-      <div className="my-8 space-y-4 bg-[#379777] px-[2rem] py-[2rem] rounded-[12px] text-[#45474B]">
-        <input
-          type="text"
-          placeholder="Search for a company..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-[6px]"
-        />
-        <div className="flex flex-wrap gap-4">
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="w-[180px] bg-white">
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-              {categoryOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={location} onValueChange={setLocation}>
-            <SelectTrigger className=" w-[180px] bg-white">
-              <SelectValue placeholder="Select a country" />
-            </SelectTrigger>
-            <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-              {countryOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <div className="flex items-center">
-            <span className="mr-2 text-[#F5F7F8]">Rating:</span>
-            <div className="flex">
-              {[1, 2, 3, 4, 5].map((value) => (
-                <button
-                  key={value}
-                  onClick={() => setRating(value)}
-                  className={`px-3 py-1 border ${
-                    rating >= value
-                      ? "bg-yellow-400 border-yellow-500"
-                      : "bg-gray-100 border-gray-300"
-                  } ${value === 1 ? "rounded-l" : ""} ${
-                    value === 5 ? "rounded-r" : ""
-                  }`}
-                  aria-label={`${value} star${
-                    value !== 1 ? "s" : ""
-                  } and above`}
-                >
-                  {value}
-                </button>
-              ))}
+      <div className="w-full rounded-b-[3rem] md:rounded-b-[8rem] space-y-4 bg-[#379777] px-[1rem] pt-[12rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[15rem] md:pb-[3rem] text-[#45474B]">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search for a company..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className=" w-full p-3 md:p-4 border border-gray-300 rounded-[16px] text-[1rem] md:text-[1.2rem]"
+          ></input>
+          <Button
+            type="submit"
+            className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 bg-[#45474B] rounded-[0.5rem]"
+          >
+            <Search className="h-4 w-4" />
+            <span className="text-[1rem]">Search</span>
+          </Button>
+        </div>
+
+        {!showAdvanced && (
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full text-xs text-[#F5F7F8] underline flex justify-center items-center text-center"
+          >
+            Advanced options
+            <ChevronDown className="h-3 w-3 ml-1" />
+          </button>
+        )}
+        {showAdvanced && (
+          <div className=" flex flex-wrap gap-4">
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-[180px] bg-white">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categoryOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={location} onValueChange={setLocation}>
+              <SelectTrigger className=" w-[180px] bg-white">
+                <SelectValue placeholder="Select a country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {countryOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="flex items-center">
+              <span className="mr-2 text-[#F5F7F8]">Rating:</span>
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <button
+                    key={value}
+                    onClick={() => setRating(value)}
+                    className={`px-3 py-1 border ${
+                      rating >= value
+                        ? "bg-yellow-400 border-yellow-500"
+                        : "bg-gray-100 border-gray-300"
+                    } ${value === 1 ? "rounded-l" : ""} ${
+                      value === 5 ? "rounded-r" : ""
+                    }`}
+                    aria-label={`${value} star${
+                      value !== 1 ? "s" : ""
+                    } and above`}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-      <div className="space-y-4">
+
+      <div className="w-[100%] max-w-[70rem] mx-auto space-y-4 flex flex-col justify-center items-center px-[1rem]">
         {filteredCompanies.map((company) => (
           <div
             key={company.projectId}
             onClick={() => router.push(`review/${company.website}`)}
-            className="cursor-pointer flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
+            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}
@@ -204,7 +229,7 @@ export default function CompanySearch() {
         {hasMore && (
           <button
             onClick={() => fetchCompanies(false)} // Load more data
-            className="w-full p-2 mt-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-2 py-1 mt-4 bg-zinc-50 rounded border-[1px] border-zinc-200 hover:bg-zinc-100 text-[#45474B]"
           >
             Load More
           </button>
