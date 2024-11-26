@@ -16,9 +16,7 @@ export default function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Write a review", href: "/write-review" },
-    { name: "Blog", href: "/blog" },
-    { name: "Help", href: "/help" },
+    
     {
       name: "Solutions",
       href: "#",
@@ -37,10 +35,11 @@ export default function PublicNavbar() {
         { name: "Feature 3", href: "/feature-3" },
       ],
     },
+    { name: "Write a review", href: "/write-review" },
   ];
 
   return (
-    <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2">
+    <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-40">
       <div className="w-[90%] max-w-[1200px] bg-white rounded-full border shadow-sm">
         <div className="flex h-14 items-center justify-between px-4">
           <div className="flex items-center gap-2">

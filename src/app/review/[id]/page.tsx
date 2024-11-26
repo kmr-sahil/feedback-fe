@@ -11,7 +11,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import CustomLoader from "@/components/CustomLoader";
+import { Checkbox } from "@/components/ui/checkbox";
 import PublicNavbar from "@/components/PublicNavbar";
+import { Button } from "@/components/ui/button";
 
 // Interfaces for type safety
 interface AdjustForm {
@@ -110,21 +112,37 @@ export default function CompanyReviewPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-[80rem] p-[1rem] sm:p-[2rem] md:p-[4rem] flex flex-col gap-[1rem] relative">
+    <div className="container mx-auto max-w-[80rem] p-[1rem] sm:p-[2rem] md:p-[4rem] flex flex-col gap-[1rem] relative bg-zinc-50">
+      <div className="fixed z-50 bottom-6 right-4">
+        <Button
+          className="bg-[#379777] text-white hover:bg-[#379777]/90"
+          asChild
+        >
+          <a
+            href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/`}
+            target="_blank"
+          >
+            Write a Review
+          </a>
+        </Button>
+      </div>
       <PublicNavbar />
       {companyData && (
         <>
           {/* Company Info */}
           <div className="bg-[#379777] p-[0.75rem] md:p-[2rem] rounded-[16px] mt-[5rem] sm:mt-[4rem] md:mt-[2rem]">
-
             <div className="flex sm:flex-row justify-between items-center text-[#F5F7F8]">
               <div className="flex items-center gap-[0.5rem]  md:gap-[1rem]">
-                <div className="w-10 h-10 sm:w-16 sm:h-16 bg-blue-500 rounded-full overflow-hidden">
-                  <img
-                    src={companyData.logoUrl || ""}
-                    alt={`${companyData.name} logo`}
-                    className="w-10 h-10 sm:w-16 sm:h-16 object-cover"
-                  />
+                <div className="w-10 h-10 sm:w-16 sm:h-16 bg-zinc-100 rounded-full overflow-hidden flex items-center justify-center">
+                  {companyData.logoUrl ? (
+                    <img
+                      src={companyData.logoUrl || ""}
+                      alt={`${companyData.name} logo`}
+                      className="w-10 h-10 sm:w-16 sm:h-16 object-cover"
+                    />
+                  ) : (
+                    <span className="text-[1.1rem] font-bold text-[#45474B]">{companyData.name?.charAt(0)}</span>
+                  )}
                 </div>
                 <div>
                   <a
@@ -148,7 +166,7 @@ export default function CompanyReviewPage() {
                     {[...Array(5)].map((_, i) =>
                       i < (companyData.avgRating || 0) ? (
                         <svg
-                        key={i}
+                          key={i}
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-6 sm:h-8 sm:w-8 text-yellow-400"
                           viewBox="0 0 20 20"
@@ -158,15 +176,15 @@ export default function CompanyReviewPage() {
                         </svg>
                       ) : (
                         <span className="text-[21px] sm:text-[29px]">
-                        <Star
-                          key={i}
-                          //size={window.innerWidth >= 640 ? 28 : 21} // Dynamically set size
-                          fill={
-                            i < (companyData.avgRating || 0)
-                              ? "#FFD700"
-                              : "#ccc"
-                          }
-                        />
+                          <Star
+                            key={i}
+                            //size={window.innerWidth >= 640 ? 28 : 21} // Dynamically set size
+                            fill={
+                              i < (companyData.avgRating || 0)
+                                ? "#FFD700"
+                                : "#ccc"
+                            }
+                          />
                         </span>
                       )
                     )}
@@ -183,123 +201,118 @@ export default function CompanyReviewPage() {
           </div>
 
           {/* Filters and Reviews */}
-          <div className="flex flex-col md:flex-row gap-8 p-[1rem]">
-            <div className="w-full md:w-1/4">
+          <div className="flex flex-col md:flex-row gap-8 sm:p-[1rem] ">
+            <div className="w-full md:w-1/4 pl-[1rem]">
               <h2 className="text-xl font-semibold mb-4">Filter Reviews</h2>
               <div className="space-y-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="rating"
-                    value="all"
-                    className="mr-2"
-                    defaultChecked
-                    onChange={() => handleFilterChange(null)}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="all"
+                    //checked={selectedRatings.length === 0}
+                    //onCheckedChange={() => setSelectedRatings([])}
                   />
-                  All Ratings
-                </label>
-                {[5, 4, 3, 2, 1].map((rating) => (
-                  <label key={rating} className="flex items-center">
-                    <input
-                      type="radio"
-                      name="rating"
-                      value={rating}
-                      className="mr-2"
-                      onChange={() => handleFilterChange(rating)}
-                    />
-                    {rating} {rating === 1 ? "Star" : "Stars"}
+                  <label
+                    htmlFor="all"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    All Ratings
                   </label>
+                </div>
+                {[5, 4, 3, 2, 1].map((rating) => (
+                  <div key={rating} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`rating-${rating}`}
+                      //checked={selectedRatings.includes(rating)}
+                      onCheckedChange={() => handleFilterChange(rating)}
+                    />
+                    <label
+                      htmlFor={`rating-${rating}`}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {rating} {rating === 1 ? "Star" : "Stars"}
+                    </label>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="w-full md:w-3/4">
-              <div className="mb-8">
-                <a
-                  href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${companyData.projectId}`}
-                  target="_blank"
-                  className="bg-[#379777] text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-                >
-                  Write a Review
-                </a>
-              </div>
+            <div className="w-full md:w-3/4 relative">
+              <div className="relative h-[600px] overflow-y-auto pr-4 mb-16 bg-zinc-100 rounded-[16px] p-[1rem]">
+                <div className="space-y-4">
+                  {reviews.length == 0
+                    ? "No responses"
+                    : reviews.map((review) => (
+                        <div
+                          key={review.responseId}
+                          className="border p-4 rounded-lg bg-zinc-50"
+                        >
+                          <div className="flex items-center mb-2">
+                            <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-2 text-[#45474B]">
+                              <span className="text-white font-semibold">
+                                {review.name?.charAt(0) || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="flex items-center">
+                                <span className="font-semibold mr-2">
+                                  {review.name || "Anonymous"}
+                                </span>
+                                <CheckCircle
+                                  size={16}
+                                  className="text-[#379777]"
+                                />
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {review.email || "No email provided"}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex mb-2">
+                            {[...Array(5)].map((_, i) =>
+                              i < (review.star || 0) ? (
+                                <svg
+                                  key={i}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="w-6 sm:h-8 sm:w-8 text-yellow-400"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              ) : (
+                                <span className="text-[21px] sm:text-[29px]">
+                                  <Star
+                                    key={i}
+                                    //size={window.innerWidth >= 640 ? 28 : 21} // Dynamically set size
+                                    fill={
+                                      i < (review.star || 0)
+                                        ? "#FFD700"
+                                        : "#ccc"
+                                    }
+                                  />
+                                </span>
+                              )
+                            )}
+                          </div>
+                          <p className="mb-2">{review.content}</p>
+                          <div className="text-sm text-muted-foreground mb-2">
+                            Reviewed on{" "}
+                            {new Date(review.createdAt).toLocaleDateString()}
+                          </div>
+                        </div>
+                      ))}
+                </div>
 
-              <div className="space-y-6">
-                {reviews.map((review) => (
-                  <div
-                    key={review.responseId}
-                    className="border p-4 rounded-lg"
+                {reviews.length < (companyData.totalReviews || 0) && (
+                  <Button
+                    className="px-2 py-1 mt-4 bg-zinc-50 rounded border-[1px] border-zinc-200 hover:bg-zinc-100 text-[#45474B]"
+                    onClick={loadMoreReviews}
+                    disabled={loading}
                   >
-                    <div className="flex items-center mb-2">
-                      <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-2 text-[#45474B]">
-                        <span className="text-white font-semibold">
-                          {review.name?.charAt(0) || "N/A"}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="flex items-center">
-                          <span className="font-semibold mr-2">
-                            {review.name || "Anonymous"}
-                          </span>
-                          {/* <CheckCircle size={32} /> */}
-                        </div>
-                        <div className="text-sm ">
-                          {review.email || "No email provided"}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex mb-2">
-                      {[...Array(5)].map((_, i) =>
-                        i < (companyData.avgRating || 0) ? (
-                          <svg
-                            key={i}
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-8 w-8 text-[#379777]"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ) : (
-                          <Star
-                            key={i}
-                            size={26}
-                            fill={
-                              i < (companyData.avgRating || 0)
-                                ? "#FFD700"
-                                : "#ccc"
-                            }
-                          />
-                        )
-                      )}
-                    </div>
-                    <p className="mb-2">{review.content}</p>
-                    <div className="text-sm mb-2">
-                      Reviewed on{" "}
-                      {new Date(review.createdAt).toLocaleDateString()}
-                    </div>
-                    {/* <div className="flex space-x-4">
-                        <button className="flex items-center text-gray-600 hover:text-gray-800">
-                          <ShareFat size={32} />
-                          Share
-                        </button>
-                        <button className="flex items-center text-gray-600 hover:text-gray-800">
-                          <Flag size={32} />
-                          Report
-                        </button>
-                      </div> */}
-                  </div>
-                ))}
+                    {loading ? "Loading..." : "Load More"}
+                  </Button>
+                )}
               </div>
-
-              {reviews.length < (companyData.totalReviews || 0) && (
-                <button
-                  className="bg-zinc-300 px-4 py-2 rounded hover:bg-zinc-400 transition-colors mt-4"
-                  onClick={loadMoreReviews}
-                >
-                  {loading ? "Loading..." : "Load More"}
-                </button>
-              )}
             </div>
           </div>
         </>

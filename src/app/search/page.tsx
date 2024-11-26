@@ -97,7 +97,7 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="flex flex-col relative gap-[1rem] justify-center items-center">
+    <div className="flex flex-col relative gap-[1rem] justify-center items-center bg-zinc-50">
       <PublicNavbar />
       <div className="w-full rounded-b-[3rem] md:rounded-b-[8rem] space-y-4 bg-[#379777] px-[1rem] pt-[12rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[15rem] md:pb-[3rem] text-[#45474B]">
         <div className="relative">
@@ -186,7 +186,7 @@ export default function CompanySearch() {
           <div
             key={company.projectId}
             onClick={() => router.push(`review/${company.website}`)}
-            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
+            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B]"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}
