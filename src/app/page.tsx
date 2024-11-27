@@ -1,16 +1,55 @@
-"use server";
-import CustomButton from "@/components/CustomButton";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import PublicNavbar from "@/components/PublicNavbar";
+import Hero from "@/components/landing/Hero";
+import Highlight from "@/components/landing/Highlight";
+import Reason from "@/components/landing/Reason";
+import Features from "@/components/landing/Features";
+import Footer from "@/components/landing/Footer";
+import Balancer from "react-wrap-balancer";
 
 export default async function Home() {
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center text-textColor text-center gap-4">
-      <h2 className="text-[0.85rem] italic">
-        landing page on the way,<br></br> till then explore the product...
-      </h2>
-      <Link href={"/signin"}>
-        <CustomButton label={"Explore"} />
-      </Link>
+    <div className="w-full relative text-[#45474B]">
+      <PublicNavbar />
+      <Hero />
+
+      <Highlight />
+
+      <Reason />
+
+      <Features />
+
+      <div className="w-full flex flex-col gap-[4rem] px-[4rem] justify-center items-center py-[10rem]">
+        <img className="w-[5rem] rotate-12" src="/images/logo.svg" alt="" />
+
+        <Balancer>
+          <h1 className="max-w-[60rem] mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight md:leading-tight lg:leading-[5rem]">
+            Start building{" "}
+            <span className="bg-[#379777] pl-[1rem] pr-[1.5rem] rounded-[12px] text-[#fff] ">
+              Trust
+            </span>
+            , with your{" "}
+            <span className="bg-[#F4CE14] pl-[1rem] pr-[1.2rem] rounded-[12px] text-[#805f1c]">
+              customers
+            </span>
+            today.
+          </h1>
+        </Balancer>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+          <Button className="bg-[#45474B] hover:bg-[#45474B]/90 text-white rounded-[0.75rem] px-8 py-8 text-[1.5rem]">
+            Sign up for free
+          </Button>
+          <Button
+            variant="outline"
+            className="rounded-[0.75rem] px-8 py-8 text-[1.5rem]"
+          >
+            Talk to founders
+          </Button>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }
