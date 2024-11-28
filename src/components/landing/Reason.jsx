@@ -1,11 +1,15 @@
 import React from "react";
+import Image from "next/image";
 
 function Reason() {
   return (
-    <div className="bg-[#379777] text-white py-[7rem] px-4">
+    <div className="bg-[#379777] text-white py-[7rem] relative px-4 z-50">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-[4rem]">
-          <span className=" text-[#F4CE14]">3 reasons </span> to choose <span className="bg-[#313335] px-[1rem] py-[0.5rem] rounded-[12px] text-[#fff]">Trustflag</span>
+          <span className=" text-[#F4CE14]">3 reasons </span> to choose{" "}
+          <span className="bg-[#313335] px-[1rem] py-[0.5rem] rounded-[12px] text-[#fff]">
+            Trustflag
+          </span>
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -22,43 +26,14 @@ function Reason() {
                 need for customization or technical expertise.
               </p>
             </div>
-            <div className="mt-auto relative h-48">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                    <div className="w-6 h-6 bg-white rounded-full" />
-                  </div>
-                  <div className="absolute top-[-80px] left-[-100px] space-y-2">
-                    {[
-                      "Product guides",
-                      "API docs",
-                      "Change-logs",
-                      "Blogs",
-                      "Static pages",
-                    ].map((text, index) => (
-                      <div
-                        key={text}
-                        className={`
-                      px-4 py-2 rounded-full text-sm font-medium
-                      ${
-                        index === 0
-                          ? "bg-blue-100 text-blue-700"
-                          : index === 1
-                          ? "bg-purple-100 text-purple-700"
-                          : index === 2
-                          ? "bg-yellow-100 text-yellow-700"
-                          : index === 3
-                          ? "bg-green-100 text-green-700"
-                          : "bg-cyan-100 text-cyan-700"
-                      }
-                    `}
-                      >
-                        {text}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="mt-auto relative">
+              <Image
+                src="/images/r1.png"
+                alt="img"
+                width={350}
+                height={200}
+                className="absolute bottom-0 rounded-lg "
+              />
             </div>
           </div>
 
@@ -75,28 +50,14 @@ function Reason() {
                 business in your industry.{" "}
               </p>
             </div>
-            <div className="mt-auto relative h-48">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  <div className="flex justify-center gap-20 mb-4">
-                    <div className="px-4 py-2 rounded-full bg-blue-400 text-white">
-                      Blog
-                    </div>
-                    <div className="px-4 py-2 rounded-full bg-purple-400 text-white">
-                      Doc
-                    </div>
-                  </div>
-                  <div className="w-12 h-12 bg-white rounded-full mx-auto mb-4" />
-                  <div className="flex justify-center gap-4">
-                    {[...Array(7)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="w-6 h-6 bg-gray-700 rounded-full"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="mt-auto relative">
+              <Image
+                src="/images/r2.png"
+                alt="img"
+                width={350}
+                height={200}
+                className="absolute bottom-0 rounded-lg "
+              />
             </div>
           </div>
 
@@ -113,20 +74,14 @@ function Reason() {
                 informed decisions.{" "}
               </p>
             </div>
-            <div className="mt-auto relative h-48">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex items-center gap-8">
-                  <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <span className="text-[1.5rem] text-green-400">$</span>
-                  </div>
-                  <div className="px-4 py-2 rounded-full bg-green-600 text-white">
-                    Devs
-                  </div>
-                  <div className="w-16 h-16 rounded-lg bg-purple-500 flex items-center justify-center">
-                    <span className="text-[1.5rem] text-white">⌛</span>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-auto relative">
+              <Image
+                src="/images/r3.png"
+                alt="img"
+                width={350}
+                height={200}
+                className="absolute bottom-0 rounded-lg "
+              />
             </div>
           </div>
         </div>

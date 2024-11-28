@@ -112,7 +112,7 @@ export default function CompanyReviewPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-[80rem] p-[1rem] sm:p-[2rem] md:p-[4rem] flex flex-col gap-[1rem] relative bg-zinc-50">
+    <div className="container mx-auto max-w-[80rem] p-[1rem] sm:p-[2rem] md:p-[4rem] flex flex-col gap-[1rem] relative ">
       <div className="fixed z-50 bottom-6 right-4">
         <Button
           className="bg-[#379777] text-white hover:bg-[#379777]/90"
@@ -238,7 +238,7 @@ export default function CompanyReviewPage() {
             </div>
 
             <div className="w-full md:w-3/4 relative">
-              <div className="relative h-[600px] overflow-y-auto pr-4 mb-16 bg-zinc-100 rounded-[16px] p-[1rem]">
+              <div className="relative h-[600px] overflow-y-auto pr-4 mb-16 rounded-[16px] p-[1rem]">
                 <div className="space-y-4">
                   {reviews.length == 0
                     ? "No responses"

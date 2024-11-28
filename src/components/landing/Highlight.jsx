@@ -68,11 +68,11 @@ function Highlight() {
       </div>
       <div className="relative">
         <Image
-          src="/placeholder.svg?height=600&width=800"
+          src="/images/highlight.png"
           alt="Documentation Interface"
           width={800}
           height={600}
-          className="rounded-lg shadow-lg"
+          className="rounded-lg "
         />
       </div>
     </div>

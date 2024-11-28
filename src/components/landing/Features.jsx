@@ -7,9 +7,9 @@ function Features() {
       <h2 className="text-2xl md:text-4xl font-bold text-center my-[2rem]">Features</h2>
 
       <div className="flex flex-wrap gap-[1.5rem] max-w-[70rem] mx-auto">
-        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem]">
+        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
-            <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
+            <div className="flex items-center  rounded-lg bg-zinc-50 p-3 text-sm text-gray-600 h-[8rem]">
               <img src="" alt="" />
             </div>
 
@@ -26,7 +26,7 @@ function Features() {
             </div>
           </CardContent>
         </Card>
-        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem]">
+        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
             <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
               <img src="" alt="" />
@@ -45,7 +45,7 @@ function Features() {
             </div>
           </CardContent>
         </Card>
-        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem]">
+        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
             <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
               <img src="" alt="" />
@@ -64,7 +64,7 @@ function Features() {
             </div>
           </CardContent>
         </Card>
-        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem]">
+        <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
             <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
               <img src="" alt="" />

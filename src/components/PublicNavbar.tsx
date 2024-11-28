@@ -41,7 +41,7 @@ export default function PublicNavbar() {
   ];
 
   return (
-    <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-40">
+    <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-20">
       <div className="w-[90%] max-w-[1200px] bg-white rounded-[1rem] border shadow-sm">
         <div className="flex h-14 items-center justify-between px-4">
           <div className="flex items-center gap-2">

@@ -47,12 +47,12 @@ function Hero() {
 
       {/* Dashboard Preview */}
       <div className="w-full max-w-6xl mx-auto mt-16 md:mt-16 relative">
-        <div className="aspect-[4/2] relative rounded-lg overflow-hidden shadow-2xl">
+        <div className="aspect-[4/2] relative rounded-lg overflow-hidden shadow-2xl ">
           <Image
-            src="/placeholder.svg"
+            src="/images/hero3.png"
             alt="TrustFlag Dashboard Preview"
             fill
-            className="object-cover"
+            className="object-cover mt-[1rem]"
             priority
           />
         </div>
