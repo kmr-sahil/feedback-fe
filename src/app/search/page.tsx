@@ -15,6 +15,7 @@ import {
 import { categoryOptions, countryOptions } from "@/lib/options";
 import { ChevronDown, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Balancer from "react-wrap-balancer";
 
 interface Company {
   projectId: string;
@@ -97,10 +98,22 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="flex flex-col relative gap-[1rem] justify-center items-center bg-zinc-50">
+    <div className="flex flex-col relative gap-[1rem] justify-center items-center ">
       <PublicNavbar />
-      <div className="w-full rounded-b-[3rem] md:rounded-b-[8rem] space-y-4 bg-[#379777] px-[1rem] pt-[12rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[15rem] md:pb-[3rem] text-[#45474B]">
-        <div className="relative">
+      <div className="w-full flex flex-col justify-center items-center rounded-b-[3rem] md:rounded-b-[8rem] space-y-4 bg-[#379777] px-[1rem] pt-[6rem] sm:pt-[4rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[5rem] md:pb-[3rem] text-white">
+        <Balancer>
+          <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:my-[3rem] md:my-[4rem] md:leading-[3rem] mx-auto">
+            Browse{" "}
+            <span className="bg-[#F4CE14] px-[0.75rem] rounded-[8px] text-[#805f1c]">
+              Business
+            </span>{" "}
+            that are{" "}
+            <span className="bg-[#313335] px-[0.75rem] rounded-[8px] text-white">
+              trusted
+            </span>
+          </h2>
+        </Balancer>
+        <div className="relative w-[100%]">
           <input
             type="text"
             placeholder="Search for a company..."

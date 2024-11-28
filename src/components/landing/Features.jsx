@@ -9,8 +9,8 @@ function Features() {
       <div className="flex flex-wrap gap-[1.5rem] max-w-[70rem] mx-auto">
         <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
-            <div className="flex items-center  rounded-lg bg-zinc-50 p-3 text-sm text-gray-600 h-[8rem]">
-              <img src="" alt="" />
+            <div className="flex items-center  rounded-lg bg-zinc-50 text-sm text-gray-600 relative overflow-hidden">
+              <img src="/images/f1.png" alt="" className="object-contain" />
             </div>
 
             <div className="flex flex-col gap-[1rem]">
@@ -28,8 +28,8 @@ function Features() {
         </Card>
         <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
-            <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
-              <img src="" alt="" />
+          <div className="flex items-center  rounded-lg bg-zinc-50 text-sm text-gray-600 relative overflow-hidden">
+              <img src="/images/f2.png" alt="" className="object-contain" />
             </div>
 
             <div className="flex flex-col gap-[1rem]">
@@ -47,8 +47,8 @@ function Features() {
         </Card>
         <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
-            <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
-              <img src="" alt="" />
+          <div className="flex items-center  rounded-lg bg-zinc-50 text-sm text-gray-600 relative overflow-hidden">
+              <img src="/images/f4.png" alt="" className="object-contain" />
             </div>
 
             <div className="flex flex-col gap-[1rem]">
@@ -66,8 +66,8 @@ function Features() {
         </Card>
         <Card className="flex-grow w-[40%] rounded-3xl bg-white p-[1.5rem] shadow-none border-[2px] border-zinc-200">
           <CardContent className="flex flex-col gap-[1.5rem] p-0">
-            <div className="flex items-center  rounded-lg bg-gray-50 p-3 text-sm text-gray-600 h-[8rem]">
-              <img src="" alt="" />
+          <div className="flex items-center  rounded-lg bg-zinc-50 text-sm text-gray-600 relative overflow-hidden">
+              <img src="/images/f3.png" alt="" className="object-contain" />
             </div>
 
             <div className="flex flex-col gap-[1rem]">
