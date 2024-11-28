@@ -27,7 +27,7 @@ function Highlight() {
       ];
 
   return (
-    <div className="max-w-[80rem] mx-auto px-4 py-12 my-[10rem]">
+    <div className="max-w-[80rem] mx-auto px-4 py-12 my-[5rem] sm:my-[10rem]">
     {/* Company Logos */}
     <div className="text-center mb-[10rem]">
       <p className="text-sm text-muted-foreground mb-8">
@@ -49,7 +49,7 @@ function Highlight() {
 
     {/* Hero Section */}
     <div className='bg-zinc-50 p-[2rem] rounded-[16px] border-[2px] border-zinc-200'>
-    <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+    <div className="grid lg:grid-cols-2 gap-12 items-center lg:mb-20">
       <div>
         <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
           The ultimate platform for managing testimonials and reviews.

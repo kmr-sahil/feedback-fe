@@ -8,13 +8,13 @@ function Hero() {
     <div className="w-full flex flex-col justify-center items-center text-textColor text-center gap-4 pt-[10rem] px-[1rem] ">
       <div className="max-w-4xl mx-auto text-center space-y-6 mt-[rem]">
         <Balancer>
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight leading-tight md:leading-tight lg:leading-[6rem]">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight leading-[3rem] md:leading-tight lg:leading-[6rem]">
             Build{" "}
-            <span className="bg-[#379777] pl-[1rem] pr-[1.5rem] rounded-[12px] text-[#fff] ">
+            <span className="bg-[#379777] pl-[0.75rem] pr-[0.95rem] sm:pl-[1rem] sm:pr-[1.5rem] rounded-[8px] sm:rounded-[12px] text-[#fff] ">
               Trust
             </span>
             , Grow Your{" "}
-            <span className="bg-[#F4CE14] pl-[1rem] pr-[1.2rem] rounded-[12px] text-[#805f1c]">
+            <span className="bg-[#F4CE14] pl-[0.75rem] pr-[0.95rem] sm:pl-[1rem] sm:pr-[1.5rem] rounded-[8px] sm:rounded-[12px] text-[#805f1c]">
               Business
             </span>
           </h1>

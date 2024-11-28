@@ -3,9 +3,9 @@ import Image from "next/image";
 
 function Reason() {
   return (
-    <div className="bg-[#379777] text-white py-[7rem] relative px-4 z-50">
+    <div className="bg-[#379777] text-white py-[4rem] sm:py-[7rem] relative px-4 z-50">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-4xl font-bold text-center mb-[4rem]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-[4rem] min-[120px]:leading-[3rem]">
           <span className=" text-[#F4CE14]">3 reasons </span> to choose{" "}
           <span className="bg-[#313335] px-[1rem] py-[0.5rem] rounded-[12px] text-[#fff]">
             Trustflag
@@ -14,7 +14,7 @@ function Reason() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {/* Card 1 */}
-          <div className="bg-[#313335] rounded-3xl p-8 min-h-[500px] flex flex-col">
+          <div className="bg-[#313335] rounded-3xl p-8 flex flex-col ">
             <div className="space-y-4 mb-8">
               <h3 className="text-[1.5rem] font-semibold leading-tight">
                 Effortless Feedback Collection
@@ -27,18 +27,16 @@ function Reason() {
               </p>
             </div>
             <div className="mt-auto relative">
-              <Image
+              <img
                 src="/images/r1.png"
                 alt="img"
-                width={350}
-                height={200}
-                className="absolute bottom-0 rounded-lg "
+                className=" rounded-lg mx-auto"
               />
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-[#313335] rounded-3xl p-8 min-h-[500px] flex flex-col">
+          <div className="bg-[#313335] rounded-3xl p-8 flex flex-col ">
             <div className="space-y-4 mb-8">
               <h3 className="text-[1.5rem] font-semibold leading-tight">
                 Build Credibility with Trustworthy Reviews
@@ -50,19 +48,17 @@ function Reason() {
                 business in your industry.{" "}
               </p>
             </div>
-            <div className="mt-auto relative">
-              <Image
+            <div className="mt-auto relative object-cover">
+              <img
                 src="/images/r2.png"
                 alt="img"
-                width={350}
-                height={200}
-                className="absolute bottom-0 rounded-lg "
+                className=" rounded-lg mx-auto "
               />
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="bg-[#313335] rounded-3xl p-8 min-h-[500px] flex flex-col">
+          <div className="bg-[#313335] rounded-3xl p-8 flex flex-col">
             <div className="space-y-4 mb-8">
               <h3 className="text-[1.5rem] font-semibold leading-tight">
                 Actionable Analytics for Continuous Growth
@@ -74,13 +70,11 @@ function Reason() {
                 informed decisions.{" "}
               </p>
             </div>
-            <div className="mt-auto relative">
-              <Image
+            <div className="mt-auto relative object-cover">
+              <img
                 src="/images/r3.png"
                 alt="img"
-                width={350}
-                height={200}
-                className="absolute bottom-0 rounded-lg "
+                className=" rounded-lg object-cover ml-auto"
               />
             </div>
           </div>

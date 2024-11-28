@@ -23,16 +23,16 @@ export default async function Home() {
         <img className="w-[5rem] rotate-12" src="/images/logo.svg" alt="" />
 
         <Balancer>
-          <h1 className="max-w-[60rem] mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight md:leading-tight lg:leading-[5rem]">
+          <h1 className="max-w-[60rem] mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight min-[120px]:leading-[3rem] md:leading-tight lg:leading-[5rem]">
             Start building{" "}
-            <span className="bg-[#379777] pl-[1rem] pr-[1.5rem] rounded-[12px] text-[#fff] ">
+            <span className="bg-[#379777] px-[0.75rem] sm:px-[1rem] rounded-[8px] sm:rounded-[12px] text-[#fff] ">
               Trust
             </span>
             , with your{" "}
-            <span className="bg-[#F4CE14] pl-[1rem] pr-[1.2rem] rounded-[12px] text-[#805f1c]">
+            <span className="bg-[#F4CE14] px-[0.75rem] sm:px-[1rem] rounded-[8px] sm:rounded-[12px] text-[#805f1c]">
               customers
             </span>
-            today.
+            {" "}today.
           </h1>
         </Balancer>
 

@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="bg-[#18191b] text-gray-200 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-[6rem]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-[2rem] sm:px-[6rem]">
           {/* About Column */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold mb-6">About</h2>
@@ -17,19 +17,15 @@ function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Jobs
+                  Changelog
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Contact
+                  Career
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Blog
-                </Link>
-              </li>
+
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
                   How Trustpilot works
@@ -37,30 +33,29 @@ function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Transparency Report
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Press
+                  Jobs
                 </Link>
               </li>
             </ul>
-            ?
           </div>
 
-          {/* Community Column */}
+          {/* Businesses Column */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-6">Community</h2>
+            <h2 className="text-lg font-semibold mb-6">Business</h2>
             <ul className="space-y-3">
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Trust in reviews
+                  Why Trustflag ? Talk with founders
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Help Center
+                  Talk to expert
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Need help setting up ?
                 </Link>
               </li>
               <li>
@@ -78,78 +73,26 @@ function Footer() {
 
           {/* Businesses Column */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-6">Businesses</h2>
+            <h2 className="text-lg font-semibold mb-6">People</h2>
             <ul className="space-y-3">
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Trustpilot Business
+                  Write a Review
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Products
+                  Log in
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Plans & Pricing
+                  Sign up
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Business Login
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Blog for Business
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Social Media Column */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-6">Follow us on</h2>
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  Facebook
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  Twitter
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  Instagram
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  Linkedin
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  Youtube
+                  Community
                 </Link>
               </li>
             </ul>
