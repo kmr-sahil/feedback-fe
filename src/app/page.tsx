@@ -19,7 +19,7 @@ export default async function Home() {
 
       <Features />
 
-      <div className="w-full flex flex-col gap-[4rem] px-[4rem] justify-center items-center py-[10rem]">
+      <div className="w-full flex flex-col gap-[4rem] px-[4rem] justify-center items-center py-[10rem]" id="start">
         <img className="w-[5rem] rotate-12" src="/images/logo.svg" alt="" />
 
         <Balancer>

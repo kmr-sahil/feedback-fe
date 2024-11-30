@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface ReviewData {
+  user: any;
   name?: string;
   content: string;
   star?: number; // Assuming star is a part of the response
@@ -101,7 +102,7 @@ const IntegratePage: React.FC = () => {
             {reviewsToShow.map((review, index) => (
               <div
                 key={index}
-                className="min-w-[15rem] md:w-[30%] flex-grow flex flex-col gap-[1rem] p-[1rem] justify-center items-center bg-zinc-50 border-[2px] border-zinc-200 rounded-[8px] relative"
+                className="min-w-[15rem] md:w-[30%] flex-grow flex flex-col gap-[1rem] p-[1rem] justify-start items-start bg-zinc-50 border-[2px] border-zinc-200 rounded-[8px] relative"
               >
                 <div className="flex gap-[0.15rem] mr-auto">
                   {Array.from({ length: review.star || 0 }, (_, index) => (
@@ -119,7 +120,7 @@ const IntegratePage: React.FC = () => {
                     {review.content}
                   </h2>
                   <span className="text-[#45474B] font-light mt-[0.5rem]">
-                    {review.name || "Anonymous"}
+                    {review.user.name || "Anonymous"}
                   </span>
                 </div>
               </div>

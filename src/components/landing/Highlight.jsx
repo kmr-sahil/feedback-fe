@@ -27,7 +27,7 @@ function Highlight() {
       ];
 
   return (
-    <div className="max-w-[80rem] mx-auto px-4 py-12 my-[5rem] sm:my-[10rem]">
+    <div className="max-w-[80rem] mx-auto px-4 py-12 my-[5rem] sm:my-[10rem]" id='solution'>
     {/* Company Logos */}
     <div className="text-center mb-[10rem]">
       <p className="text-sm text-muted-foreground mb-8">

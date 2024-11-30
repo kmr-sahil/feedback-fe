@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 function Features() {
   return (
-    <div className="w-full flex flex-col gap-[2rem] my-[5rem] sm:my-[10rem]">
+    <div className="w-full flex flex-col gap-[2rem] my-[5rem] sm:my-[10rem]" id="features">
       <h2 className="text-3xl md:text-4xl font-bold text-center my-[2rem]">Features</h2>
 
       <div className="flex flex-wrap gap-[1.5rem] max-w-[70rem] mx-auto px-[1rem] sm:px-[1.5rem]">

@@ -71,7 +71,7 @@ function SignupPage() {
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">
-        Let's onboard you
+        Let's onboard your Business
       </h3>
       <CustomInput
         type="text"
@@ -112,10 +112,10 @@ function SignupPage() {
         onClick={isSignupDone ? otpSubmit : signup}
       ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
-        Already user here ?{" "}
+        Business already register at Trustflag ?{" "}
         <Link
           className="underline underline-offset-2 text-accentOne"
-          href={"/signin"}
+          href={"/business/signin"}
         >
           Signin
         </Link>

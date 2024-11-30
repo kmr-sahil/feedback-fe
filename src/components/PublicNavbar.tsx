@@ -4,16 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
 
 export default function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter()
 
   const navItems = [
     
@@ -35,9 +31,9 @@ export default function PublicNavbar() {
     //     { name: "Feature 3", href: "/feature-3" },
     //   ],
     // },
-    { name: "Solutions", href: "/write-review" },
-    { name: "Features", href: "/write-review" },
-    { name: "Write a review", href: "/write-review" },
+    { name: "Solutions", href: "/#solution" },
+    { name: "Features", href: "/#features" },
+    { name: "For Business", href: "/#start" },
   ];
 
   return (
@@ -73,8 +69,9 @@ export default function PublicNavbar() {
             <Button
               variant="ghost"
               className="bg-[#45474B] text-white hover:bg-[#45474B]/90 rounded-[0.5rem] px-6 hidden md:block"
+              onClick={() => router.push('/search')}
             >
-              For Business
+              Write a Review
             </Button>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
@@ -100,8 +97,9 @@ export default function PublicNavbar() {
                   <Button
                     variant="ghost"
                     className="bg-[#45474B] text-white hover:bg-[#45474B]/90 rounded-[0.5rem] px-6"
+                    onClick={() => router.push('/search')}
                   >
-                    For Business
+                    Write a Review
                   </Button>
                 </nav>
               </SheetContent>

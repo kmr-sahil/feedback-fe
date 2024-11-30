@@ -21,7 +21,7 @@ function CustomButton({
   return (
     <button
       disabled={disabled}
-      className={`  ${type == "secondary" ? "bg-backgroundTwo text-textOne" : "bg-accentOne text-slate-200"} ${
+      className={`  ${type == "secondary" ? "bg-[#b8bbba] text-textOne" : "bg-[#379777] text-slate-200"} ${
         type == "secondary" ? "border-2 border-backgroundThree" : ""
       } text-[0.9rem] px-[1rem] py-[0.5rem] rounded-[8px] hover:opacity-90 focus:opacity-90 disabled:opacity-20 flex gap-[1rem] items-center justify-center`}
       onClick={onClick}

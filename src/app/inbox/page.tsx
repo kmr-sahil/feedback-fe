@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import ReviewContainer from "@/components/ReviewContainer";
@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 import CustomLoader from "../../components/CustomLoader";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import toast from "react-hot-toast";
 
 export default function InboxPage() {
   const [reviewData, setReviewData] = useState<any[]>([]);
@@ -56,12 +57,20 @@ export default function InboxPage() {
   );
 
   useEffect(() => {
-    setLoading(true);
-    const storedProjectId = localStorage.getItem("projectId");
-    if (storedProjectId) {
-      setProject(storedProjectId);
+    const loginDate = localStorage.getItem("isLogin");
+
+    if (loginDate) {
+      setLoading(true);
+      const storedProjectId = localStorage.getItem("projectId");
+      if (storedProjectId) {
+        setProject(storedProjectId);
+      }
+      setLoading(false);
+    } else {
+      console.log("No login date found.");
+      toast.error("Log in again please");
+      window.location.href = "/signin";
     }
-    setLoading(false); // Stop loading after the project ID is fetched
   }, []);
 
   useEffect(() => {
@@ -91,7 +100,7 @@ export default function InboxPage() {
                       className="bg-backgroundOne border-[2px] border-zinc-200 rounded-[8px] px-[1rem] py-[0.5rem] mb-[2rem] text-sm "
                       onClick={() => setSkip((prev) => prev + take)}
                     >
-                      {loading ? "Loading..." : "Load more" }
+                      {loading ? "Loading..." : "Load more"}
                     </button>
                   )}
                 </>

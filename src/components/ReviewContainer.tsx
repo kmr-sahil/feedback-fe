@@ -34,7 +34,7 @@ function ReviewContainer({ data }: any) {
       </div>
       <div className="flex flex-col gap-[0.25rem]">
         <h3 className="font-semibold text-textTwo">
-          {data.name ? data.name : "Anonymous"}
+          {data.user.name ? data.user.name : "Anonymous"}
         </h3>
         <p className="text-[16px]">{data?.content}</p>
       </div>

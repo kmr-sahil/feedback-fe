@@ -7,10 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-function SignupPage() {
+function SigninPage() {
   const router = useRouter();
   const [details, setDetails] = useState({
-    name: "",
     email: "",
     password: "",
     otp: 0,
@@ -26,24 +25,20 @@ function SignupPage() {
     }));
   };
 
-  const signup = async () => {
+  const signin = async () => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
-        {
-          name: details.name,
-          email: details.email,
-          password: details.password,
-        },
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signin`,
+        details,
         {
           withCredentials: true,
         }
       );
-      toast.success("OTP sent Successful");
+      toast.success("OTP sent successfully");
       console.log(response.data);
       setIsSignupDone(true);
     } catch (error: any) {
-      console.error("Signup error:", error);
+      console.error("Signin error:", error);
       toast.error(`Error: ${error.response.data.error}`);
     }
   };
@@ -71,16 +66,8 @@ function SignupPage() {
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">
-        Let's onboard you
+        Logging to Business account
       </h3>
-      <CustomInput
-        type="text"
-        name="name"
-        placeholder="tyler durden"
-        value={details.name}
-        onChange={handleChange}
-        label="Name"
-      ></CustomInput>
       <CustomInput
         type="email"
         name="email"
@@ -108,20 +95,26 @@ function SignupPage() {
         />
       )}
       <CustomButton
-        label="Signup"
-        onClick={isSignupDone ? otpSubmit : signup}
+        label={"Signin"}
+        onClick={isSignupDone ? otpSubmit : signin}
       ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
-        Already user here ?{" "}
+        New Business at Trustflag ?{" "}
         <Link
           className="underline underline-offset-2 text-accentOne"
-          href={"/signin"}
+          href={"/business/signup"}
         >
-          Signin
+          Signup
         </Link>
       </p>
+      <Link
+        className="text-[14px] text-center underline underline-offset-2 text-accentOne"
+        href={"/forgetpassword"}
+      >
+        Forgot Password
+      </Link>
     </div>
   );
 }
 
-export default SignupPage;
+export default SigninPage;

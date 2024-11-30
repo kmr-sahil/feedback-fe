@@ -53,7 +53,8 @@ function SigninPage() {
         }
       );
       toast.success("Login Successful");
-      localStorage.setItem("isLogin", "true");
+      const currentDate = new Date().toISOString(); // Save date in ISO format
+      localStorage.setItem("isLogin", currentDate);
       router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {

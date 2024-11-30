@@ -49,11 +49,6 @@ interface Project {
   responses: Response[];
 }
 
-interface ApiResponse {
-  message: string;
-  response: Project[];
-}
-
 export default function CompanyReviewPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -76,22 +71,40 @@ export default function CompanyReviewPage() {
           params: { website, rating: ratingFilter || "", page },
         }
       );
-      const newReviews = res.data.response[0]?.responses || [];
+      const newReviews = res.data.responses || [];
       if (append) {
         setReviews((prev) => [...prev, ...newReviews]); // Append to existing reviews
       } else {
         setReviews(newReviews); // Replace existing reviews
       }
-      setCompanyData(res.data.response[0]);
+      //setCompanyData(res.data.responses[0]);
     } catch (error) {
       console.error("Error fetching reviews:", error);
     }
     setLoading(false);
   };
 
+  // Fetch company details
+  const fetchCompanyDetails = async () => {
+    if (!website) return;
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/companydetails`,
+        { params: { website } }
+      );
+      setCompanyData(res.data.company);
+    } catch (error) {
+      console.error("Error fetching company details:", error);
+    }
+  };
+
   useEffect(() => {
     fetchReviews(); // Initial fetch or when filter changes
   }, [website, ratingFilter]);
+
+  useEffect(() => {
+    fetchCompanyDetails();
+  }, []);
 
   const handleFilterChange = (rating: number | null) => {
     setRatingFilter(rating);
