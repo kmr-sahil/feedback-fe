@@ -75,7 +75,7 @@ function SigninPage() {
       const loginDate = new Date(isLogin);
       const currentDate = new Date();
       const daysDifference =
-        (currentDate - loginDate) / (1000 * 60 * 60 * 24); // Difference in days
+        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
       if (daysDifference < 30) {
         router.push("/search");
       }
