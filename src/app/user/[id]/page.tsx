@@ -23,10 +23,17 @@ function UserPage() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false); // New state to handle errors
-
-  const userId = window.location.pathname.split("/").pop(); // Extract userId from URL
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
+    // Extract userId from the URL in the browser
+    const id = window.location.pathname.split("/").pop() || null;
+    setUserId(id);
+  }, []);
+
+  useEffect(() => {
+    if (!userId) return; // Wait for userId to be set
+
     // Fetch user details
     const fetchUser = async () => {
       try {
@@ -36,7 +43,10 @@ function UserPage() {
         );
         setUser(response.data);
       } catch (error: any) {
-        if (error.response?.status === 404 || error.response?.data?.message === "user not found") {
+        if (
+          error.response?.status === 404 ||
+          error.response?.data?.message === "user not found"
+        ) {
           setError(true); // Mark as error
         } else {
           console.error("Error fetching user:", error);
@@ -48,7 +58,7 @@ function UserPage() {
   }, [userId]);
 
   useEffect(() => {
-    if (error) return; // Skip fetching reviews if there's an error
+    if (!userId || error) return; // Skip fetching reviews if there's an error
 
     // Fetch user reviews
     const fetchReviews = async () => {
@@ -89,7 +99,7 @@ function UserPage() {
 
   return (
     <div className="max-w-[75rem] mx-auto p-[1rem] flex flex-col gap-[2rem] relative">
-      <Navbar/>
+      <Navbar />
       {/* User Info */}
       <div className="bg-[#379777] rounded-[12px] border-[2px] border-zinc-200 flex gap-[1rem] items-center p-4 mt-[5rem]">
         <span className="text-zinc-200 font-semibold w-10 h-10 sm:w-20 sm:h-20 bg-zinc-50 rounded-full flex justify-center items-center">
@@ -122,9 +132,7 @@ function UserPage() {
                 </div>
                 <div>
                   <div className="flex items-center">
-                    <span className="font-semibold mr-2">
-                      {user?.name}
-                    </span>
+                    <span className="font-semibold mr-2">{user?.name}</span>
                   </div>
                 </div>
               </div>

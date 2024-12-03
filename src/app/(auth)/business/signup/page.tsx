@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
@@ -60,6 +60,13 @@ function SignupPage() {
       toast.success("Login Successful");
       const currentDate = new Date().toISOString(); // Save date in ISO format
       localStorage.setItem("isLogin", currentDate);
+
+      const userId = response.data.verified.user.userId;
+      const name = response.data.verified.user.name;
+
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("name", name);
+
       router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {
@@ -67,6 +74,19 @@ function SignupPage() {
       toast.error(`Error: ${error.response.data.error}`);
     }
   };
+
+  useEffect(() => {
+    const isLogin = localStorage.getItem("isLogin");
+    if (isLogin) {
+      const loginDate = new Date(isLogin);
+      const currentDate = new Date();
+      const daysDifference =
+        (currentDate - loginDate) / (1000 * 60 * 60 * 24); // Difference in days
+      if (daysDifference < 30) {
+        router.push("/search");
+      }
+    }
+  }, [router]);
 
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">

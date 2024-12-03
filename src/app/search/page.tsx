@@ -141,7 +141,7 @@ export default function CompanySearch() {
           </button>
         )}
         {showAdvanced && (
-          <div className=" flex flex-wrap gap-4">
+          <div className=" flex flex-wrap gap-4 text-zinc-600">
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger className="w-[180px] bg-white">
                 <SelectValue placeholder="Select a category" />
