@@ -1,13 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Star } from "@phosphor-icons/react";
+import Navbar from "@/components/Navbar";
+
+// Define types for User and Review
+interface User {
+  name?: string;
+}
+
+interface Review {
+  responseId: string;
+  star?: number;
+  content: string;
+  createdAt: string;
+}
 
 function UserPage() {
-  const [user, setUser] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false); // New state to handle errors
 
   const userId = window.location.pathname.split("/").pop(); // Extract userId from URL
 
@@ -20,8 +35,12 @@ function UserPage() {
           { withCredentials: true }
         );
         setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
+      } catch (error: any) {
+        if (error.response?.status === 404 || error.response?.data?.message === "user not found") {
+          setError(true); // Mark as error
+        } else {
+          console.error("Error fetching user:", error);
+        }
       }
     };
 
@@ -29,12 +48,14 @@ function UserPage() {
   }, [userId]);
 
   useEffect(() => {
+    if (error) return; // Skip fetching reviews if there's an error
+
     // Fetch user reviews
     const fetchReviews = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/reviews`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/userreviews/${userId}`,
           {
             withCredentials: true,
             params: { page: currentPage, limit: 10 },
@@ -50,22 +71,34 @@ function UserPage() {
     };
 
     fetchReviews();
-  }, [userId, currentPage]);
+  }, [userId, currentPage, error]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-center">
+        <h1 className="text-2xl font-semibold text-zinc-400">
+          404 Error: User not found. Please return back later.
+        </h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-[75rem] mx-auto p-[1rem] flex flex-col gap-[2rem]">
+    <div className="max-w-[75rem] mx-auto p-[1rem] flex flex-col gap-[2rem] relative">
+      <Navbar/>
       {/* User Info */}
-      <div className="bg-zinc-50 rounded-[12px] border-[2px] border-zinc-200 flex items-center p-4">
-        <img src="" alt="" className="w-20 h-20 rounded-full mr-4" />
+      <div className="bg-[#379777] rounded-[12px] border-[2px] border-zinc-200 flex gap-[1rem] items-center p-4 mt-[5rem]">
+        <span className="text-zinc-200 font-semibold w-10 h-10 sm:w-20 sm:h-20 bg-zinc-50 rounded-full flex justify-center items-center">
+          {user?.name?.charAt(0)}
+        </span>
         <div className="flex flex-col">
-          <h2 className="text-[1.1rem] sm:text-[1.5rem] font-semibold">
+          <h2 className="text-[1.1rem] sm:text-[1.5rem] font-semibold text-zinc-50">
             {user ? user.name : "Loading..."}
           </h2>
-          <h5 className="text-[0.9rem] sm:text-[1rem] ">Location</h5>
         </div>
       </div>
 
@@ -84,38 +117,28 @@ function UserPage() {
               <div className="flex items-center mb-2">
                 <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-2 text-[#45474B]">
                   <span className="text-white font-semibold">
-                    {review.name?.charAt(0) || "N/A"}
+                    {user?.name?.charAt(0)}
                   </span>
                 </div>
                 <div>
                   <div className="flex items-center">
                     <span className="font-semibold mr-2">
-                      {review.name || "Anonymous"}
+                      {user?.name}
                     </span>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {review.email || "No email provided"}
                   </div>
                 </div>
               </div>
               <div className="flex mb-2">
                 {[...Array(5)].map((_, i) =>
                   i < (review.star || 0) ? (
-                    <svg
+                    <Star
                       key={i}
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 sm:h-8 sm:w-8 text-yellow-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
+                      className="text-yellow-400"
+                      weight="fill"
+                      size={24}
+                    />
                   ) : (
-                    <span key={i} className="text-[21px] sm:text-[29px]">
-                      <Star
-                        fill={i < (review.star || 0) ? "#FFD700" : "#ccc"}
-                      />
-                    </span>
+                    <Star key={i} className="text-gray-300" size={24} />
                   )
                 )}
               </div>

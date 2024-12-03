@@ -40,7 +40,7 @@ export default function PublicNavbar() {
     <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-20">
       <div className="w-[90%] max-w-[1200px] bg-white rounded-[1rem] border shadow-sm">
         <div className="flex h-14 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2">
             <img
               className="w-8 md:h-8"
               src="/images/logo.svg"
@@ -49,7 +49,7 @@ export default function PublicNavbar() {
             <h1 className="font-bold text-[1.25rem] md:text-[1.5rem] text-[#45474B]">
               Trustflag.in
             </h1>
-          </div>
+          </a>
 
           <div className="hidden md:flex items-center sm:gap-4 lg:gap-6">
             {navItems.map((item) =>
@@ -68,7 +68,7 @@ export default function PublicNavbar() {
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
-              className="bg-[#45474B] text-white hover:bg-[#45474B]/90 rounded-[0.5rem] px-6 hidden md:block"
+              className="bg-[#45474B] text-white hover:bg-[#393a3c] hover:text-white rounded-[0.5rem] px-6 hidden md:block"
               onClick={() => router.push('/search')}
             >
               Write a Review
@@ -96,7 +96,7 @@ export default function PublicNavbar() {
                   )}
                   <Button
                     variant="ghost"
-                    className="bg-[#45474B] text-white hover:bg-[#45474B]/90 rounded-[0.5rem] px-6"
+                    className="bg-[#45474B] text-white hover:bg-[#393a3c] hover:text-white rounded-[0.5rem] px-6"
                     onClick={() => router.push('/search')}
                   >
                     Write a Review

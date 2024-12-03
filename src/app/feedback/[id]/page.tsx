@@ -39,13 +39,67 @@ function SimpleFormPage() {
   const [showInputs, setShowInputs] = useState(false);
   const [submitted, setSubmitted] = useState(false); // New state for submission status
   const [loading, setLoading] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [highlighter, setHighlighter] = useState({
-    email: "",
     message: "",
   });
+
+  useEffect(() => {
+    const isLogin = localStorage.getItem("isLogin");
+
+    if (isLogin) {
+      const loginDate = new Date(isLogin);
+      const currentDate = new Date();
+      const daysDifference = Math.floor(
+        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
+      if (daysDifference <= 30) {
+        setIsLoggedIn(true);
+      } else {
+        localStorage.removeItem("isLogin");
+        setIsLoggedIn(false);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setShowModal(true); // Show modal if not logged in
+    }
+  }, []);
+
+  const Modal = () => (
+    <motion.div
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="bg-white p-6 rounded-lg shadow-lg w-[80%] sm:w-[30rem]">
+        <h2 className="text-xl font-semibold">Please Log In or Sign Up</h2>
+        <p className="mt-2 text-zinc-600">
+          You need to log in to submit your feedback.
+        </p>
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={() => router.push("/signin")}
+            className="bg-zinc-500 text-white py-2 px-4 rounded-[8px]"
+          >
+            Log In
+          </button>
+          <button
+            onClick={() => router.push("/signup")}
+            className="bg-[#379777] text-white py-2 px-4 rounded-[8px]"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+
   const [details, setDetails] = useState<IDetailsToSend>({
-    name: "",
-    email: "",
     projectId: "",
     type: "",
     content: "",
@@ -80,21 +134,18 @@ function SimpleFormPage() {
       if (rating < 2) {
         setDetails((prev) => ({ ...prev, type: "Issue" }));
         setHighlighter({
-          email: "Enter your mail so we can inform resolution at earliest",
           message:
             "Please describe what we did wrong, we will definitely try to solve it for you",
         });
       } else if (rating < 4) {
         setDetails((prev) => ({ ...prev, type: "Suggestion" }));
         setHighlighter({
-          email: "Enter your mail",
           message:
             "Please describe what should we do to make you rate us 5 stars. Any feature or recommendation.",
         });
       } else if (rating <= 5) {
         setDetails((prev) => ({ ...prev, type: "Liked" }));
         setHighlighter({
-          email: "Enter your mail",
           message: "Please tell us what you liked the most about us.",
         });
       }
@@ -129,22 +180,6 @@ function SimpleFormPage() {
         star: rating,
       };
 
-      if (
-        details.name === "" &&
-        projectDetails?.adjustForm?.isNameReq === true
-      ) {
-        toast("Name is required", { duration: 3000 });
-        return;
-      }
-
-      if (
-        details.email === "" &&
-        projectDetails?.adjustForm?.isEmailReq === true
-      ) {
-        toast("Email is required", { duration: 3000 });
-        return;
-      }
-
       if (details.content == "") {
         toast("Content is required", { duration: 3000 });
         return;
@@ -168,9 +203,10 @@ function SimpleFormPage() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-zinc-100 p-[1rem]">
+      {showModal && <Modal />}
       <div className="relative max-w-[30rem] flex-grow flex flex-col justify-center items-center mt-[2rem]">
         <motion.img
-        onClick={() => router.push(`https://${projectDetails?.website}`)}
+          onClick={() => router.push(`https://${projectDetails?.website}`)}
           transition={{ duration: 0.2, type: "spring" }}
           src={projectDetails?.logoUrl}
           className="absolute z-30 top-[-3rem] w-[6rem] h-[6rem] border-special border-zinc-200 rounded-[8px] object-cover"
@@ -229,32 +265,6 @@ function SimpleFormPage() {
                         className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 focus:border-[#37977793] focus:outline-none"
                       />
                     </div>
-                    <div className="flex flex-col justify-start items-start gap-[0.35rem]">
-                      <label className="text-zinc-400 font-medium text-[0.95rem]">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        value={details.name}
-                        onChange={handleChange}
-                        placeholder="Enter your name"
-                        className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-[#37977793]"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-start items-start gap-[0.35rem]">
-                      <label className="text-zinc-400 font-medium text-[0.95rem]">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        value={details.email}
-                        onChange={handleChange}
-                        placeholder={highlighter.email}
-                        className="w-full bg-zinc-100 p-[0.5rem] rounded-[8px] border-[2px] border-zinc-200 placeholder:text-zinc-400 focus:border-[#37977793]"
-                      />
-                    </div>
                   </motion.div>
                 ) : (
                   <motion.span
@@ -276,7 +286,9 @@ function SimpleFormPage() {
               <button
                 onClick={onSubmit}
                 className="bg-[#379979] text-[0.9rem] border-[2px] border-[#31876a] text-white px-[1rem] py-[0.35rem] rounded-[6px] hover:bg-[#2f8166] transition-colors"
-              >Submit</button>
+              >
+                Submit
+              </button>
             </div>
           )}
         </motion.div>

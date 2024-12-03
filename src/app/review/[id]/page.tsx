@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import CustomLoader from "@/components/CustomLoader";
 import { Checkbox } from "@/components/ui/checkbox";
-import PublicNavbar from "@/components/PublicNavbar";
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 
 // Interfaces for type safety
@@ -31,6 +31,7 @@ interface Response {
   name?: string;
   email?: string;
   createdAt: string;
+  doe? : any;
 }
 
 interface Project {
@@ -139,7 +140,7 @@ export default function CompanyReviewPage() {
           </a>
         </Button>
       </div>
-      <PublicNavbar />
+      <Navbar />
       {companyData && (
         <>
           {/* Company Info */}
@@ -313,7 +314,7 @@ export default function CompanyReviewPage() {
                           <p className="mb-2">{review.content}</p>
                           <div className="text-sm text-muted-foreground mb-2">
                             Reviewed on{" "}
-                            {new Date(review.createdAt).toLocaleDateString()}
+                            {new Date(review.doe).toLocaleDateString()}
                           </div>
                         </div>
                       ))}
