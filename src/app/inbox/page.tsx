@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import ReviewContainer from "@/components/ReviewContainer";
@@ -6,8 +6,10 @@ import DashboardLayout from "@/components/DashboardLayout";
 import CustomLoader from "../../components/CustomLoader";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import toast from "react-hot-toast";
+import withAuth from "@/components/WithAuth";
 
-export default function InboxPage() {
+const InboxPage = () => {
   const [reviewData, setReviewData] = useState<any[]>([]);
   const [projectId, setProject] = useState<string | null>(null);
   const [skip, setSkip] = useState(0);
@@ -56,12 +58,20 @@ export default function InboxPage() {
   );
 
   useEffect(() => {
-    setLoading(true);
-    const storedProjectId = localStorage.getItem("projectId");
-    if (storedProjectId) {
-      setProject(storedProjectId);
+    const loginDate = localStorage.getItem("isLogin");
+
+    if (loginDate) {
+      setLoading(true);
+      const storedProjectId = localStorage.getItem("projectId");
+      if (storedProjectId) {
+        setProject(storedProjectId);
+      }
+      setLoading(false);
+    } else {
+      console.log("No login date found.");
+      toast.error("Log in again please");
+      window.location.href = "/signin";
     }
-    setLoading(false); // Stop loading after the project ID is fetched
   }, []);
 
   useEffect(() => {
@@ -77,7 +87,7 @@ export default function InboxPage() {
         </div>
 
         <div className="w-[100%] flex flex-col gap-[1.25rem] justify-center items-center">
-          {loading ? (
+          {loading && reviewData.length == 0 ? (
             <CustomLoader /> // You can use a custom loader component
           ) : (
             <>
@@ -88,10 +98,10 @@ export default function InboxPage() {
                   ))}
                   {hasMore && (
                     <button
-                      className="bg-backgroundOne rounded-[12px] px-[1rem] py-[0.5rem] mb-[2rem]"
+                      className="bg-backgroundOne border-[2px] border-zinc-200 rounded-[8px] px-[1rem] py-[0.5rem] mb-[2rem] text-sm "
                       onClick={() => setSkip((prev) => prev + take)}
                     >
-                      Load more
+                      {loading ? "Loading..." : "Load more"}
                     </button>
                   )}
                 </>
@@ -105,3 +115,5 @@ export default function InboxPage() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(InboxPage);
