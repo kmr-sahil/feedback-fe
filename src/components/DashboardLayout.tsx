@@ -103,10 +103,11 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
       {isCreate && <CreateProject setIsCreate={setIsCreate} />}
 
       {/* Sidebar */}
-      <aside className="w-[16rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
-        <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
-          trusteek.com
-        </h1>
+      <aside className="max-w-[20rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
+        {/* <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
+          <img src="/images/logo.svg" alt="" />
+          TrustFlag.in
+        </h1> */}
         <div className="relative">
           <CustomSelect
             options={selectOptions}
@@ -171,8 +172,16 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
 
           <div className="flex flex-col">
             <h2 className="text-[0.85rem] font-semibold  mt-[2rem] text-textTwo">
-              Form
+              Collect and Display
             </h2>
+            <span
+              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+                pathname === "/form/widget" ? "bg-backgroundTwo" : ""
+              }`}
+              onClick={() => router.push("/form/widget")}
+            >
+              Widget
+            </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 pathname === "/form/customize" ? "bg-backgroundTwo" : ""
@@ -191,13 +200,13 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
             </span>
           </div>
 
-          <div className="w-full max-w-md mx-auto bg-backgroundTwo rounded-lg shadow-md overflow-hidden border-[2px] border-backgroundThree">
+          <div className="w-full max-w-md mx-auto bg-backgroundOne rounded-[12px] overflow-hidden border-[2px] border-backgroundThree">
             <div className="p-[1rem] flex flex-col h-full">
               <h2 className="text-[0.9rem] text-start mb-4">
                 Start collecting reviews
               </h2>
               <div className="flex-grow"></div>
-              <CustomButton label={"Copy Link"} onClick={() => handleCopyLink()} type="secondary"/>
+              <CustomButton label={"Share Link"} onClick={() => handleCopyLink()} type="secondary"/>
             </div>
           </div>
         </nav>

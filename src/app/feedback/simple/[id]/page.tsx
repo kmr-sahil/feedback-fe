@@ -3,7 +3,7 @@ import CustomButton from "@/components/CustomButton";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import StartInput from "./components/starInput";
+import { Star } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
 
@@ -161,6 +161,10 @@ function SimpleFormPage() {
     setLoading(false)
   };
 
+  const handleStarClick = (selectedRating: number) => {
+    setRating(selectedRating);
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center bg-zinc-100 p-[1rem]">
       <div className="relative max-w-[30rem] flex-grow flex flex-col justify-center items-center mt-[2rem]">
@@ -183,7 +187,28 @@ function SimpleFormPage() {
               } mt-[3rem]`}
               transition={{ duration: 0.5 }}
             >
-              <StartInput rating={rating} setRating={setRating} />
+                  <div className="w-[100%] flex justify-center">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <motion.button
+            key={star}
+            type="button"
+            onClick={() => handleStarClick(star)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="focus:outline-none mx-[0.15rem]"
+          >
+            <Star
+              size={48}
+              weight={star <= rating ? "fill" : "regular"}
+              className={` ${
+                star <= rating
+                  ? "text-yellow-500 fill-yellow-500"
+                  : "text-zinc-300"
+              }`}
+            />
+          </motion.button>
+        ))}
+      </div>
             </motion.div>
           )}
 

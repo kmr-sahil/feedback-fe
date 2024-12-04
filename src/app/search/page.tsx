@@ -4,6 +4,18 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { categoryOptions, countryOptions } from "@/lib/options";
+import { ChevronDown, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Balancer from "react-wrap-balancer";
 
 interface Company {
   projectId: string;
@@ -26,6 +38,7 @@ interface Company {
 
 export default function CompanySearch() {
   const router = useRouter();
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [location, setLocation] = useState<string>("");
@@ -38,17 +51,26 @@ export default function CompanySearch() {
 
   // Fetch companies from API
   const fetchCompanies = async (reset = false) => {
+    if (category == "all") {
+      setCategory("");
+    }
+    if (location == "all") {
+      setLocation("");
+    }
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`, {
-        params: {
-          searchTerm,
-          category,
-          location,
-          rating,
-          offset: reset ? 0 : offset,
-          limit,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`,
+        {
+          params: {
+            searchTerm,
+            category,
+            location,
+            rating,
+            offset: reset ? 0 : offset,
+            limit,
+          },
+        }
+      );
 
       const newCompanies = res.data.response;
       setCompanies(reset ? newCompanies : [...companies, ...newCompanies]);
@@ -76,75 +98,116 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="container max-w-[60rem] mx-auto p-4 font-sans">
-      <div className="mb-8 space-y-4 bg-[#379777] px-[2rem] pb-[2rem] rounded-[8px] text-[#45474B]">
-        <h1 className="text-end text-xl font-bold text-[#F4CE14] pt-[1rem]">
-          TrustFlag.in
-        </h1>
-        <input
-          type="text"
-          placeholder="Search for a company..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-        <div className="flex flex-wrap gap-4">
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
-          >
-            <option value="">All Categories</option>
-            {/* Assuming categories are hardcoded */}
-            <option value="Tech">Tech</option>
-            <option value="Healthcare">Healthcare</option>
-            {/* Add more categories as needed */}
-          </select>
+    <div className="flex flex-col relative gap-[1rem] justify-center items-center ">
+      <Navbar />
+      <div className="w-full flex flex-col justify-center items-center rounded-b-[3rem] md:rounded-b-[8rem] space-y-4 bg-[#379777] px-[1rem] pt-[6rem] sm:pt-[4rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[5rem] md:pb-[3rem] text-white">
+        <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:my-[3rem] md:my-[4rem] md:leading-[3rem] mx-auto">
+          <Balancer>
+            Browse{" "}
+            <span className="bg-[#F4CE14] px-[0.75rem] rounded-[8px] text-[#805f1c]">
+              Business
+            </span>{" "}
+            that are{" "}
+            <span className="bg-[#313335] px-[0.75rem] rounded-[8px] text-white">
+              trusted
+            </span>
+          </Balancer>
+        </h2>
+
+        <div className="relative w-[100%]">
           <input
             type="text"
-            placeholder="Country"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
-          />
-          <div className="flex items-center">
-            <span className="mr-2 text-[#F5F7F8]">Rating:</span>
-            <div className="flex">
-              {[1, 2, 3, 4, 5].map((value) => (
-                <button
-                  key={value}
-                  onClick={() => setRating(value)}
-                  className={`px-3 py-1 border ${
-                    rating >= value
-                      ? "bg-yellow-400 border-yellow-500"
-                      : "bg-gray-100 border-gray-300"
-                  } ${value === 1 ? "rounded-l" : ""} ${
-                    value === 5 ? "rounded-r" : ""
-                  }`}
-                  aria-label={`${value} star${
-                    value !== 1 ? "s" : ""
-                  } and above`}
-                >
-                  {value}
-                </button>
-              ))}
+            placeholder="Search for a company..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className=" w-full p-3 md:p-4 border border-gray-300 rounded-[16px] text-[1rem] md:text-[1.2rem]"
+          ></input>
+          <Button
+            type="submit"
+            className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 bg-[#45474B] rounded-[0.5rem]"
+          >
+            <Search className="h-4 w-4" />
+            <span className="text-[1rem]">Search</span>
+          </Button>
+        </div>
+
+        {!showAdvanced && (
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full text-xs text-[#F5F7F8] underline flex justify-center items-center text-center"
+          >
+            Advanced options
+            <ChevronDown className="h-3 w-3 ml-1" />
+          </button>
+        )}
+        {showAdvanced && (
+          <div className=" flex flex-wrap gap-4 text-zinc-600">
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-[180px] bg-white">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categoryOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={location} onValueChange={setLocation}>
+              <SelectTrigger className=" w-[180px] bg-white">
+                <SelectValue placeholder="Select a country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {countryOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="flex items-center">
+              <span className="mr-2 text-[#F5F7F8]">Rating:</span>
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <button
+                    key={value}
+                    onClick={() => setRating(value)}
+                    className={`px-3 py-1 border ${
+                      rating >= value
+                        ? "bg-yellow-400 border-yellow-500"
+                        : "bg-gray-100 border-gray-300"
+                    } ${value === 1 ? "rounded-l" : ""} ${
+                      value === 5 ? "rounded-r" : ""
+                    }`}
+                    aria-label={`${value} star${
+                      value !== 1 ? "s" : ""
+                    } and above`}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-      <div className="space-y-4">
+
+      <div className="w-[100%] max-w-[70rem] mx-auto space-y-4 flex flex-col justify-center items-center px-[1rem]">
         {filteredCompanies.map((company) => (
           <div
             key={company.projectId}
             onClick={() => router.push(`review/${company.website}`)}
-            className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm bg-[#F5F7F8] text-[#45474B]"
+            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B] object-cover"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}
               alt={`${company.name} logo`}
               width={64}
               height={64}
-              className="object-contain"
+              className="object-cover"
             />
             <div className="flex-grow">
               <h2 className="text-xl font-semibold">{company.name}</h2>
@@ -180,7 +243,7 @@ export default function CompanySearch() {
         {hasMore && (
           <button
             onClick={() => fetchCompanies(false)} // Load more data
-            className="w-full p-2 mt-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-2 py-1 mt-4 bg-zinc-50 rounded border-[1px] border-zinc-200 hover:bg-zinc-100 text-[#45474B]"
           >
             Load More
           </button>

@@ -60,6 +60,7 @@ function SignupPage() {
       toast.success("Login Successful");
       const currentDate = new Date().toISOString(); // Save date in ISO format
       localStorage.setItem("isLogin", currentDate);
+      localStorage.setItem("isBusiness", "true");
 
       const userId = response.data.verified.user.userId;
       const name = response.data.verified.user.name;
@@ -67,7 +68,7 @@ function SignupPage() {
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
 
-      router.push(`/user/${userId}`);
+      router.push("/getstarted");
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
@@ -77,13 +78,14 @@ function SignupPage() {
 
   useEffect(() => {
     const isLogin = localStorage.getItem("isLogin");
+    const isBusiness = localStorage.getItem("isBusiness");
     if (isLogin) {
       const loginDate = new Date(isLogin);
       const currentDate = new Date();
       const daysDifference =
         (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
-      if (daysDifference < 30) {
-        router.push("/search");
+      if (daysDifference < 30 && isBusiness == "true") {
+        router.back();
       }
     }
   }, [router]);
@@ -91,7 +93,7 @@ function SignupPage() {
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">
-        Let's onboard you
+        Let's onboard your Business
       </h3>
       <CustomInput
         type="text"
@@ -132,10 +134,10 @@ function SignupPage() {
         onClick={isSignupDone ? otpSubmit : signup}
       ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
-        Already user here ?{" "}
+        Business already register at Trustflag ?{" "}
         <Link
           className="underline underline-offset-2 text-accentOne"
-          href={"/signin"}
+          href={"/business/signin"}
         >
           Signin
         </Link>
