@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/card";
 import DashboardLayout from "@/components/DashboardLayout";
 import WidgetComponent from "./widgetCmp";
+import withAuth from "@/components/WithAuth";
 
-export default function WidgetSetupGuide() {
+const WidgetSetupGuide = () => {
   const [copied, setCopied] = useState(false);
   const [widgetCode, setWidgetCode] = useState("Loading widget code...");
 
@@ -111,3 +112,5 @@ export default function YourPage() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(WidgetSetupGuide);

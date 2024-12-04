@@ -4,6 +4,7 @@ import axios from "axios";
 import { Star } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import withAuth from "@/components/WithAuth";
 
 interface ReviewData {
   user: any;
@@ -192,4 +193,4 @@ const IntegratePage: React.FC = () => {
   );
 };
 
-export default IntegratePage;
+export default withAuth(IntegratePage);

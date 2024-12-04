@@ -1,5 +1,6 @@
 "use client";
 import CreateProject from "@/components/CreateProject";
+import withAuth from "@/components/WithAuth";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -31,4 +32,4 @@ function GetStartedPage() {
   );
 }
 
-export default GetStartedPage;
+export default withAuth(GetStartedPage);

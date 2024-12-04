@@ -55,6 +55,7 @@ function SigninPage() {
       toast.success("Login Successful");
       const currentDate = new Date().toISOString(); // Save date in ISO format
       localStorage.setItem("isLogin", currentDate);
+      localStorage.setItem("isBusiness", "true");
 
       const userId = response.data.verified.user.userId;
       const name = response.data.verified.user.name;
@@ -72,17 +73,17 @@ function SigninPage() {
 
   useEffect(() => {
     const isLogin = localStorage.getItem("isLogin");
+    const isBusiness = localStorage.getItem("isBusiness");
     if (isLogin) {
       const loginDate = new Date(isLogin);
       const currentDate = new Date();
       const daysDifference =
         (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
-      if (daysDifference < 30) {
-        router.push("/search");
+      if (daysDifference < 30 && isBusiness == "true") {
+        router.back();
       }
     }
   }, [router]);
-  
 
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">

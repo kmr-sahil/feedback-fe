@@ -7,8 +7,9 @@ import CustomLoader from "../../components/CustomLoader";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import toast from "react-hot-toast";
+import withAuth from "@/components/WithAuth";
 
-export default function InboxPage() {
+const InboxPage = () => {
   const [reviewData, setReviewData] = useState<any[]>([]);
   const [projectId, setProject] = useState<string | null>(null);
   const [skip, setSkip] = useState(0);
@@ -114,3 +115,5 @@ export default function InboxPage() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(InboxPage);

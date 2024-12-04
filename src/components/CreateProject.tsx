@@ -13,8 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categoryOptions, countryOptions } from "@/lib/options";
+import { useRouter } from "next/navigation";
 
 export default function CreateProject({ setIsCreate }: any) {
+  const router = useRouter();
   const [details, setDetails] = useState<{
     logoUrl: string;
     name: string;
@@ -44,8 +46,9 @@ export default function CreateProject({ setIsCreate }: any) {
       );
       //localStorage.clear();
       //fetchProjects();
-      setIsCreate(false);
       toast.success("Project created !");
+      router.push("/inbox")
+      setIsCreate(false);
     } catch (error) {
       console.error("Failed to create project:", error);
     }
