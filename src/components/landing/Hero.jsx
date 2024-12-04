@@ -25,12 +25,14 @@ function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button
-            size="lg"
-            className="bg-[#45474B] hover:bg-[#45474B]/90 text-white rounded-[0.5rem] px-8"
-          >
-            Sign up for free
-          </Button>
+          <a href="/business/signup">
+            <Button
+              size="lg"
+              className="bg-[#45474B] hover:bg-[#45474B]/90 text-white rounded-[0.5rem] px-8"
+            >
+              Start a Business Account
+            </Button>
+          </a>
           <Button
             size="lg"
             variant="outline"
@@ -41,7 +43,7 @@ function Hero() {
         </div>
 
         <p className="text-sm text-muted-foreground">
-          No credit card required.
+          No payments required. Everything for free.
         </p>
       </div>
 

@@ -200,14 +200,14 @@ export default function CompanySearch() {
           <div
             key={company.projectId}
             onClick={() => router.push(`review/${company.website}`)}
-            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B]"
+            className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B] object-cover"
           >
             <img
               src={company?.logoUrl || "/placeholder.svg"}
               alt={`${company.name} logo`}
               width={64}
               height={64}
-              className="object-contain"
+              className="object-cover"
             />
             <div className="flex-grow">
               <h2 className="text-xl font-semibold">{company.name}</h2>

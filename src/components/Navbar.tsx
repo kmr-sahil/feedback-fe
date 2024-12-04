@@ -88,9 +88,9 @@ export default function Navbar() {
                     </Link>
                     <button
                       onClick={() => {
-                        localStorage.removeItem("isLogin");
+                        localStorage.clear();
                         setIsLoggedIn(false);
-                        router.push("/login");
+                        router.push("/signin");
                       }}
                       className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
                     >

@@ -19,7 +19,10 @@ export default async function Home() {
 
       <Features />
 
-      <div className="w-full flex flex-col gap-[4rem] px-[4rem] justify-center items-center py-[10rem]" id="start">
+      <div
+        className="w-full flex flex-col gap-[4rem] px-[4rem] justify-center items-center py-[10rem]"
+        id="start"
+      >
         <img className="w-[5rem] rotate-12" src="/images/logo.svg" alt="" />
 
         <Balancer>
@@ -31,15 +34,17 @@ export default async function Home() {
             , with your{" "}
             <span className="bg-[#F4CE14] px-[0.75rem] sm:px-[1rem] rounded-[8px] sm:rounded-[12px] text-[#805f1c]">
               customers
-            </span>
-            {" "}today.
+            </span>{" "}
+            today.
           </h1>
         </Balancer>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button className="bg-[#45474B] hover:bg-[#45474B]/90 text-white rounded-[0.75rem] px-8 py-8 text-[1.5rem]">
-            Sign up for free
-          </Button>
+          <a href="/business/signup">
+            <Button className="bg-[#45474B] hover:bg-[#45474B]/90 text-white rounded-[0.75rem] px-8 py-8 text-[1.5rem]">
+              Start a Business Account
+            </Button>
+          </a>
           <Button
             variant="outline"
             className="rounded-[0.75rem] px-8 py-8 text-[1.5rem]"
