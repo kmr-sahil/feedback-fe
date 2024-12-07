@@ -133,7 +133,7 @@ export default function CompanyReviewPage() {
           asChild
         >
           <a
-            href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/`}
+            href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${companyData?.projectId}`}
             target="_blank"
           >
             Write a Review

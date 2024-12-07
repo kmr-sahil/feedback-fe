@@ -232,15 +232,20 @@ function SimpleFormPage() {
 
           <AnimatePresence mode="wait">
             {submitted ? (
-              <motion.div
-                className="text-[2rem] font-semibold text-center text-green-600 mt-[4rem]"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ duration: 0.5, type: "spring" }}
-              >
-                Thank you for your feedback!
-              </motion.div>
+              <>
+                <motion.div
+                  className="text-[2rem] font-semibold text-center text-green-600 mt-[4rem]"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                >
+                  Thank you for your feedback!
+                </motion.div>
+                <a href="/search" className="text-[0.65rem] text-zinc-400 text-center underline">
+                  Go back
+                </a>
+              </>
             ) : (
               <>
                 {showInputs ? (

@@ -195,7 +195,7 @@ export default function CompanySearch() {
         )}
       </div>
 
-      <div className="w-[100%] max-w-[70rem] mx-auto space-y-4 flex flex-col justify-center items-center px-[1rem]">
+      <div className="w-[100%] max-w-[60rem] mx-auto space-y-4 flex flex-col justify-center items-center px-[1rem]">
         {filteredCompanies.map((company) => (
           <div
             key={company.projectId}
@@ -211,8 +211,7 @@ export default function CompanySearch() {
             />
             <div className="flex-grow">
               <h2 className="text-xl font-semibold">{company.name}</h2>
-              <p className="text-sm text-gray-600">{company.category}</p>
-              <p className="text-sm text-gray-600">{company.country}</p>
+              <p className="text-sm text-gray-600">{company.category} {" " } {company.country}</p>
             </div>
             <div className="flex flex-col items-end">
               <div className="flex items-center">
