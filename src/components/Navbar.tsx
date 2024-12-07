@@ -101,7 +101,7 @@ export default function Navbar() {
               </div>
             ) : (
               <button
-                onClick={() => router.push("/login")}
+                onClick={() => router.push("/signin")}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Login
