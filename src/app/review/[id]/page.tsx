@@ -90,7 +90,7 @@ export default function CompanyReviewPage() {
     if (!website) return;
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/companydetails`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/company/details`,
         { params: { website } }
       );
       setCompanyData(res.data.company);

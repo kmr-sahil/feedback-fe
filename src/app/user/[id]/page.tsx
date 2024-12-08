@@ -65,7 +65,7 @@ function UserPage() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/userreviews/${userId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/reviews/${userId}`,
           {
             withCredentials: true,
             params: { page: currentPage, limit: 10 },

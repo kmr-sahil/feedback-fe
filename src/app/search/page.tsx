@@ -59,7 +59,7 @@ export default function CompanySearch() {
     }
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/companies`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/company`,
         {
           params: {
             searchTerm,

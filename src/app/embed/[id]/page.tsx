@@ -23,7 +23,7 @@ const TrustFlagFeedback = () => {
   const fetchFeedback = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sureefy?responseId=${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses/single?responseId=${id}`
       );
       console.log(response.data.response);
 

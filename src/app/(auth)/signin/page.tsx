@@ -65,7 +65,7 @@ function SigninPage() {
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
-      toast.error(`Error: ${error.response.data.error}`);
+      //toast.error(`Error: ${error.response.data.error}`);
     }
   };
 

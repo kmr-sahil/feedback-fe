@@ -24,7 +24,7 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
       try {
         const projectId = localStorage.getItem("projectId") || null;
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/projects`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`, {
           withCredentials: true,
         });
 
