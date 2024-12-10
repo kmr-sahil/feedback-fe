@@ -8,15 +8,17 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import toast from "react-hot-toast";
 import withAuth from "@/components/WithAuth";
+import { useSearchParams } from "next/navigation";
 
 const InboxPage = () => {
+  const searchParams = useSearchParams();
   const [reviewData, setReviewData] = useState<any[]>([]);
   const [projectId, setProject] = useState<string | null>(null);
   const [skip, setSkip] = useState(0);
   const [take] = useState(5);
   const [hasMore, setHasMore] = useState(true);
   const [isStats, setIsStats] = useState(true);
-  const [filter, setFilter] = useState(""); // Move the filter state here
+  const [filter, setFilter] = useState<any>(""); // Move the filter state here
   const [stats, setStats] = useState({
     issueCount: 0,
     likedCount: 0,
@@ -75,11 +77,22 @@ const InboxPage = () => {
   }, []);
 
   useEffect(() => {
+    const filterValue = searchParams.get("filter");
+
+    // Correct the capitalization and handle null/undefined cases
+    if (filterValue && filterValue !== "all") {
+      setFilter(filterValue.charAt(0).toUpperCase() + filterValue.slice(1));
+    } else {
+      setFilter("");
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     fetchReviews(skip !== 0);
   }, [projectId, skip, filter, fetchReviews]); // Add fetchReviews as a dependency
 
   return (
-    <DashboardLayout filter={filter} setFilter={setFilter}>
+    <DashboardLayout>
       <div className=" w-[100%] flex flex-col gap-[1.25rem]">
         <div className="flex gap-[1rem] items-center justify-start">
           <CustomInput label={""} type={"text"} placeholder="Search" />
@@ -114,6 +127,6 @@ const InboxPage = () => {
       </div>
     </DashboardLayout>
   );
-}
+};
 
 export default withAuth(InboxPage);

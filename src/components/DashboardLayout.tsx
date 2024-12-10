@@ -9,7 +9,7 @@ import CreateProject from "./CreateProject";
 import CustomButton from "./CustomButton";
 import toast from "react-hot-toast";
 
-export default function DashboardLayout({ children, filter, setFilter }: any) {
+export default function DashboardLayout({ children }: any) {
   const router = useRouter();
   const pathname = usePathname(); // Get current route
   const [activeProject, setActiveProject] = useState("Select Project");
@@ -24,9 +24,12 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
       try {
         const projectId = localStorage.getItem("projectId") || null;
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`,
+          {
+            withCredentials: true,
+          }
+        );
 
         const fetchedProjects = response.data.projects;
         setProjects(fetchedProjects);
@@ -71,24 +74,14 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
     { name: "Create New Project", value: "0", icon: <Plus size={16} /> },
   ];
 
-  const handleFilterClick = (filterValue: string) => {
-    if (pathname.startsWith("/form")) {
-      // If on a form route, don't use setFilter
-      router.push("/inbox");
-      console.log(`Filter ${filterValue} clicked, but ignored on form routes`);
-    } else if (typeof setFilter === "function") {
-      // Only call setFilter if it's a function (i.e., on inbox routes)
-      console.log(filterValue);
-      setFilter(filterValue);
-    }
-  };
-
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(
-        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${localStorage.getItem("projectId")}`
+        `${
+          process.env.NEXT_PUBLIC_FRONTEND_URL
+        }/feedback/${localStorage.getItem("projectId")}`
       );
-      toast.success("Copied")
+      toast.success("Copied");
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
@@ -122,49 +115,43 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
             </h2>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox" && filter == "" ? "bg-backgroundTwo" : ""
+                pathname == "/inbox?filter=all" ? "bg-backgroundTwo" : ""
               }`}
-              onClick={() => handleFilterClick("")}
+              onClick={() => router.push("/inbox?filter=all")}
             >
               All
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox" && filter == "Issue"
-                  ? "bg-backgroundTwo"
-                  : ""
+                pathname == "/inbox?filter=issue" ? "bg-backgroundTwo" : ""
               }`}
-              onClick={() => handleFilterClick("Issue")}
+              onClick={() => router.push("/inbox?filter=issue")}
             >
               Issue
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox" && filter == "Suggestion"
-                  ? "bg-backgroundTwo"
-                  : ""
+                pathname == "/inbox?filter=suggestion" ? "bg-backgroundTwo" : ""
               }`}
-              onClick={() => handleFilterClick("Suggestion")}
+              onClick={() => router.push("/inbox?filter=suggestion")}
             >
               Suggestion
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox" && filter == "Liked"
-                  ? "bg-backgroundTwo"
+                pathname == "/inbox?filter=liked"
+                  ? "bg-backgroundTwo?filter=liked"
                   : ""
               }`}
-              onClick={() => handleFilterClick("Liked")}
+              onClick={() => router.push("/inbox?filter=liked")}
             >
               Liked
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox" && filter == "Others"
-                  ? "bg-backgroundTwo"
-                  : ""
+                pathname == "/inbox?filter=others" ? "bg-backgroundTwo" : ""
               }`}
-              onClick={() => handleFilterClick("Others")}
+              onClick={() => router.push("/inbox?filter=others")}
             >
               Others
             </span>
@@ -206,7 +193,11 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
                 Start collecting reviews
               </h2>
               <div className="flex-grow"></div>
-              <CustomButton label={"Share Link"} onClick={() => handleCopyLink()} type="secondary"/>
+              <CustomButton
+                label={"Share Link"}
+                onClick={() => handleCopyLink()}
+                type="secondary"
+              />
             </div>
           </div>
         </nav>

@@ -93,7 +93,7 @@ function SignupPage() {
       const daysDifference =
         (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
       if (daysDifference < 30 && isBusiness == "true") {
-        router.back();
+        router.push('/inbox');
       }
     }
   }, [router]);
