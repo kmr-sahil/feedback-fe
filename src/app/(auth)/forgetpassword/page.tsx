@@ -17,6 +17,7 @@ function ForgetPasswordPage() {
   });
 
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,6 +29,7 @@ function ForgetPasswordPage() {
 
   const emailSubmit = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/forgotpass`,
         { email: details.email },
@@ -38,14 +40,17 @@ function ForgetPasswordPage() {
       toast.success("OTP sent successfully");
       console.log(response.data);
       setIsOtpSent(true); // Show additional inputs when OTP is sent
+      setLoading(false)
     } catch (error: any) {
       console.error("OTP error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
   const otpSubmit = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resetpass`,
         { email: details.email, otp: details.otp, newPassword: details.newpassword },
@@ -55,10 +60,12 @@ function ForgetPasswordPage() {
       );
       toast.success("Password Changed Successfully");
       router.push("/signin");
+      setLoading(false)
       console.log(response.data);
     } catch (error: any) {
       console.error("Password reset error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
@@ -111,6 +118,8 @@ function ForgetPasswordPage() {
       <CustomButton
         label={isOtpSent ? "Reset Password" : "Send OTP"}
         onClick={isOtpSent ? otpSubmit : emailSubmit}
+        loading={loading}
+        disabled={loading}
       />
 
       <p className="text-[14px] text-textTwo text-center">

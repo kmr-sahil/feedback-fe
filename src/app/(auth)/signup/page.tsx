@@ -16,6 +16,7 @@ function SignupPage() {
     otp: 0,
   });
 
+  const[loading, setLoading] = useState(false)
   const [isSignupDone, setIsSignupDone] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,7 @@ function SignupPage() {
 
   const signup = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
         {
@@ -42,14 +44,17 @@ function SignupPage() {
       toast.success("OTP sent Successful");
       console.log(response.data);
       setIsSignupDone(true);
+      setLoading(false)
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
   const otpSubmit = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
         { email: details.email, otp: details.otp },
@@ -68,10 +73,12 @@ function SignupPage() {
       localStorage.setItem("name", name);
 
       router.push(`/user/${userId}`);
+      setLoading(false)
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
@@ -130,6 +137,8 @@ function SignupPage() {
       <CustomButton
         label="Signup"
         onClick={isSignupDone ? otpSubmit : signup}
+        loading={loading}
+        disabled={loading}
       ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
         Already user here ?{" "}

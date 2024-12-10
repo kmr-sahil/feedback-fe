@@ -247,8 +247,8 @@ export default function DashboardLayout({ children, filter, setFilter }: any) {
                     <button
                       onClick={() => {
                         // Handle logout logic
-                        localStorage.removeItem("token");
-                        router.push("/login");
+                        localStorage.clear();
+                        router.push("/business/signin");
                       }}
                       className="block w-[100%] px-[0.5rem] py-2 text-sm text-start text-textOne hover:bg-backgroundThree rounded-[6px]"
                     >

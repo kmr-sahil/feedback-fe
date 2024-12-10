@@ -14,8 +14,8 @@ function SigninPage() {
     password: "",
     otp: 0,
   });
-
   const [isSignupDone, setIsSignupDone] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,6 +27,7 @@ function SigninPage() {
 
   const signin = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signin`,
         details,
@@ -37,14 +38,17 @@ function SigninPage() {
       toast.success("OTP sent successfully");
       console.log(response.data);
       setIsSignupDone(true);
+      setLoading(false)
     } catch (error: any) {
       console.error("Signin error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
   const otpSubmit = async () => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
         { email: details.email, otp: details.otp },
@@ -62,12 +66,13 @@ function SigninPage() {
 
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
-
+      setLoading(false)
       router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.error}`);
+      setLoading(false)
     }
   };
 
@@ -119,6 +124,8 @@ function SigninPage() {
       <CustomButton
         label={"Signin"}
         onClick={isSignupDone ? otpSubmit : signin}
+        loading={loading}
+        disabled={loading}
       ></CustomButton>
       <p className="text-[14px] text-textTwo text-center">
         New Business at Trustflag ?{" "}
