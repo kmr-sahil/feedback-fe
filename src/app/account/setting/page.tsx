@@ -1,167 +1,165 @@
 "use client";
 
-import { ArrowLeft, PencilSimple, Trash } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft } from "lucide-react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-export default function AccountSettings() {
+export default function UserPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [projects, setProjects] = useState([
-    { id: 1, name: "Project A" },
-    { id: 2, name: "Project B" },
-    { id: 3, name: "Project C" },
-  ]);
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
 
-  const deleteProject = (id: number) => {
-    setProjects(projects.filter((project) => project.id !== id));
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/self/data`,
+        { withCredentials: true }
+      );
+      console.log(response)
+        setName(response.data.name);
+        setEmail(response.data.email);
+      
+    } catch (error) {
+      toast.error("An error occurred while fetching user details");
+    }
   };
 
-  const editProject = (id: number) => {
-    // Placeholder for edit functionality
-    console.log(`Edit project with id: ${id}`);
+  const handleNameUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        toast.success("Name updated successfully");
+      } else {
+        toast.error("Failed to update name");
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating name");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      toast.error("New password and confirm password do not match");
+      return;
+    }
+    // if (newPassword.length < 8) {
+    //   toast.error("New password must be at least 8 characters long");
+    //   return;
+    // }
+    setIsLoading(true);
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/password`,
+        
+          { curr: currentPassword, newPass: newPassword },
+          { withCredentials: true }
+        
+      );
+        toast.success("Password changed successfully");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      
+    } catch (error:any) {
+      console.log(error)
+      toast.error(error.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center">
-        <button
-          className="mr-4 flex items-center text-blue-600 hover:text-blue-800"
-          onClick={() => router.back()}
-        >
-          <ArrowLeft size={32} />
-          Back
-        </button>
-        <h1 className="text-3xl font-bold">Account Settings</h1>
-      </div>
+    <div className="container mx-auto p-4 max-w-2xl">
+      <Button variant="ghost" className="mb-4" onClick={() => router.back()}>
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back
+      </Button>
+      <h1 className="text-2xl font-bold mb-6">Account Settings</h1>
 
-      <div className="space-y-12">
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Personal Information</h2>
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Your Name"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                placeholder="your.email@example.com"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
+      <form onSubmit={handleNameUpdate} className="mb-8">
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="name">Name</label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Change Password</h2>
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="current-password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Current Password
-              </label>
-              <input
-                id="current-password"
-                type="password"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="new-password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                New Password
-              </label>
-              <input
-                id="new-password"
-                type="password"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="confirm-password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm New Password
-              </label>
-              <input
-                id="confirm-password"
-                type="password"
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              Update Password
-            </button>
+          <div>
+            <label htmlFor="email">Email</label>
+            <Input id="email" value={email} disabled />
           </div>
-        </section>
+        </div>
+        <Button type="submit" className="mt-4" disabled={isLoading}>
+          {isLoading ? "Saving..." : "Save Changes"}
+        </Button>
+      </form>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-          <ul className="space-y-2">
-            {projects.map((project) => (
-              <li
-                key={project.id}
-                className="flex items-center justify-between bg-gray-100 p-3 rounded-md"
-              >
-                <span>{project.name}</span>
-                <div>
-                  <button
-                    onClick={() => editProject(project.id)}
-                    className="text-blue-600 hover:text-blue-800 mr-2"
-                    aria-label={`Edit ${project.name}`}
-                  >
-                    <PencilSimple size={32} />
-                  </button>
-                  <button
-                    onClick={() => deleteProject(project.id)}
-                    className="text-red-600 hover:text-red-800"
-                    aria-label={`Delete ${project.name}`}
-                  >
-                    <Trash size={32} />
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+      <hr />
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Danger Zone</h2>
-          <div className="bg-red-100 p-4 rounded-md">
-            <h3 className="text-lg font-semibold mb-2">Delete Account</h3>
-            <p className="mb-4">
-              Once you delete your account, there is no going back. Please be
-              certain.
-            </p>
-            <button className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-              Delete Account
-            </button>
-          </div>
-        </section>
-      </div>
+      <form onSubmit={handlePasswordChange} className="space-y-4">
+        <div>
+          <label htmlFor="currentPassword">Current Password</label>
+          <Input
+            id="currentPassword"
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="newPassword">New Password</label>
+          <Input
+            id="newPassword"
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Confirm New Password</label>
+          <Input
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Changing Password..." : "Change Password"}
+        </Button>
+      </form>
     </div>
   );
 }
