@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Bell, UserCircle, Plus } from "@phosphor-icons/react";
 import CustomSelect from "./CustomSelect";
 import axios from "axios";
-import { useRouter, usePathname } from "next/navigation"; // Import usePathname to detect the current route
+import { useRouter, usePathname, useSearchParams } from "next/navigation"; // Import usePathname to detect the current route
 import ThemeSwitch from "./ThemeSwitch";
 import CreateProject from "./CreateProject";
 import CustomButton from "./CustomButton";
@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 export default function DashboardLayout({ children }: any) {
   const router = useRouter();
   const pathname = usePathname(); // Get current route
+  const searchParams = useSearchParams();
+  const [filter, setFilter] = useState<any>("");
   const [activeProject, setActiveProject] = useState("Select Project");
   const [projects, setProjects] = useState<any[]>([]);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -51,6 +53,12 @@ export default function DashboardLayout({ children }: any) {
 
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    const filterValue = searchParams.get("filter");
+    setFilter(filterValue);
+    console.log(filterValue)
+  }, [searchParams]);
 
   const onOptionSelect = (projectId: string) => {
     if (projectId === "0") {
@@ -96,11 +104,11 @@ export default function DashboardLayout({ children }: any) {
       {isCreate && <CreateProject setIsCreate={setIsCreate} />}
 
       {/* Sidebar */}
-      <aside className="max-w-[20rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
-        {/* <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem]">
+      <aside className="w-[100%] max-w-[18rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
+         <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem] flex gap-[0.5rem] ">
           <img src="/images/logo.svg" alt="" />
           TrustFlag.in
-        </h1> */}
+        </h1> 
         <div className="relative">
           <CustomSelect
             options={selectOptions}
@@ -115,7 +123,7 @@ export default function DashboardLayout({ children }: any) {
             </h2>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox?filter=all" ? "bg-backgroundTwo" : ""
+                filter == "all" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=all")}
             >
@@ -123,7 +131,7 @@ export default function DashboardLayout({ children }: any) {
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox?filter=issue" ? "bg-backgroundTwo" : ""
+                filter == "issue" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=issue")}
             >
@@ -131,7 +139,7 @@ export default function DashboardLayout({ children }: any) {
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox?filter=suggestion" ? "bg-backgroundTwo" : ""
+                filter == "suggestion" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=suggestion")}
             >
@@ -139,7 +147,7 @@ export default function DashboardLayout({ children }: any) {
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox?filter=liked"
+                filter == "liked"
                   ? "bg-backgroundTwo?filter=liked"
                   : ""
               }`}
@@ -149,7 +157,7 @@ export default function DashboardLayout({ children }: any) {
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                pathname == "/inbox?filter=others" ? "bg-backgroundTwo" : ""
+                filter == "others" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=others")}
             >

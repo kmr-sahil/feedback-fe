@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { ShareNetwork } from "@phosphor-icons/react";
+import { ShareNetwork, Star } from "@phosphor-icons/react";
 import toast from "react-hot-toast";
 
 // Extend Day.js with the relativeTime plugin
@@ -26,16 +26,38 @@ function ReviewContainer({ data }: any) {
   return (
     <div
       key={data.responseId}
-      className="w-[100%] flex flex-col bg-backgroundOne border-2 border-backgroundThree rounded-[12px] p-[1.5rem] gap-[1rem] text-textOne"
+      className="w-[100%] flex flex-col bg-zinc-50 border-2 border-zinc-200 rounded-[12px] p-[1.5rem] gap-[1rem] text-zinc-700"
     >
       <div className="flex gap-[0.5rem] items-center">
         <span className="w-2 h-2 rounded-full bg-textTwo"></span>
         <p className="text-textTwo text-[0.75rem]">{data?.type}</p>
       </div>
       <div className="flex flex-col gap-[0.25rem]">
-        <h3 className="font-semibold text-textTwo">
-          {data.user.name ? data.user.name : "Anonymous"}
-        </h3>
+        <div className="font-semibold text-zinc-700 flex-col gap-[1rem]">
+          <div className="flex mb-2 items-center ml-[-0.25rem]">
+            {[...Array(5)].map((_, i) =>
+              i < (data?.star || 0) ? (
+                <svg
+                  key={i}
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 sm:h-6 sm:w-6 text-yellow-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ) : (
+                <span key={i} className="text-[16px] sm:text-[21px]">
+                  <Star
+                    //size={window.innerWidth >= 640 ? 28 : 21} // Dynamically set size
+                    fill={i < (data?.star || 0) ? "#FFD700" : "#ccc"}
+                  />
+                </span>
+              )
+            )}
+          </div>
+          <h3>{data.user.name ? data.user.name : "Anonymous"} </h3>
+        </div>
         <p className="text-[16px]">{data?.content}</p>
       </div>
       <div className="flex justify-between">
