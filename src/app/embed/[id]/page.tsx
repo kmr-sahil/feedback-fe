@@ -7,6 +7,7 @@ import React, { useEffect, useState, useCallback } from "react";
 
 // Define an interface for the feedback data
 interface FeedbackData {
+  user: any;
   star: number;
   name?: string; // Name could be optional, as you fallback to "Anonymous"
   content: string;
@@ -67,7 +68,7 @@ const TrustFlagFeedback = () => {
             {data.content}
           </h2>
           <span className="text-[#45474B] font-light mt-[0.5rem]">
-            {data.name || "Anonymous"}
+            {data.user.name || "Anonymous"}
           </span>
         </div>
       </div>

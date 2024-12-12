@@ -4,11 +4,13 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { ShareNetwork, Star } from "@phosphor-icons/react";
 import toast from "react-hot-toast";
+import DownloadImg from "./DownloadImg";
 
 // Extend Day.js with the relativeTime plugin
 dayjs.extend(relativeTime);
 
 function ReviewContainer({ data }: any) {
+  const [isDownload, setIsDownload] = useState("");
   const [isVisible, setIsVisible] = useState(false); // State to control visibility of the absolute div
 
   // Parse the createdAt date string
@@ -20,7 +22,7 @@ function ReviewContainer({ data }: any) {
   // Function to copy the link to clipboard
   const copyClipboard = (link: string) => {
     navigator.clipboard.writeText(link);
-    toast("Embed link copied to clipboard!"); // Optional feedback
+    toast.success("Embed link copied to clipboard!"); // Optional feedback
   };
 
   return (
@@ -28,6 +30,11 @@ function ReviewContainer({ data }: any) {
       key={data.responseId}
       className="w-[100%] flex flex-col bg-zinc-50 border-2 border-zinc-200 rounded-[12px] p-[1.5rem] gap-[1rem] text-zinc-700"
     >
+      {isDownload && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <DownloadImg id={isDownload} onClose={() => setIsDownload("")} />
+        </div>
+      )}
       <div className="flex gap-[0.5rem] items-center">
         <span className="w-2 h-2 rounded-full bg-textTwo"></span>
         <p className="text-textTwo text-[0.75rem]">{data?.type}</p>
@@ -74,9 +81,9 @@ function ReviewContainer({ data }: any) {
         >
           <ShareNetwork size={16} />
           {isVisible && (
-            <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-backgroundTwo rounded-[8px] p-[0.5rem]">
+            <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-zinc-100 rounded-[8px] p-[0.5rem] shadow-md">
               <span
-                className="hover:bg-backgroundThree rounded-[6px] text-[14px] w-[8rem] p-[0.5rem]"
+                className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] cursor-pointer"
                 onClick={() =>
                   copyClipboard(`
 <script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script>
@@ -96,9 +103,15 @@ function ReviewContainer({ data }: any) {
               >
                 Get embed link
               </span>
-              {/* <span className="hover:bg-backgroundThree rounded-[6px] text-[10px] w-[8rem] p-[0.5rem]">
-                More coming soon..
-              </span> */}
+              <span
+                className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] whitespace-nowrap cursor-pointer"
+                onClick={() => {
+                  console.log(data.responseId); // Debug log
+                  setIsDownload(data.responseId.toString());
+                }}
+              >
+                Download as an Image
+              </span>
             </div>
           )}
         </span>
