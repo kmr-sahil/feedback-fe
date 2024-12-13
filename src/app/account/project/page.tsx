@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/select";
 import { categoryOptions, countryOptions } from "@/lib/options";
 import FileUpload from "@/components/FileUpload";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Project {
   projectId: string;
@@ -28,6 +31,7 @@ interface Project {
 }
 
 export default function ProjectSettings() {
+  const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
   const [editedProjects, setEditedProjects] = useState<{
     [key: string]: Project;
@@ -111,16 +115,19 @@ export default function ProjectSettings() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Project Settings</h1>
+    <div className="container mx-auto p-4 max-w-[45rem]">
+      <Button variant="ghost" className="mb-4" onClick={() => router.back()}>
+        <ArrowLeft className="mr-2 h-4 w-4" /> Back
+      </Button>
+      <h1 className="text-2xl font-bold mb-6">Project Settings</h1>
       <div className="grid grid-cols-1 gap-4">
         {projects.map((project) => (
           <Card key={project.projectId} className="w-full">
             <CardHeader>
               <CardTitle>{project.name}</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col md:flex-row md:items-start md:space-x-4">
-              <div className="mb-4 md:mb-0">
+            <CardContent className="flex flex-col w-full items-start ">
+              <div className=" flex justify-between items-center w-full">
                 <img
                   src={
                     editedProjects[project.projectId]?.logoUrl ||
@@ -129,21 +136,26 @@ export default function ProjectSettings() {
                   alt={editedProjects[project.projectId]?.name}
                   width={100}
                   height={100}
-                  className="rounded-full"
+                  className="rounded-[12px] h-24 w-24"
                 />
-                <FileUpload
-                  setDetails={(update :any) => {
-                    setEditedProjects((prev) => ({
-                      ...prev,
-                      [project.projectId]: {
-                        ...prev[project.projectId],
-                        logoUrl: update.logoUrl, // Update only the logoUrl
-                      },
-                    }));
-                  }}
-                />
+                <div className="">
+                  <p className="text-zinc-500 text-xs mb-2 text-end pr-2">
+                    Update logo
+                  </p>
+                  <FileUpload
+                    setDetails={(update: any) => {
+                      setEditedProjects((prev) => ({
+                        ...prev,
+                        [project.projectId]: {
+                          ...prev[project.projectId],
+                          logoUrl: update.logoUrl, // Update only the logoUrl
+                        },
+                      }));
+                    }}
+                  />
+                </div>
               </div>
-              <div className="flex-grow space-y-4">
+              <div className="w-full flex-grow space-y-4 mt-4">
                 <Input
                   name="name"
                   value={editedProjects[project.projectId]?.name}
@@ -152,7 +164,7 @@ export default function ProjectSettings() {
                   }
                   placeholder="Project Name"
                 />
-                <textarea
+                <Textarea
                   name="description"
                   value={editedProjects[project.projectId]?.description || ""}
                   onChange={(e) =>
@@ -204,12 +216,15 @@ export default function ProjectSettings() {
                   disabled
                   placeholder="Website"
                 />
-                <Button
-                  onClick={() => handleUpdate(project.projectId)}
-                  disabled={!isProjectChanged(project.projectId)}
-                >
-                  Save
-                </Button>
+                <div className="w-full flex items-end justify-end">
+                  <Button
+                    className="bg-[#379777] "
+                    onClick={() => handleUpdate(project.projectId)}
+                    disabled={!isProjectChanged(project.projectId)}
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
