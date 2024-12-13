@@ -4,16 +4,7 @@ import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 interface FileUploadProps {
-  setDetails: React.Dispatch<
-    React.SetStateAction<{
-      logoUrl: string;
-      name: string;
-      description: string;
-      website: string;
-      country: string;
-      category: string;
-    }>
-  >;
+  setDetails: any;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ setDetails }) => {
@@ -51,9 +42,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ setDetails }) => {
         },
       });
 
-      // Update the logo URL in both local state and setDetails
-      setDetails((prevDetails) => ({ ...prevDetails, logoUrl: fileLink }));
+      // Update state and propagate changes
       setLogoUrl(fileLink);
+      setDetails({ logoUrl: fileLink });
       toast.success("File uploaded successfully");
     } catch (error) {
       toast.error("Error during file upload");

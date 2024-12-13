@@ -70,7 +70,7 @@ export default function Navbar() {
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                 >
                   <UserCircle className="h-6 w-6" />
-                  <ChevronDown className="h-4 w-4" />
+                  {/* <ChevronDown className="h-4 w-4" /> */}
                 </button>
                 {isProfileOpen && (
                   <div className="absolute top-full right-0 mt-2 w-40 bg-white border shadow-lg rounded-lg p-2 z-50">
