@@ -25,8 +25,9 @@ export default async function Home() {
       >
         <img className="w-[5rem] rotate-12" src="/images/logo.svg" alt="" />
 
-        <Balancer>
-          <h1 className="max-w-[60rem] mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight min-[120px]:leading-[3rem] md:leading-tight lg:leading-[5rem]">
+        <h1 className="max-w-[60rem] mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight min-[120px]:leading-[3rem] md:leading-tight lg:leading-[5rem]">
+          <Balancer>
+            {" "}
             Start building{" "}
             <span className="bg-[#379777] px-[0.75rem] sm:px-[1rem] rounded-[8px] sm:rounded-[12px] text-[#fff] ">
               Trust
@@ -35,9 +36,9 @@ export default async function Home() {
             <span className="bg-[#F4CE14] px-[0.75rem] sm:px-[1rem] rounded-[8px] sm:rounded-[12px] text-[#805f1c]">
               customers
             </span>{" "}
-            today.
-          </h1>
-        </Balancer>
+          </Balancer>
+          today.
+        </h1>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <a href="/business/signup">

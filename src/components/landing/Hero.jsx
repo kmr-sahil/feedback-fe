@@ -7,8 +7,8 @@ function Hero() {
   return (
     <div className="w-full flex flex-col justify-center items-center text-textColor text-center gap-4 pt-[10rem] px-[1rem] ">
       <div className="max-w-4xl mx-auto text-center space-y-6 mt-[rem]">
-        <Balancer>
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight leading-[3rem] md:leading-tight lg:leading-[6rem]">
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight leading-[3rem] md:leading-tight lg:leading-[6rem]">
+          <Balancer>
             Build{" "}
             <span className="bg-[#379777] pl-[0.75rem] pr-[0.95rem] sm:pl-[1rem] sm:pr-[1.5rem] rounded-[8px] sm:rounded-[12px] text-[#fff] ">
               Trust
@@ -17,8 +17,9 @@ function Hero() {
             <span className="bg-[#F4CE14] pl-[0.75rem] pr-[0.95rem] sm:pl-[1rem] sm:pr-[1.5rem] rounded-[8px] sm:rounded-[12px] text-[#805f1c]">
               Business
             </span>
-          </h1>
-        </Balancer>
+          </Balancer>
+        </h1>
+
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
           Easily collect, manage, and showcase customer feedback to boost
           credibility and attract more users.

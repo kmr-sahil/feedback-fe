@@ -264,6 +264,12 @@ export default function DashboardLayout({ children }: any) {
                       Manage Plan
                     </button>
                     <button
+                      onClick={() => router.push("/account/project")}
+                      className="block w-[100%] px-[0.5rem] py-2 text-sm text-start text-textOne hover:bg-backgroundThree rounded-[6px]"
+                    >
+                      Project Setting
+                    </button>
+                    <button
                       onClick={() => {
                         // Handle logout logic
                         localStorage.clear();
