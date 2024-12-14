@@ -41,7 +41,7 @@ function SigninPage() {
       setLoading(false)
     } catch (error: any) {
       console.error("Signin error:", error);
-      toast.error(`Error: ${error.response.data.error}`);
+      toast.error(`Error: ${error.response.data.message}`);
       setLoading(false)
     }
   };
@@ -71,7 +71,7 @@ function SigninPage() {
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
-      toast.error(`Error: ${error.response.data.error}`);
+      toast.error(`Error: ${error.response.data.message}`);
       setLoading(false)
     }
   };

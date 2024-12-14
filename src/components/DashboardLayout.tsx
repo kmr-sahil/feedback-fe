@@ -14,6 +14,7 @@ export default function DashboardLayout({ children }: any) {
   const pathname = usePathname(); // Get current route
   const searchParams = useSearchParams();
   const [filter, setFilter] = useState<any>("");
+  const [stats, setStats] = useState<any>();
   const [activeProject, setActiveProject] = useState("Select Project");
   const [projects, setProjects] = useState<any[]>([]);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ export default function DashboardLayout({ children }: any) {
 
   // Fetch projects from API or local storage
   useEffect(() => {
+    const projectId = localStorage.getItem("projectId") || null;
     const fetchProjects = async () => {
       try {
         const projectId = localStorage.getItem("projectId") || null;
@@ -52,12 +54,16 @@ export default function DashboardLayout({ children }: any) {
     };
 
     fetchProjects();
+    if (projectId != null) {
+      fetchStats(projectId);
+    }
   }, []);
 
   useEffect(() => {
     const filterValue = searchParams.get("filter");
+    //console.log(filterValue)
     setFilter(filterValue);
-    console.log(filterValue)
+    console.log(filterValue);
   }, [searchParams]);
 
   const onOptionSelect = (projectId: string) => {
@@ -95,6 +101,22 @@ export default function DashboardLayout({ children }: any) {
     }
   };
 
+  const fetchStats = async (projectId: any) => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/helper/stats?projectId=${projectId}`,
+        { withCredentials: true }
+      );
+
+      console.log(res);
+      setStats(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return <div></div>;
   }
@@ -105,10 +127,10 @@ export default function DashboardLayout({ children }: any) {
 
       {/* Sidebar */}
       <aside className="w-[100%] max-w-[18rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
-         <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem] flex gap-[0.5rem] ">
+        <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem] flex gap-[0.5rem] ">
           <img src="/images/logo.svg" alt="" />
           TrustFlag.in
-        </h1> 
+        </h1>
         <div className="relative">
           <CustomSelect
             options={selectOptions}
@@ -122,38 +144,36 @@ export default function DashboardLayout({ children }: any) {
               Inbox
             </h2>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                filter == "all" ? "bg-backgroundTwo" : ""
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+                filter == "all" || filter == null ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=all")}
             >
-              All
+              <p>All</p> <p className="text-xs font-medium text-zinc-400">{stats?.totalResponses}</p>
             </span>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 filter == "issue" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=issue")}
             >
-              Issue
+              <p>Issue</p> <p className="text-xs font-medium text-zinc-400">{stats?.issueCount}</p>
             </span>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 filter == "suggestion" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=suggestion")}
             >
-              Suggestion
+              <p>Suggestion</p> <p className="text-xs font-medium text-zinc-400">{stats?.suggestionCount}</p>
             </span>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                filter == "liked"
-                  ? "bg-backgroundTwo?filter=liked"
-                  : ""
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+                filter == "liked" ? "bg-backgroundTwo?filter=liked" : ""
               }`}
               onClick={() => router.push("/inbox?filter=liked")}
             >
-              Liked
+              <p>Liked</p> <p className="text-xs font-medium text-zinc-400">{stats?.likedCount}</p>
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
