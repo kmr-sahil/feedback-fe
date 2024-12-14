@@ -43,7 +43,7 @@ function ForgetPasswordPage() {
       setLoading(false)
     } catch (error: any) {
       console.error("OTP error:", error);
-      toast.error(`Error: ${error.response.data.error}`);
+      toast.error(`Error: ${error.response.data.message}`);
       setLoading(false)
     }
   };
@@ -64,7 +64,7 @@ function ForgetPasswordPage() {
       console.log(response.data);
     } catch (error: any) {
       console.error("Password reset error:", error);
-      toast.error(`Error: ${error.response.data.error}`);
+      toast.error(`Error: ${error.response.data.message}`);
       setLoading(false)
     }
   };
