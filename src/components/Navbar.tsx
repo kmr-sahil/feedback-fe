@@ -6,6 +6,8 @@ import { Menu, ChevronDown, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // Mobile sheet state
@@ -34,6 +36,28 @@ export default function Navbar() {
       setIsLoggedIn(false);
     }
   }, []);
+
+  const handleReviewRoute = async () => {
+    let userId: string = localStorage.getItem("userId") || "";
+    if (userId == null) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/giveId`,
+          {
+            withCredentials: true,
+          }
+        );
+
+        userId = response.data.userId;
+        localStorage.setItem("userId", userId);
+      } catch (error) {
+        console.log(error);
+        toast.error("Token expired, logout first and then login");
+      }
+    }
+
+    router.push(`/user/${userId}`);
+  };
 
   return (
     <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-20">
@@ -74,14 +98,14 @@ export default function Navbar() {
                 </button>
                 {isProfileOpen && (
                   <div className="absolute top-full right-0 mt-2 w-40 bg-white border shadow-lg rounded-lg p-2 z-50">
-                    <a
-                      href={`/user/${localStorage.getItem("userId")}`}
+                    <p
+                      onClick={() => handleReviewRoute()}
                       className="block px-4 py-2 text-sm hover:bg-gray-100"
                     >
                       My Reviews
-                    </a>
+                    </p>
                     <Link
-                      href="/settings"
+                      href="/account/setting"
                       className="block px-4 py-2 text-sm hover:bg-gray-100"
                     >
                       Settings

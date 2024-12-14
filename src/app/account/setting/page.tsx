@@ -188,10 +188,7 @@ export default function UserPage() {
         </Button>
       </form>
 
-      <form
-        onSubmit={handleNameUpdate}
-        className="mb-8 flex flex-col items-end bg-zinc-50 p-[1rem] rounded-[12px] shadow-sm"
-      ></form>
+      
     </div>
   );
 }
