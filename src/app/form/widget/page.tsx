@@ -46,7 +46,7 @@ const WidgetSetupGuide = () => {
 
   return (
     <DashboardLayout>
-      <WidgetComponent projectId={"1"} />
+      <WidgetComponent projectId={"04dcf530-a048-4795-bd0c-3609b7880e63"} />
       <div className="container mx-auto py-10">
         <h1 className="text-3xl font-bold mb-6">
           How to Implement the Feedback Widget
