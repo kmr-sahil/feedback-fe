@@ -71,11 +71,14 @@ export default function DashboardLayout({ children }: any) {
       // Logic for creating a new project
       setIsCreate(true);
     } else {
+      //console.log(projects)
       const selectedProject = projects.find((p) => p.projectId === projectId);
+      //console.log(selectedProject)
       setActiveProject(
         selectedProject ? selectedProject.name : "Select Project"
       );
       localStorage.setItem("projectId", projectId);
+      localStorage.setItem("projectWebsite", selectedProject.website);
       window.location.reload();
     }
   };
