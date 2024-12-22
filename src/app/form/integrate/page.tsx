@@ -208,7 +208,7 @@ const IntegratePage: React.FC = () => {
                     onClick={() =>
                       handleCopyText(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
                     }
-                    className="text-sm text-blue-500 underline"
+                    className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
                   >
                     Copy
                   </button>
@@ -224,7 +224,7 @@ const IntegratePage: React.FC = () => {
                         `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${projectId}`
                       )
                     }
-                    className="text-sm text-blue-500 underline"
+                    className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
                   >
                     Copy
                   </button>
