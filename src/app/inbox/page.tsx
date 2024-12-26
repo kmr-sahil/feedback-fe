@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import axios from "axios";
 import ReviewContainer from "@/components/ReviewContainer";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -92,6 +92,7 @@ const InboxPage = () => {
   }, [projectId, skip, filter, fetchReviews]); // Add fetchReviews as a dependency
 
   return (
+    <Suspense fallback={<CustomLoader />}>
     <DashboardLayout>
       <div className=" w-[100%] flex flex-col gap-[1.25rem]">
         <div className="flex gap-[1rem] items-center justify-start">
@@ -126,6 +127,7 @@ const InboxPage = () => {
         </div>
       </div>
     </DashboardLayout>
+    </Suspense>
   );
 };
 

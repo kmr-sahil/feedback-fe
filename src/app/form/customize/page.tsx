@@ -3,7 +3,7 @@ import CustomButton from "@/components/CustomButton";
 import CustomSwitch from "@/components/CustomSwitch";
 import DashboardLayout from "@/components/DashboardLayout";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 // Define type for adjustInputs state
@@ -88,6 +88,7 @@ const Customize: React.FC = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <DashboardLayout>
       <div className="bg-backgroundOne rounded-[12px] border-special border-backgroundTwo p-[1rem]">
         <div className="flex flex-col gap-[1rem]">
@@ -118,6 +119,7 @@ const Customize: React.FC = () => {
         </div>
       </div>
     </DashboardLayout>
+    </Suspense>
   );
 };
 
