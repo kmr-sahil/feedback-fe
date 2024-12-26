@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { ShareNetwork, Star } from "@phosphor-icons/react";
+import { Info, ShareNetwork, Star } from "@phosphor-icons/react";
 import toast from "react-hot-toast";
 import DownloadImg from "./DownloadImg";
 
@@ -11,7 +11,7 @@ dayjs.extend(relativeTime);
 
 function ReviewContainer({ data }: any) {
   const [isDownload, setIsDownload] = useState("");
-  const [isVisible, setIsVisible] = useState(false); // State to control visibility of the absolute div
+  const [isVisible, setIsVisible] = useState(""); // State to control visibility of the absolute div
 
   // Parse the createdAt date string
   const createdAt = dayjs(data.createdAt);
@@ -74,18 +74,33 @@ function ReviewContainer({ data }: any) {
             : createdAt.format("YYYY-MM-DD")}{" "}
           {/* Shows date in YYYY-MM-DD format for older dates */}
         </p>
-        <span
-          className="relative flex gap-[1rem] text-textOne"
-          onMouseEnter={() => setIsVisible(true)}
-          onMouseLeave={() => setIsVisible(false)}
-        >
-          <ShareNetwork size={16} />
-          {isVisible && (
-            <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-zinc-100 rounded-[8px] p-[0.5rem] shadow-md">
-              <span
-                className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] cursor-pointer"
-                onClick={() =>
-                  copyClipboard(`
+        <div className="flex gap-[1rem] items-center">
+          <span
+            className="relative flex gap-[1rem] text-textOne cursor-pointer"
+            onClick={() => setIsVisible(isVisible == "info" ? "" : "info")}
+          >
+            <Info size={18} />
+            {isVisible == "info" && (
+              <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-zinc-100 rounded-[8px] p-[0.5rem] shadow-md text-xs whitespace-nowrap">
+                <span>IP Address : {data.ip}</span>
+                <span>Location : {data.location}</span>
+                <span>
+                  Date of exp : {dayjs(data.doe).format("YYYY-MM-DD")}
+                </span>
+              </div>
+            )}
+          </span>
+          <span
+            className="relative flex gap-[1rem] text-textOne cursor-pointer"
+            onClick={() => setIsVisible(isVisible == "share" ? "" : "share")}
+          >
+            <ShareNetwork size={16} />
+            {isVisible == "share" && (
+              <div className="absolute bottom-[1rem] right-0 flex flex-col justify-start bg-zinc-100 rounded-[8px] p-[0.5rem] shadow-md">
+                <span
+                  className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] cursor-pointer"
+                  onClick={() =>
+                    copyClipboard(`
 <script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script>
 <iframe
   id="my-embed-widget"
@@ -99,22 +114,23 @@ function ReviewContainer({ data }: any) {
   iFrameResize({ log: false, checkOrigin: false }, "#my-embed-widget");
 </script>
 </iframe>`)
-                }
-              >
-                Get embed link
-              </span>
-              <span
-                className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] whitespace-nowrap cursor-pointer"
-                onClick={() => {
-                  console.log(data.responseId); // Debug log
-                  setIsDownload(data.responseId.toString());
-                }}
-              >
-                Download as an Image
-              </span>
-            </div>
-          )}
-        </span>
+                  }
+                >
+                  Get embed link
+                </span>
+                <span
+                  className="hover:bg-zinc-200 rounded-[6px] text-[12px] p-[0.5rem] whitespace-nowrap cursor-pointer"
+                  onClick={() => {
+                    console.log(data.responseId); // Debug log
+                    setIsDownload(data.responseId.toString());
+                  }}
+                >
+                  Download as an Image
+                </span>
+              </div>
+            )}
+          </span>
+        </div>
       </div>
     </div>
   );
