@@ -47,7 +47,14 @@ export default function DashboardLayout({ children }: any) {
             selectedProject ? selectedProject.name : "Select Project"
           );
         }
-      } catch (error) {
+      } catch (error:any) {
+        // here check if got 401 then redirect to login page
+        console.log("here ", error);
+        if (error.status === 401) {
+          localStorage.clear();
+          router.push("/business/signin");
+          return;
+        }
         console.error("Failed to fetch projects:", error);
       }
       setLoading(false);
@@ -152,7 +159,10 @@ export default function DashboardLayout({ children }: any) {
               }`}
               onClick={() => router.push("/inbox?filter=all")}
             >
-              <p>All</p> <p className="text-xs font-medium text-zinc-400">{stats?.totalResponses}</p>
+              <p>All</p>{" "}
+              <p className="text-xs font-medium text-zinc-400">
+                {stats?.totalResponses}
+              </p>
             </span>
             <span
               className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
@@ -160,7 +170,10 @@ export default function DashboardLayout({ children }: any) {
               }`}
               onClick={() => router.push("/inbox?filter=issue")}
             >
-              <p>Issue</p> <p className="text-xs font-medium text-zinc-400">{stats?.issueCount}</p>
+              <p>Issue</p>{" "}
+              <p className="text-xs font-medium text-zinc-400">
+                {stats?.issueCount}
+              </p>
             </span>
             <span
               className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
@@ -168,7 +181,10 @@ export default function DashboardLayout({ children }: any) {
               }`}
               onClick={() => router.push("/inbox?filter=suggestion")}
             >
-              <p>Suggestion</p> <p className="text-xs font-medium text-zinc-400">{stats?.suggestionCount}</p>
+              <p>Suggestion</p>{" "}
+              <p className="text-xs font-medium text-zinc-400">
+                {stats?.suggestionCount}
+              </p>
             </span>
             <span
               className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
@@ -176,7 +192,10 @@ export default function DashboardLayout({ children }: any) {
               }`}
               onClick={() => router.push("/inbox?filter=liked")}
             >
-              <p>Liked</p> <p className="text-xs font-medium text-zinc-400">{stats?.likedCount}</p>
+              <p>Liked</p>{" "}
+              <p className="text-xs font-medium text-zinc-400">
+                {stats?.likedCount}
+              </p>
             </span>
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${

@@ -41,7 +41,7 @@ function SigninPage() {
       setLoading(false)
     } catch (error: any) {
       console.error("Signin error:", error);
-      toast.error(`Error: ${error.response.data.message}`);
+      toast.error(`Error: ${error.response.data.error}`);
       setLoading(false)
     }
   };
@@ -70,7 +70,7 @@ function SigninPage() {
       router.push("/inbox");
       console.log(response.data);
     } catch (error: any) {
-      console.error("Signup error:", error);
+      console.error("Signin error:", error);
       toast.error(`Error: ${error.response.data.message}`);
       setLoading(false)
     }
