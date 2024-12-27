@@ -4,6 +4,7 @@ import "./globals.css";
 //import { Providers } from "./provider";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
+import { Providers } from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,27 +49,27 @@ export default function RootLayout({
         <title>Trustflag</title>
       </head>
       <body className={inter.className}>
-        {/* <Providers> */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-1M0DS4V64D"
-        ></Script>
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
+        <Providers>
+          <Script
+            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-1M0DS4V64D"
+          ></Script>
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-1M0DS4V64D');`}
-        </Script>
-        {children}{" "}
-        <Toaster
-          toastOptions={{
-            style: {
-              background: "",
-            },
-            className: "class",
-          }}
-        />
-        {/* </Providers> */}
+          </Script>
+          {children}{" "}
+          <Toaster
+            toastOptions={{
+              style: {
+                background: "",
+              },
+              className: "class",
+            }}
+          />
+        </Providers>
       </body>
     </html>
   );

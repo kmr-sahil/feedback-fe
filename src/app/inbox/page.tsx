@@ -9,42 +9,32 @@ import CustomButton from "@/components/CustomButton";
 import toast from "react-hot-toast";
 import withAuth from "@/components/WithAuth";
 import { useSearchParams } from "next/navigation";
+import { useProjectContext } from "../projectContext";
 
 const InboxPage = () => {
   const searchParams = useSearchParams();
   const [reviewData, setReviewData] = useState<any[]>([]);
-  const [projectId, setProject] = useState<string | null>(null);
   const [skip, setSkip] = useState(0);
   const [take] = useState(5);
   const [hasMore, setHasMore] = useState(true);
   const [isStats, setIsStats] = useState(true);
   const [filter, setFilter] = useState<any>(""); // Move the filter state here
-  const [stats, setStats] = useState({
-    issueCount: 0,
-    likedCount: 0,
-    suggestionCount: 0,
-    totalResponses: 0,
-  });
   const [loading, setLoading] = useState(true); // Load state
+  const { activeProject } = useProjectContext();
 
   // Memoize fetchReviews using useCallback
   const fetchReviews = useCallback(
     async (appendData = false) => {
-      if (!projectId) return; // Ensure projectId is set before making the request
+      if (!activeProject) return; // Ensure projectId is set before making the request
       setLoading(true); // Start loading
 
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${projectId}&skip=${skip}&take=${take}&filter=${filter}&getStats=${isStats}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${activeProject}&skip=${skip}&take=${take}&filter=${filter}`,
           { withCredentials: true }
         );
 
         const { responses } = res.data;
-
-        if (isStats) {
-          const { stats } = res.data;
-          setStats(stats);
-        }
         setReviewData((prev) =>
           appendData ? [...prev, ...responses] : responses
         );
@@ -56,25 +46,8 @@ const InboxPage = () => {
         setLoading(false); // Stop loading after the request is done
       }
     },
-    [projectId, skip, take, filter, isStats] // Add dependencies
+    [activeProject, skip, take, filter, isStats] // Add dependencies
   );
-
-  useEffect(() => {
-    const loginDate = localStorage.getItem("isLogin");
-
-    if (loginDate) {
-      setLoading(true);
-      const storedProjectId = localStorage.getItem("projectId");
-      if (storedProjectId) {
-        setProject(storedProjectId);
-      }
-      setLoading(false);
-    } else {
-      console.log("No login date found.");
-      toast.error("Log in again please");
-      window.location.href = "/signin";
-    }
-  }, []);
 
   useEffect(() => {
     const filterValue = searchParams.get("filter");
@@ -89,7 +62,7 @@ const InboxPage = () => {
 
   useEffect(() => {
     fetchReviews(skip !== 0);
-  }, [projectId, skip, filter, fetchReviews]); // Add fetchReviews as a dependency
+  }, [activeProject, skip, filter, fetchReviews]); // Add fetchReviews as a dependency
 
   return (
     <Suspense fallback={<CustomLoader />}>

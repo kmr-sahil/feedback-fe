@@ -8,85 +8,28 @@ import ThemeSwitch from "./ThemeSwitch";
 import CreateProject from "./CreateProject";
 import CustomButton from "./CustomButton";
 import toast from "react-hot-toast";
+import { useProjectContext } from "../app/projectContext";
 
 export default function DashboardLayout({ children }: any) {
   const router = useRouter();
   const pathname = usePathname(); // Get current route
   const searchParams = useSearchParams();
   const [filter, setFilter] = useState<any>("");
-  const [stats, setStats] = useState<any>();
-  const [activeProject, setActiveProject] = useState("Select Project");
-  const [projects, setProjects] = useState<any[]>([]);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [isCreate, setIsCreate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch projects from API or local storage
-  useEffect(() => {
-    const projectId = localStorage.getItem("projectId") || null;
-    const fetchProjects = async () => {
-      try {
-        const projectId = localStorage.getItem("projectId") || null;
-
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        const fetchedProjects = response.data.projects;
-        setProjects(fetchedProjects);
-
-        // Set the active project name if projectId exists
-        if (projectId) {
-          const selectedProject = fetchedProjects.find(
-            (p: any) => p.projectId === projectId
-          );
-          setActiveProject(
-            selectedProject ? selectedProject.name : "Select Project"
-          );
-        }
-      } catch (error:any) {
-        // here check if got 401 then redirect to login page
-        console.log("here ", error);
-        if (error.status === 401) {
-          localStorage.clear();
-          router.push("/business/signin");
-          return;
-        }
-        console.error("Failed to fetch projects:", error);
-      }
-      setLoading(false);
-    };
-
-    fetchProjects();
-    if (projectId != null) {
-      fetchStats(projectId);
-    }
-  }, []);
-
-  useEffect(() => {
-    const filterValue = searchParams.get("filter");
-    //console.log(filterValue)
-    setFilter(filterValue);
-    console.log(filterValue);
-  }, [searchParams]);
+  const { activeProject, setActiveProject, projects, stats } = useProjectContext();
+  const [isCreate, setIsCreate] = React.useState(false);
 
   const onOptionSelect = (projectId: string) => {
     if (projectId === "0") {
-      // Logic for creating a new project
       setIsCreate(true);
     } else {
-      //console.log(projects)
       const selectedProject = projects.find((p) => p.projectId === projectId);
-      //console.log(selectedProject)
       setActiveProject(
+        projectId,
         selectedProject ? selectedProject.name : "Select Project"
       );
-      localStorage.setItem("projectId", projectId);
-      localStorage.setItem("projectWebsite", selectedProject.website);
-      window.location.reload();
     }
   };
 
@@ -97,6 +40,15 @@ export default function DashboardLayout({ children }: any) {
     })),
     { name: "Create New Project", value: "0", icon: <Plus size={16} /> },
   ];
+
+  useEffect(() => {
+    console.log("heheeh - ", projects);
+    const filterValue = searchParams.get("filter");
+    //console.log(filterValue)
+    setFilter(filterValue);
+    console.log(filterValue);
+
+  }, [searchParams]);
 
   const handleCopyLink = async () => {
     try {
@@ -111,24 +63,14 @@ export default function DashboardLayout({ children }: any) {
     }
   };
 
-  const fetchStats = async (projectId: any) => {
-    try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/helper/stats?projectId=${projectId}`,
-        { withCredentials: true }
-      );
-
-      console.log(res);
-      setStats(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <div></div>;
+  // Show loader if data is being fetched or no projects
+  if (loading || projects.length == 0) {
+    console.log(loading, "122", projects.length);
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -144,7 +86,6 @@ export default function DashboardLayout({ children }: any) {
         <div className="relative">
           <CustomSelect
             options={selectOptions}
-            default={activeProject}
             onOptionSelect={onOptionSelect}
           />
         </div>
