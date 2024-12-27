@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface ProjectContextProps {
   activeProject: string | null;
-  setActiveProject: (projectId: string, projectName: string) => void;
+  setActiveProject: (projectId: string, projectName: string, website:string) => void;
   projects: any[];
   fetchProjects: () => void;
   stats: any;
@@ -31,11 +31,11 @@ export const ProjectProvider = ({
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`,
         { withCredentials: true }
       );
-      console.log("Projects:", response.data.projects);
-      // Only set active project if none is currently set
+         
       if (!activeProject && response.data.projects.length > 0) {
+        
         const firstProject = response.data.projects[0];
-        setActiveProject(firstProject.projectId, firstProject.name);
+        setActiveProject(firstProject.projectId, firstProject.name, firstProject.website);
       }
       setProjects(response.data.projects);
     } catch (error: any) {
@@ -62,8 +62,9 @@ export const ProjectProvider = ({
     }
   };
 
-  const setActiveProject = (projectId: string, projectName: string) => {
+  const setActiveProject = (projectId: string, projectName: string, website: string) => {
     setActiveProjectState(projectId);
+    localStorage.setItem("website", website);
     // Add additional project-related logic if needed
   };
 

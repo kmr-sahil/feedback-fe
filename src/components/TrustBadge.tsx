@@ -1,4 +1,5 @@
 "use client";
+import { useProjectContext } from "@/app/projectContext";
 import { Star } from "@phosphor-icons/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -6,15 +7,17 @@ import toast from "react-hot-toast";
 
 export default function TrustBadge() {
   const [data, setData] = useState<any>();
+    const { activeProject} = useProjectContext();
 
   // Fetch company details
   useEffect(() => {
-    const website = localStorage.getItem("projectWebsite") || null;
+    const website = localStorage.getItem("website") || null;
 
     fetchCompanyDetails(website);
-  }, []);
+  }, [activeProject]);
 
   const fetchCompanyDetails = async (website: any) => {
+    console.log("chh",website)
     if (!website) return;
     try {
       const res = await axios.get(

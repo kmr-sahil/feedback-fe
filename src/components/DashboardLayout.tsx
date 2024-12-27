@@ -25,10 +25,11 @@ export default function DashboardLayout({ children }: any) {
     if (projectId === "0") {
       setIsCreate(true);
     } else {
-      const selectedProject = projects.find((p) => p.projectId === projectId);
+      const selectedProject = projects.find((p) => p.projectId == projectId);
       setActiveProject(
         projectId,
-        selectedProject ? selectedProject.name : "Select Project"
+        selectedProject ? selectedProject.name : "Select Project",
+        selectedProject.website
       );
       
     }
@@ -53,10 +54,11 @@ export default function DashboardLayout({ children }: any) {
 
   const handleCopyLink = async () => {
     try {
+      console.log("hehewrggeh - ", activeProject);
       await navigator.clipboard.writeText(
         `${
           process.env.NEXT_PUBLIC_FRONTEND_URL
-        }/feedback/${localStorage.getItem("projectId")}`
+        }/feedback/${activeProject ?? ''}`
       );
       toast.success("Copied");
     } catch (err) {
