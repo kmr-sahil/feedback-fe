@@ -6,6 +6,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import withAuth from "@/components/WithAuth";
 import TrustBadge from "@/components/TrustBadge";
+import { useProjectContext } from "@/app/projectContext";
 
 interface ReviewData {
   user: any;
@@ -16,18 +17,16 @@ interface ReviewData {
 
 const IntegratePage: React.FC = () => {
   const [reviewData, setReviewData] = useState<ReviewData[]>([]);
-  const [projectId, setProject] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [reviewsCount, setReviewsCount] = useState<number>(3); // Default to 3 reviews
   const [message, setMessage] = useState("");
+  const { activeProject } = useProjectContext();
 
   const fetchReviews = async () => {
     setLoading(true);
     try {
-      const storedProjectId = localStorage.getItem("projectId");
-      setProject(storedProjectId);
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${storedProjectId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${activeProject}`,
         {
           withCredentials: true,
         }
@@ -111,13 +110,14 @@ const IntegratePage: React.FC = () => {
   };
 
   useEffect(() => {
-    const website = localStorage.getItem("projectId") || null;
-    if (website != null) {
+    
+    if (activeProject) {
       fetchReviews();
+      setMessage("");
     } else {
       setMessage("Select project first!");
     }
-  }, [projectId]);
+  }, [activeProject]);
 
   const handleCopyText = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -203,7 +203,7 @@ const IntegratePage: React.FC = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-700 text-sm">
-                      API Key:<span className="pl-2">{projectId} </span>
+                      API Key:<span className="pl-2">{activeProject} </span>
                     </span>
                     <button
                       onClick={() =>
@@ -217,12 +217,12 @@ const IntegratePage: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-700 text-sm">
                       API URL:{" "}
-                      <span className="pl-2">{`https://trustflag.in/responses?projectId=${projectId}`}</span>{" "}
+                      <span className="pl-2">{`https://trustflag.in/responses?projectId=${activeProject}`}</span>{" "}
                     </span>
                     <button
                       onClick={() =>
                         handleCopyText(
-                          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${projectId}`
+                          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${activeProject}`
                         )
                       }
                       className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"

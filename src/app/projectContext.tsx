@@ -8,7 +8,7 @@ interface ProjectContextProps {
   setActiveProject: (projectId: string, projectName: string) => void;
   projects: any[];
   fetchProjects: () => void;
-  stats: any
+  stats: any;
 }
 
 const ProjectContext = createContext<ProjectContextProps | undefined>(
@@ -32,6 +32,11 @@ export const ProjectProvider = ({
         { withCredentials: true }
       );
       console.log("Projects:", response.data.projects);
+      // Only set active project if none is currently set
+      if (!activeProject && response.data.projects.length > 0) {
+        const firstProject = response.data.projects[0];
+        setActiveProject(firstProject.projectId, firstProject.name);
+      }
       setProjects(response.data.projects);
     } catch (error: any) {
       if (error.status === 401) {
@@ -71,7 +76,13 @@ export const ProjectProvider = ({
 
   return (
     <ProjectContext.Provider
-      value={{ activeProject, setActiveProject, projects, fetchProjects, stats }}
+      value={{
+        activeProject,
+        setActiveProject,
+        projects,
+        fetchProjects,
+        stats,
+      }}
     >
       {children}
     </ProjectContext.Provider>

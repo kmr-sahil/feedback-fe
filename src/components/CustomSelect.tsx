@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { CaretDown } from "@phosphor-icons/react";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -19,7 +19,9 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
   default: defaultOption = "",
   onOptionSelect,
 }) => {
-  const [activeOption, setActiveOption] = useState(defaultOption);
+  const [activeOption, setActiveOption] = useState<string | undefined>(
+    options.find((option) => option.value === defaultOption)?.name
+  );
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -30,8 +32,12 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
   };
 
   useEffect(() => {
-    setActiveOption(defaultOption);
-  }, [defaultOption]);
+    // Update the active option when the default value changes
+    const newActiveOption = options.find(
+      (option) => option.value === defaultOption
+    )?.name;
+    setActiveOption(newActiveOption || "Select option");
+  }, [defaultOption, options]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,7 +49,8 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (

@@ -30,6 +30,7 @@ export default function DashboardLayout({ children }: any) {
         projectId,
         selectedProject ? selectedProject.name : "Select Project"
       );
+      
     }
   };
 
@@ -86,6 +87,7 @@ export default function DashboardLayout({ children }: any) {
         <div className="relative">
           <CustomSelect
             options={selectOptions}
+            default={activeProject ?? ""}
             onOptionSelect={onOptionSelect}
           />
         </div>
