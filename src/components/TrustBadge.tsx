@@ -17,7 +17,6 @@ export default function TrustBadge() {
   }, [activeProject]);
 
   const fetchCompanyDetails = async (website: any) => {
-    console.log("chh",website)
     if (!website) return;
     try {
       const res = await axios.get(

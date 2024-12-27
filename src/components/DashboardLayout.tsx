@@ -16,9 +16,9 @@ export default function DashboardLayout({ children }: any) {
   const searchParams = useSearchParams();
   const [filter, setFilter] = useState<any>("");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const { activeProject, setActiveProject, projects, stats } = useProjectContext();
+  const { activeProject, setActiveProject, projects, stats } =
+    useProjectContext();
   const [isCreate, setIsCreate] = React.useState(false);
 
   const onOptionSelect = (projectId: string) => {
@@ -31,7 +31,6 @@ export default function DashboardLayout({ children }: any) {
         selectedProject ? selectedProject.name : "Select Project",
         selectedProject.website
       );
-      
     }
   };
 
@@ -44,21 +43,20 @@ export default function DashboardLayout({ children }: any) {
   ];
 
   useEffect(() => {
-    console.log("heheeh - ", projects);
+    //console.log("heheeh - ", projects);
     const filterValue = searchParams.get("filter");
     //console.log(filterValue)
     setFilter(filterValue);
-    console.log(filterValue);
-
+    //console.log(filterValue);
   }, [searchParams]);
 
   const handleCopyLink = async () => {
     try {
       console.log("hehewrggeh - ", activeProject);
       await navigator.clipboard.writeText(
-        `${
-          process.env.NEXT_PUBLIC_FRONTEND_URL
-        }/feedback/${activeProject ?? ''}`
+        `${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedback/${
+          activeProject ?? ""
+        }`
       );
       toast.success("Copied");
     } catch (err) {
@@ -67,8 +65,7 @@ export default function DashboardLayout({ children }: any) {
   };
 
   // Show loader if data is being fetched or no projects
-  if (loading || projects.length == 0) {
-    console.log(loading, "122", projects.length);
+  if (projects.length == 0) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p>Loading...</p>
@@ -100,7 +97,9 @@ export default function DashboardLayout({ children }: any) {
             </h2>
             <span
               className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                filter == "all" || filter == null ? "bg-backgroundTwo" : ""
+                filter == "all" || (filter == null && pathname == "/inbox")
+                  ? "bg-backgroundTwo"
+                  : ""
               }`}
               onClick={() => router.push("/inbox?filter=all")}
             >
@@ -133,7 +132,7 @@ export default function DashboardLayout({ children }: any) {
             </span>
             <span
               className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
-                filter == "liked" ? "bg-backgroundTwo?filter=liked" : ""
+                filter == "liked" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=liked")}
             >
@@ -164,14 +163,14 @@ export default function DashboardLayout({ children }: any) {
             >
               Widget
             </span>
-            <span
+            {/* <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 pathname === "/form/customize" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/form/customize")}
             >
               Customize
-            </span>
+            </span> */}
             <span
               className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
                 pathname === "/form/integrate" ? "bg-backgroundTwo" : ""
