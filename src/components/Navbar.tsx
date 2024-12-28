@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Article, GearSix, SignOut } from "@phosphor-icons/react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // Mobile sheet state
@@ -39,8 +40,10 @@ export default function Navbar() {
 
   const handleReviewRoute = async () => {
     let userId: string = localStorage.getItem("userId") || "";
-    if (userId == null) {
+    console.log(userId)
+    if (userId == null || userId == "") {
       try {
+        console.log("here")
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/giveId`,
           {
@@ -50,12 +53,13 @@ export default function Navbar() {
 
         userId = response.data.userId;
         localStorage.setItem("userId", userId);
+        console.log("here1")
       } catch (error) {
         console.log(error);
         toast.error("Token expired, logout first and then login");
       }
     }
-
+    console.log("here2")
     router.push(`/user/${userId}`);
   };
 
@@ -97,18 +101,18 @@ export default function Navbar() {
                   {/* <ChevronDown className="h-4 w-4" /> */}
                 </button>
                 {isProfileOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-40 bg-white border shadow-lg rounded-lg p-2 z-50">
+                  <div className="absolute top-full right-0 mt-2 min-w-[8rem] bg-zinc-50 border shadow-lg rounded-lg p-[0.35rem] z-50 cursor-pointer">
                     <p
                       onClick={() => handleReviewRoute()}
-                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      className="flex items-center gap-[0.35rem] px-1 py-[0.35rem] text-sm hover:bg-zinc-100"
                     >
-                      My Reviews
+                      <Article size={14} /> My Reviews
                     </p>
                     <Link
                       href="/account/setting"
-                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      className="flex items-center gap-[0.35rem] px-1 py-[0.35rem] text-sm hover:bg-zinc-100"
                     >
-                      Settings
+                      <GearSix size={14} /> Settings
                     </Link>
                     <button
                       onClick={() => {
@@ -116,9 +120,9 @@ export default function Navbar() {
                         setIsLoggedIn(false);
                         router.push("/signin");
                       }}
-                      className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
+                      className="flex items-center gap-[0.35rem] px-1 py-[0.35rem] text-sm hover:bg-zinc-100 w-full text-left"
                     >
-                      Logout
+                      <SignOut size={14} /> Logout
                     </button>
                   </div>
                 )}

@@ -72,13 +72,13 @@ export default function DashboardLayout({ children }: any) {
   };
 
   // Show loader if data is being fetched or no projects
-  if (projects.length == 0) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  // if (projects.length == 0) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <p>Loading...</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="h-screen flex text-textOne">

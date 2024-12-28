@@ -147,7 +147,7 @@ export default function CompanyReviewPage() {
           <div className="bg-[#379777] p-[0.75rem] md:p-[2rem] rounded-[16px] mt-[5rem] sm:mt-[4rem] md:mt-[2rem]">
             <div className="flex sm:flex-row justify-between items-center text-[#F5F7F8]">
               <div className="flex items-center gap-[0.5rem]  md:gap-[1rem]">
-                <div className="w-10 h-10 sm:w-16 sm:h-16 bg-zinc-100 rounded-full overflow-hidden flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-16 sm:h-16 bg-zinc-100 rounded-md overflow-hidden flex items-center justify-center">
                   {companyData.logoUrl ? (
                     <img
                       src={companyData.logoUrl || ""}
@@ -156,7 +156,7 @@ export default function CompanyReviewPage() {
                     />
                   ) : (
                     <span className="text-[1.1rem] font-bold text-[#45474B]">
-                      {companyData.name?.charAt(0)}
+                      {companyData.website[0]}
                     </span>
                   )}
                 </div>
@@ -166,7 +166,10 @@ export default function CompanyReviewPage() {
                     target="_blank"
                     className="text-[1rem] sm:text-3xl font-bold flex gap-[0.5rem]"
                   >
-                    {companyData.name}{" "}
+                    {(companyData?.name || companyData.website.split(".")[0])
+                    .charAt(0)
+                    .toUpperCase() +
+                    (companyData?.name || companyData.website.split(".")[0]).slice(1)}
                     <span>
                       <ArrowSquareOut size={16} />
                     </span>
@@ -255,7 +258,7 @@ export default function CompanyReviewPage() {
               <div className="relative h-[600px] overflow-y-auto pr-4 mb-16 rounded-[16px] p-[1rem]">
                 <div className="space-y-4">
                   {reviews.length == 0
-                    ? "No responses"
+                    ? "No responses. Be the First one to review!"
                     : reviews.map((review) => (
                         <div
                           key={review.responseId}
