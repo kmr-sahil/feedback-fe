@@ -115,7 +115,7 @@ export default function TrustBadge() {
 </div>`;
 
   return (
-    <div className="w-full relative bg-zinc-100 border-[1px] border-zinc-200 rounded-[12px] flex justify-center items-center p-[1rem]">
+    <div className="w-full relative bg-zinc-100 border-2 border-zinc-200 rounded-[12px] flex justify-center items-center p-[1rem]">
       {data ? (
         <div className=" rounded-8px border-[1px] border-zinc-200 p-[1rem] bg-zinc-50 rounded-[12px] flex flex-col-reverse sm:flex-row sm:gap-[1.5rem] shadow-sm">
           <div className="flex gap-2 items-end mt-[0.5rem] sm:mt-0">

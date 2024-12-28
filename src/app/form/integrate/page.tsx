@@ -110,7 +110,6 @@ const IntegratePage: React.FC = () => {
   };
 
   useEffect(() => {
-    
     if (activeProject) {
       fetchReviews();
       setMessage("");
@@ -128,118 +127,122 @@ const IntegratePage: React.FC = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <DashboardLayout>
-        <div>
-          {message ? (
-            <div>{message}</div>
-          ) : (
-            <>
-              <div className="relative bg-zinc-100 border-special border-backgroundTwo rounded-[12px] p-[1rem] flex flex-col items-center justify-center gap-[1rem]">
-                {loading ? (
-                  <p>Loading...</p>
-                ) : reviewsToShow.length > 0 ? (
-                  <div className="w-[100%] flex flex-wrap gap-[1rem] justify-center">
-                    {reviewsToShow.map((review, index) => (
-                      <div
-                        key={index}
-                        className="min-w-[15rem] md:w-[30%] flex-grow flex flex-col gap-[1rem] p-[1rem] justify-start items-start bg-zinc-50 border-[2px] border-zinc-200 rounded-[8px] relative"
+      <div className="w-full max-w-[70rem] mx-auto">
+        <DashboardLayout>
+          <div>
+            {message ? (
+              <div>{message}</div>
+            ) : (
+              <div className="flex flex-col gap-[2rem]">
+                <div className="relative bg-zinc-100 border-2 border-zinc-200 rounded-[12px] p-[1rem] flex flex-col items-center justify-center gap-[1rem]">
+                  {loading ? (
+                    <p>Loading...</p>
+                  ) : reviewsToShow.length > 0 ? (
+                    <div className="w-[100%] flex flex-wrap gap-[1rem] justify-center">
+                      {reviewsToShow.map((review, index) => (
+                        <div
+                          key={index}
+                          className="min-w-[15rem] md:w-[30%] flex-grow flex flex-col gap-[1rem] p-[1rem] justify-start items-start bg-zinc-50 border-[2px] border-zinc-200 rounded-[8px] relative"
+                        >
+                          <div className="flex gap-[0.15rem] mr-auto">
+                            {Array.from(
+                              { length: review.star || 0 },
+                              (_, index) => (
+                                <Star
+                                  key={index}
+                                  size={32}
+                                  weight="fill"
+                                  className="text-[#F4CE14]"
+                                />
+                              )
+                            )}
+                          </div>
+
+                          <div className="flex flex-col mr-auto">
+                            <h2 className="font-medium text-[#45474B] text-[0.85rem]">
+                              {review.content}
+                            </h2>
+                            <span className="text-[#45474B] font-light mt-[0.5rem] text-[0.85rem]">
+                              {review.user.name || "Anonymous"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No reviews available.</p>
+                  )}
+
+                  <div className="absolute bottom-2 right-2 flex gap-2 text-xs">
+                    <select
+                      value={reviewsCount}
+                      onChange={(e) => setReviewsCount(Number(e.target.value))}
+                      className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600"
+                    >
+                      <option value={3}>3 Reviews</option>
+                      <option value={6}>6 Reviews</option>
+                    </select>
+                    <button
+                      onClick={handleCopyCode}
+                      className=" px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600"
+                    >
+                      Copy Code
+                    </button>
+                  </div>
+                </div>
+
+                 {/* <hr className="my-[1rem] bg-zinc-100" /> */}
+
+                <TrustBadge />
+
+                {/* API Info Section */}
+                <div className="w-full p-4 bg-zinc-50 border border-zinc-200 rounded-lg">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    API Information
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Use the following API key and URL to fetch reviews for your
+                    project:
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 text-sm">
+                        API Key:<span className="pl-2">{activeProject} </span>
+                      </span>
+                      <button
+                        onClick={() =>
+                          handleCopyText(
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}`
+                          )
+                        }
+                        className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
                       >
-                        <div className="flex gap-[0.15rem] mr-auto">
-                          {Array.from(
-                            { length: review.star || 0 },
-                            (_, index) => (
-                              <Star
-                                key={index}
-                                size={32}
-                                weight="fill"
-                                className="text-[#F4CE14]"
-                              />
-                            )
-                          )}
-                        </div>
-
-                        <div className="flex flex-col mr-auto">
-                          <h2 className="font-medium text-[#45474B] text-[1.1rem]">
-                            {review.content}
-                          </h2>
-                          <span className="text-[#45474B] font-light mt-[0.5rem]">
-                            {review.user.name || "Anonymous"}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No reviews available.</p>
-                )}
-
-                <div className="absolute bottom-2 right-2 flex gap-2 text-xs">
-                  <select
-                    value={reviewsCount}
-                    onChange={(e) => setReviewsCount(Number(e.target.value))}
-                    className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600"
-                  >
-                    <option value={3}>3 Reviews</option>
-                    <option value={6}>6 Reviews</option>
-                  </select>
-                  <button
-                    onClick={handleCopyCode}
-                    className=" px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600"
-                  >
-                    Copy Code
-                  </button>
-                </div>
-              </div>
-
-              {/* API Info Section */}
-              <div className="w-full p-4 bg-zinc-50 border border-zinc-200 rounded-lg mt-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  API Information
-                </h3>
-                <p className="text-sm text-gray-600 mb-1">
-                  Use the following API key and URL to fetch reviews for your
-                  project:
-                </p>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 text-sm">
-                      API Key:<span className="pl-2">{activeProject} </span>
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopyText(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
-                      }
-                      className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
-                    >
-                      Copy
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 text-sm">
-                      API URL:{" "}
-                      <span className="pl-2">{`https://trustflag.in/responses?projectId=${activeProject}`}</span>{" "}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopyText(
-                          `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${activeProject}`
-                        )
-                      }
-                      className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
-                    >
-                      Copy
-                    </button>
+                        Copy
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 text-sm">
+                        API URL:{" "}
+                        <span className="pl-2">{`https://trustflag.in/responses?projectId=${activeProject}`}</span>{" "}
+                      </span>
+                      <button
+                        onClick={() =>
+                          handleCopyText(
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/responses?projectId=${activeProject}`
+                          )
+                        }
+                        className="px-2 py-1 rounded-sm bg-zinc-200 border-[1px] border-zinc-300 bg-opacity-70 text-zinc-600 text-xs"
+                      >
+                        Copy
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <hr className="my-[1rem] bg-zinc-400" />
-
-              <TrustBadge />
-            </>
-          )}
-        </div>
-      </DashboardLayout>
+            )}
+          </div>
+        </DashboardLayout>
+      </div>
     </Suspense>
   );
 };
