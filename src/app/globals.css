@@ -5,7 +5,7 @@
 :root {
   --body-color: 242, 242, 242;
   --background-1: 245, 245, 245;
-  --background-2: 235,235,235;
+  --background-2: 235, 235, 235;
   --background-3: 224, 224, 224;
   --accent-1: 22, 64, 214;
   --accent-2: 224, 244, 255;
@@ -16,7 +16,7 @@
 }
 
 .dark {
-  --body-color: 37,32,32;
+  --body-color: 37, 32, 32;
   --background-1: 49, 43, 43;
   --background-2: 50, 50, 50;
   --background-3: 77, 66, 66;
@@ -108,23 +108,25 @@ input:focus {
   }
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #dfdcdc;
-  border-radius: 4px;
-}
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #8f8e8e;
-}
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #dfdcdc;
+    border-radius: 4px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8f8e8e;
+  }
+

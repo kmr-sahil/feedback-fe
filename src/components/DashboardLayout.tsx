@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Bell, UserCircle, Plus } from "@phosphor-icons/react";
+import { Bell, UserCircle, Plus, PaperPlaneTilt } from "@phosphor-icons/react";
 import CustomSelect from "./CustomSelect";
 import axios from "axios";
 import { useRouter, usePathname, useSearchParams } from "next/navigation"; // Import usePathname to detect the current route
@@ -78,8 +78,8 @@ export default function DashboardLayout({ children }: any) {
       {isCreate && <CreateProject setIsCreate={setIsCreate} />}
 
       {/* Sidebar */}
-      <aside className="w-[100%] max-w-[18rem] bg-backgroundOne border-r-2 border-r-backgroundThree p-[1.5rem] overflow-y-scroll">
-        <h1 className="text-xl font-semibold pl-[1rem] mb-[2rem] flex gap-[0.5rem] ">
+      <aside className="w-[100%] max-w-[17rem] border-r-2 border-r-backgroundThree p-[1rem] overflow-y-scroll customscroll text-sm">
+        <h1 className="text-lg font-semibold mb-[2rem] flex gap-[0.5rem] ">
           <img src="/images/logo.svg" alt="" />
           TrustFlag.in
         </h1>
@@ -90,13 +90,13 @@ export default function DashboardLayout({ children }: any) {
             onOptionSelect={onOptionSelect}
           />
         </div>
-        <nav className="flex flex-col gap-[1rem]">
+        <nav className="flex flex-col gap-[rem] text-zinc-600 h-min-screen">
           <div className="flex flex-col">
-            <h2 className="text-[0.85rem] font-semibold mt-[2rem] text-textTwo">
+            <h2 className="text-[0.85rem] font-semibold mt-[2rem] text-zinc-400">
               Inbox
             </h2>
             <span
-              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 filter == "all" || (filter == null && pathname == "/inbox")
                   ? "bg-backgroundTwo"
                   : ""
@@ -109,7 +109,7 @@ export default function DashboardLayout({ children }: any) {
               </p>
             </span>
             <span
-              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 filter == "issue" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=issue")}
@@ -120,7 +120,7 @@ export default function DashboardLayout({ children }: any) {
               </p>
             </span>
             <span
-              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 filter == "suggestion" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=suggestion")}
@@ -131,7 +131,7 @@ export default function DashboardLayout({ children }: any) {
               </p>
             </span>
             <span
-              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`flex justify-between w-full items-center px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 filter == "liked" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=liked")}
@@ -142,7 +142,7 @@ export default function DashboardLayout({ children }: any) {
               </p>
             </span>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 filter == "others" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/inbox?filter=others")}
@@ -152,11 +152,11 @@ export default function DashboardLayout({ children }: any) {
           </div>
 
           <div className="flex flex-col">
-            <h2 className="text-[0.85rem] font-semibold  mt-[2rem] text-textTwo">
+            <h2 className="text-[0.85rem] font-semibold  mt-[2rem] text-zinc-400">
               Collect and Display
             </h2>
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 pathname === "/form/widget" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/form/widget")}
@@ -172,7 +172,7 @@ export default function DashboardLayout({ children }: any) {
               Customize
             </span> */}
             <span
-              className={`px-[0.5rem] py-[0.5rem] text-textOne rounded-[6px] cursor-pointer ${
+              className={`px-[0.5rem] py-[0.5rem] rounded-[6px] cursor-pointer ${
                 pathname === "/form/integrate" ? "bg-backgroundTwo" : ""
               }`}
               onClick={() => router.push("/form/integrate")}
@@ -181,17 +181,15 @@ export default function DashboardLayout({ children }: any) {
             </span>
           </div>
 
-          <div className="w-full max-w-md mx-auto bg-backgroundOne rounded-[12px] overflow-hidden border-[2px] border-backgroundThree">
-            <div className="p-[1rem] flex flex-col h-full">
-              <h2 className="text-[0.9rem] text-start mb-4">
-                Start collecting reviews
+          <div className="w-full mt-[2rem] rounded-[12px] overflow-hidden border-[2px] border-zinc-200 bg-zinc-50">
+            <div className="p-[0.75rem] flex flex-col gap-[0.5rem]">
+              <h2 className="text-[0.75rem] text-start ">
+                Start collecting reviews, with ease and simplicity. Copy the link below
               </h2>
               <div className="flex-grow"></div>
-              <CustomButton
-                label={"Share Link"}
-                onClick={() => handleCopyLink()}
-                type="secondary"
-              />
+              <button onClick={() => handleCopyLink()} className="bg-[#379777] px-[1rem] py-[0.4rem] text-white rounded-[6px] text-[0.75rem] flex gap-[0.5rem] justify-center items-center">
+                Share now <PaperPlaneTilt size={14} />
+              </button>
             </div>
           </div>
         </nav>
@@ -199,18 +197,18 @@ export default function DashboardLayout({ children }: any) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <header className="bg-backgroundOne border-b-2 border-backgroundThree">
-          <div className="flex items-center justify-between px-[3.5rem] py-[1rem]">
-            <h1 className="font-semibold">Dashboard</h1>
-            <div className="flex items-center space-x-4">
+        <header className=" border-b-2 border-backgroundThree">
+          <div className="flex items-center justify-between px-[1rem] py-[1rem]">
+            <h1 className="font-semibold"></h1>
+            <div className="flex items-center space-x-4 text-zinc-700">
               <ThemeSwitch />
-              <button className="text-textOne">
+              <button className="">
                 <Bell size={24} />
               </button>
               <div className="relative">
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center text-textOne"
+                  className="flex items-center "
                 >
                   <UserCircle size={24} />
                 </button>
@@ -253,7 +251,7 @@ export default function DashboardLayout({ children }: any) {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto p-[3rem]">{children}</main>
+        <main className="flex-1 overflow-y-auto p-[1.5rem]">{children}</main>
       </div>
     </div>
   );

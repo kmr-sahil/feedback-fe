@@ -66,8 +66,9 @@ const InboxPage = () => {
 
   return (
     <Suspense fallback={<CustomLoader />}>
+      <div className="w-full max-w-[70rem] mx-auto">
     <DashboardLayout>
-      <div className=" w-[100%] flex flex-col gap-[1.25rem]">
+      <div className=" w-[100%] flex flex-col gap-[1.25rem] customscroll">
         <div className="flex gap-[1rem] items-center justify-start">
           <CustomInput label={""} type={"text"} placeholder="Search" />
           <CustomButton label={"Filter"} type="secondary" />
@@ -100,6 +101,7 @@ const InboxPage = () => {
         </div>
       </div>
     </DashboardLayout>
+    </div>
     </Suspense>
   );
 };

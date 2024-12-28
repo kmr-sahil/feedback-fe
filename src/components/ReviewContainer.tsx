@@ -63,9 +63,9 @@ function ReviewContainer({ data }: any) {
               )
             )}
           </div>
-          <h3>{data.user.name ? data.user.name : "Anonymous"} </h3>
+          <h3 className="text-[0.85rem]">{data.user.name ? data.user.name : "Anonymous"} </h3>
         </div>
-        <p className="text-[16px]">{data?.content}</p>
+        <p className="text-[0.95rem]">{data?.content}</p>
       </div>
       <div className="flex justify-between">
         <p className="text-[12px] font-light text-textTwo">

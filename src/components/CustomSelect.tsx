@@ -57,7 +57,7 @@ const CustomSelect: React.FC<ISelectCompProps> = ({
     <div className="relative" ref={selectRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-[100%] flex justify-between items-center px-4 py-2 bg-backgroundTwo border-2 border-backgroundThree rounded-[8px]"
+        className="w-[100%] flex justify-between items-center px-4 py-2 bg-zinc-50 border-2 border-zinc-200 rounded-[8px]"
       >
         {activeOption || "Select option"}
         <span className={`ml-2 ${open ? "rotate-180" : ""}`}>

@@ -20,14 +20,14 @@ function CustomInput({
 }: CustomInput) {
   return (
     <div className="flex flex-col gap-[0.5rem] text-textOne text-[1rem]">
-      {label && <label className="font-medium text-textTwo">{label}</label>}
+      {label && <label className="font-medium text-zinc-700">{label}</label>}
       <input
         type={type}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="px-[0.75rem] py-[0.5rem] rounded-[8px] text-textColor bg-backgroundTwo ring-1 ring-inset ring-backgroundThree placeholder:text-textTwo focus:ring-1 focus:ring-inset focus:ring-accentOne focus:shadow-[0px_0px_4px_1px] focus:shadow-accentOne"
+        className="px-[0.75rem] py-[0.4rem] rounded-[8px] text-zinc-700 bg-zinc-50 ring-[1.5px] ring-inset ring-zinc-200 placeholder:text-zinc-500 focus:ring-1 focus:ring-inset focus:ring-[#379777]"
       />
     </div>
   );
