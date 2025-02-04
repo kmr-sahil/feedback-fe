@@ -1,28 +1,21 @@
 "use client"
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useProjectContext } from "@/app/projectContext";
 
 const withAuth = (WrappedComponent :any) => {
   const AuthenticatedComponent = (props :any) => {
     const router = useRouter();
 
-    useEffect(() => {
-      const isLogin = localStorage.getItem('isLogin');
-      const isBusiness = localStorage.getItem('isBusiness');
+    const {isAuth, loading} = useProjectContext(); // true means authenticated user and false means not
 
-      if (isLogin) {
-        const loginDate = new Date(isLogin);
-        const currentDate = new Date();
-        const daysDifference =
-          (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
+    if(loading) {
+      return <div></div>;
+    }
 
-        if (daysDifference > 30 && isBusiness != 'true') {
-          router.back(); // Redirect back if conditions are met
-        }
-      } else {
-        router.push('/business/signin'); // Redirect to login if not authenticated
-      }
-    }, [router]);
+    if(!isAuth && !loading) {
+      router.push('/business/signin');
+    }
 
     return <WrappedComponent {...props} />;
   };

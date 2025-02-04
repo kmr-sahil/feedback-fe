@@ -4,6 +4,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 interface ProjectContextProps {
+  isAuth: boolean;
+  loading: boolean;
   activeProject: string | null;
   setActiveProject: (projectId: string, projectName: string, website:string) => void;
   projects: any[];
@@ -24,6 +26,8 @@ export const ProjectProvider = ({
   const [projects, setProjects] = useState<any[]>([]);
   const [activeProject, setActiveProjectState] = useState<string | null>(null);
   const [stats, setStats] = useState<any>();
+  const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchProjects = async () => {
     try {
@@ -38,10 +42,12 @@ export const ProjectProvider = ({
         setActiveProject(firstProject.projectId, firstProject.name, firstProject.website);
       }
       setProjects(response.data.projects);
+      setIsAuth(true);
     } catch (error: any) {
-      if (error.status === 401) {
-        localStorage.clear();
-        router.push("/business/signin");
+      if (error.status == 401) {
+        // localStorage.clear();
+        // router.push("/business/signin");
+        setIsAuth(false);
       } else {
         console.error("Failed to fetch projects:", error);
       }
@@ -69,15 +75,19 @@ export const ProjectProvider = ({
   };
 
   useEffect(() => {
+    setLoading(true)
     fetchProjects();
     if (activeProject) {
       fetchStats(activeProject);
     }
+    setLoading(false);
   }, [activeProject]);
 
   return (
     <ProjectContext.Provider
       value={{
+        isAuth,
+        loading,
         activeProject,
         setActiveProject,
         projects,
