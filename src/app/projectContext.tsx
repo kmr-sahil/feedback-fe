@@ -7,7 +7,11 @@ interface ProjectContextProps {
   isAuth: boolean;
   loading: boolean;
   activeProject: string | null;
-  setActiveProject: (projectId: string, projectName: string, website:string) => void;
+  setActiveProject: (
+    projectId: string,
+    projectName: string,
+    website: string
+  ) => void;
   projects: any[];
   fetchProjects: () => void;
   stats: any;
@@ -35,22 +39,29 @@ export const ProjectProvider = ({
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/user`,
         { withCredentials: true }
       );
-         
+
       if (!activeProject && response.data.projects.length > 0) {
-        
         const firstProject = response.data.projects[0];
-        setActiveProject(firstProject.projectId, firstProject.name, firstProject.website);
+        setActiveProject(
+          firstProject.projectId,
+          firstProject.name,
+          firstProject.website
+        );
       }
+
       setProjects(response.data.projects);
       setIsAuth(true);
     } catch (error: any) {
-      if (error.status == 401) {
-        // localStorage.clear();
-        // router.push("/business/signin");
+      if (error.status === 401) {
         setIsAuth(false);
       } else {
         console.error("Failed to fetch projects:", error);
       }
+    } finally {
+      // Delay setting loading to ensure isAuth is set first
+      setTimeout(() => {
+        setLoading(false);
+      }, 100); // Small delay to allow state updates
     }
   };
 
@@ -61,26 +72,30 @@ export const ProjectProvider = ({
         { withCredentials: true }
       );
 
-      console.log(res);
       setStats(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const setActiveProject = (projectId: string, projectName: string, website: string) => {
+  const setActiveProject = (
+    projectId: string,
+    projectName: string,
+    website: string
+  ) => {
     setActiveProjectState(projectId);
     localStorage.setItem("website", website);
-    // Add additional project-related logic if needed
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetchProjects();
+  }, []);
+
+  useEffect(() => {
     if (activeProject) {
       fetchStats(activeProject);
     }
-    setLoading(false);
   }, [activeProject]);
 
   return (

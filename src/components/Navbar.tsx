@@ -9,41 +9,30 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Article, GearSix, SignOut } from "@phosphor-icons/react";
+import { useProjectContext } from "@/app/projectContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // Mobile sheet state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuth, loading } = useProjectContext();
+
   const [isProfileOpen, setIsProfileOpen] = useState(false); // Profile dropdown state
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Check login status from localStorage
   useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
-
-    if (isLogin) {
-      const loginDate = new Date(isLogin);
-      const currentDate = new Date();
-      const daysDifference = Math.floor(
-        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24)
-      );
-
-      if (daysDifference <= 30) {
-        setIsLoggedIn(true);
-      } else {
-        localStorage.removeItem("isLogin");
-        setIsLoggedIn(false);
-      }
-    } else {
-      setIsLoggedIn(false);
+    if (isAuth && !loading) {
+      setIsLoggedIn(true);
     }
-  }, []);
+  }, [isAuth, loading]);
+
 
   const handleReviewRoute = async () => {
     let userId: string = localStorage.getItem("userId") || "";
-    console.log(userId)
+    console.log(userId);
     if (userId == null || userId == "") {
       try {
-        console.log("here")
+        console.log("here");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/giveId`,
           {
@@ -53,13 +42,13 @@ export default function Navbar() {
 
         userId = response.data.userId;
         localStorage.setItem("userId", userId);
-        console.log("here1")
+        console.log("here1");
       } catch (error) {
         console.log(error);
         toast.error("Token expired, logout first and then login");
       }
     }
-    console.log("here2")
+    console.log("here2");
     router.push(`/user/${userId}`);
   };
 

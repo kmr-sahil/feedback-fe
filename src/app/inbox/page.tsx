@@ -6,7 +6,6 @@ import DashboardLayout from "@/components/DashboardLayout";
 import CustomLoader from "../../components/CustomLoader";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
-import toast from "react-hot-toast";
 import withAuth from "@/components/WithAuth";
 import { useSearchParams } from "next/navigation";
 import { useProjectContext } from "../projectContext";

@@ -80,7 +80,9 @@ function SigninPage() {
 
   useEffect(() => {
     if (isAuth && !load) {
-      router.push("/inbox");
+      localStorage.getItem("isBusiness")
+        ? router.push("/inbox")
+        : router.push("/search");
     }
   }, [isAuth, load]);
 

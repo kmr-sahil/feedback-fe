@@ -1,19 +1,23 @@
-"use client"
-import { useRouter } from 'next/navigation';
+"use client";
+import { useRouter } from "next/navigation";
 import { useProjectContext } from "@/app/projectContext";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
-const withAuth = (WrappedComponent :any) => {
-  const AuthenticatedComponent = (props :any) => {
+const withAuth = (WrappedComponent: any) => {
+  const AuthenticatedComponent = (props: any) => {
     const router = useRouter();
+    const { isAuth, loading } = useProjectContext();
 
-    const {isAuth, loading} = useProjectContext(); // true means authenticated user and false means not
+    useEffect(() => {
+      if (!loading && !isAuth) {
+        toast.error("Please login to access this page");
+        router.push("/business/signin");
+      }
+    }, [isAuth, loading]); // Ensure it only triggers when loading is done
 
-    if(loading) {
+    if (loading) {
       return <div></div>;
-    }
-
-    if(!isAuth && !loading) {
-      router.push('/business/signin');
     }
 
     return <WrappedComponent {...props} />;
