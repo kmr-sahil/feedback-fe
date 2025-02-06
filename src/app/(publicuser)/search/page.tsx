@@ -123,10 +123,9 @@ export default function CompanySearch() {
   });
 
   return (
-    <div className="flex flex-col relative gap-[1rem] justify-center items-center ">
-      <Navbar />
-      <div className="w-full flex flex-col justify-center items-center space-y-4 bg-[#379777] px-[1rem] pt-[6rem] sm:pt-[4rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] md:pt-[5rem] md:pb-[3rem] text-white">
-        <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:my-[3rem] md:my-[4rem] md:leading-[3rem] mx-auto">
+    <div className="flex flex-col relative gap-[1rem] justify-center items-center px-[1rem]">
+      <div className=" relative w-full flex flex-col justify-center items-center space-y-4 bg-[#379777] px-[1rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] mt-[6rem] md:pb-[3rem] text-white rounded-[1rem]">
+        <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:my-[2rem] md:my-[3rem] md:leading-[3rem] mx-auto">
           <Balancer>
             Browse{" "}
             <span className="bg-[#F4CE14] px-[0.75rem] rounded-[8px] text-[#805f1c]">
@@ -228,7 +227,7 @@ export default function CompanySearch() {
               might not be listed on Trustflag yet. Add them and be the first to
               write a review!
             </h3>
-            <div className="flex gap-[1rem]">
+            <div className="flex gap-[1rem] flex-col sm:flex-row">
               {" "}
               <CustomInput
                 label={""}
@@ -245,7 +244,7 @@ export default function CompanySearch() {
             <div
               key={company.projectId}
               onClick={() => router.push(`review/${company.website}`)}
-              className="w-[100%] cursor-pointer flex items-center space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B] object-cover"
+              className="w-[100%] cursor-pointer flex items-start space-x-4 p-4 border-[2px] border-zinc-200 rounded-[12px] bg-white text-[#45474B] object-cover"
             >
               {company?.logoUrl ? (
                 <img
@@ -260,14 +259,22 @@ export default function CompanySearch() {
                   {company.website[0]}
                 </div>
               )}
-              <div className="flex-grow">
+              <div className="flex-grow flex flex-col items-start justify-start">
                 <h2 className="text-lg font-semibold">
                   {(company?.name || company.website.split(".")[0])
                     .charAt(0)
                     .toUpperCase() +
                     (company?.name || company.website.split(".")[0]).slice(1)}
                 </h2>
-                <p className="text-sm text-gray-600">
+                <a
+                  href={`https://${company.website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline text-xs"
+                >
+                  {company.website}
+                </a>
+                <p className="text-xs text-gray-600">
                   {company?.category} {company?.country}
                 </p>
               </div>
@@ -285,14 +292,14 @@ export default function CompanySearch() {
                     {company.avgRating ? company.avgRating.toFixed(1) : 0}
                   </span>
                 </div>
-                <a
+                {/* <a
                   href={`https://${company.website}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
+                  className="text-blue-600 hover:underline text-xs"
                 >
                   Visit Website
-                </a>
+                </a> */}
               </div>
             </div>
           ))

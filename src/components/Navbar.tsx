@@ -54,7 +54,7 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-2 left-0 w-full flex justify-center px-2 py-2 z-20">
-      <div className="w-[90%] max-w-[1200px] bg-white rounded-[1rem] border shadow-sm">
+      <div className="w-[100%] max-w-[64rem] bg-white rounded-[1rem] border shadow-sm ">
         <div className="flex h-14 items-center justify-between px-4">
           {/* Logo Section */}
           <a href="/" className="flex items-center gap-2">

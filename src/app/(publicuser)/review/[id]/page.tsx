@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import CustomLoader from "@/components/CustomLoader";
 import { Checkbox } from "@/components/ui/checkbox";
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 
 // Interfaces for type safety
@@ -140,7 +139,7 @@ export default function CompanyReviewPage() {
           </a>
         </Button>
       </div>
-      <Navbar />
+      
       {companyData && (
         <>
           {/* Company Info */}
@@ -314,8 +313,8 @@ export default function CompanyReviewPage() {
                               )
                             )}
                           </div>
-                          <p className="mb-2">{review.content}</p>
-                          <div className="text-sm text-muted-foreground mb-2">
+                          <p className="mb-2 text-sm sm:text-[0.95rem]">{review.content}</p>
+                          <div className="text-xs sm:text-sm text-muted-foreground mb-2">
                             Reviewed on{" "}
                             {new Date(review.doe).toLocaleDateString()}
                           </div>

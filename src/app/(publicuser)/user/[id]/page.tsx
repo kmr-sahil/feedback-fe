@@ -99,7 +99,6 @@ function UserPage() {
 
   return (
     <div className="max-w-[75rem] mx-auto p-[1rem] flex flex-col gap-[2rem] relative">
-      <Navbar />
       {/* User Info */}
       <div className="bg-[#379777] rounded-[12px] border-[2px] border-zinc-200 flex gap-[1rem] items-center p-4 mt-[5rem]">
         <span className="text-zinc-200 font-semibold w-10 h-10 sm:w-20 sm:h-20 bg-zinc-50 rounded-full flex justify-center items-center">
