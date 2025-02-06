@@ -84,20 +84,6 @@ function SignupPage() {
     }
   };
 
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
-    const isBusiness = localStorage.getItem("isBusiness");
-    if (isLogin) {
-      const loginDate = new Date(isLogin);
-      const currentDate = new Date();
-      const daysDifference =
-        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
-      if (daysDifference < 30 && isBusiness == "true") {
-        router.push('/inbox');
-      }
-    }
-  }, [router]);
-
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">

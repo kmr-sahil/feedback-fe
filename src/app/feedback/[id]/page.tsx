@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import StartInput from "./starInput";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { useProjectContext } from "@/app/projectContext";
 
 interface IDetailsToSend {
   projectId: string;
@@ -39,34 +40,19 @@ function SimpleFormPage() {
   const [showInputs, setShowInputs] = useState(false);
   const [submitted, setSubmitted] = useState(false); // New state for submission status
   const [loading, setLoading] = useState(false);
+  const { isAuth, loading: load } = useProjectContext();
 
   const [showModal, setShowModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [highlighter, setHighlighter] = useState({
     message: "",
   });
 
   useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
-
-    if (isLogin) {
-      const loginDate = new Date(isLogin);
-      const currentDate = new Date();
-      const daysDifference = Math.floor(
-        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24)
-      );
-
-      if (daysDifference <= 30) {
-        setIsLoggedIn(true);
-      } else {
-        localStorage.removeItem("isLogin");
-        setIsLoggedIn(false);
-      }
-    } else {
-      setIsLoggedIn(false);
-      setShowModal(true); // Show modal if not logged in
+    
+    if (!isAuth && !load) {
+      setShowModal(true);
     }
-  }, []);
+  }, [isAuth, load]);
 
   const Modal = () => (
     <motion.div
@@ -242,7 +228,10 @@ function SimpleFormPage() {
                 >
                   Thank you for your feedback!
                 </motion.div>
-                <a href="/search" className="text-[0.65rem] text-zinc-400 text-center underline">
+                <a
+                  href="/search"
+                  className="text-[0.65rem] text-zinc-400 text-center underline"
+                >
                   Go back
                 </a>
               </>

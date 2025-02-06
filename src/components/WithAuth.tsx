@@ -1,6 +1,5 @@
 "use client"
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { useProjectContext } from "@/app/projectContext";
 
 const withAuth = (WrappedComponent :any) => {

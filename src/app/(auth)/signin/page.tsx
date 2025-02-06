@@ -6,6 +6,7 @@ import CustomButton from "@/components/CustomButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useProjectContext } from "@/app/projectContext";
 
 function SigninPage() {
   const router = useRouter();
@@ -15,8 +16,9 @@ function SigninPage() {
     otp: 0,
   });
 
-  const[loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isSignupDone, setIsSignupDone] = useState(false);
+  const { isAuth, loading: load } = useProjectContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +30,7 @@ function SigninPage() {
 
   const signin = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signin`,
         details,
@@ -39,17 +41,17 @@ function SigninPage() {
       toast.success("OTP sent successfully");
       console.log(response.data);
       setIsSignupDone(true);
-      setLoading(false)
+      setLoading(false);
     } catch (error: any) {
       console.error("Signin error:", error);
       toast.error(`Error: ${error.response.data.message}`);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   const otpSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
         { email: details.email, otp: details.otp },
@@ -67,27 +69,20 @@ function SigninPage() {
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
       router.push(`/user/${userId}`);
-      setLoading(false)
+      setLoading(false);
       console.log(response.data);
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(`Error: ${error.response.data.message}`);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
-    if (isLogin) {
-      const loginDate = new Date(isLogin);
-      const currentDate = new Date();
-      const daysDifference =
-        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
-      if (daysDifference < 30) {
-        router.push("/search");
-      }
+    if (isAuth && !load) {
+      router.push("/inbox");
     }
-  }, [router]);
+  }, [isAuth, load]);
 
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">

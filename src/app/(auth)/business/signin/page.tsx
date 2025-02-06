@@ -6,6 +6,7 @@ import CustomButton from "@/components/CustomButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useProjectContext } from "@/app/projectContext";
 
 function SigninPage() {
   const router = useRouter();
@@ -16,6 +17,13 @@ function SigninPage() {
   });
   const [isSignupDone, setIsSignupDone] = useState(false);
   const [loading, setLoading] = useState(false)
+  const { isAuth, loading: load } = useProjectContext();
+
+    useEffect(() => {
+      if (isAuth && !load) {
+        router.push("/inbox");
+      }
+    }, [isAuth, load]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -75,20 +83,6 @@ function SigninPage() {
       setLoading(false)
     }
   };
-
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
-    const isBusiness = localStorage.getItem("isBusiness");
-    if (isLogin) {
-      const loginDate = new Date(isLogin);
-      const currentDate = new Date();
-      const daysDifference =
-        (currentDate.getTime() - loginDate.getTime()) / (1000 * 60 * 60 * 24); // Difference in days
-      if (daysDifference < 30 && isBusiness == "true") {
-        router.push('/inbox');
-      }
-    }
-  }, [router]);
 
   return (
     <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
