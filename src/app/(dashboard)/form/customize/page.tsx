@@ -45,9 +45,12 @@ const Customize: React.FC = () => {
 
   const getProjectDetail = async (projectId: string) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/project`, {
-        params: { projectId },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/project`,
+        {
+          params: { projectId },
+        }
+      );
       const details = response.data;
       console.log(details);
       setProjectDetails(details.project);
@@ -89,7 +92,6 @@ const Customize: React.FC = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-    <DashboardLayout>
       <div className="bg-backgroundOne rounded-[12px] border-special border-backgroundTwo p-[1rem]">
         <div className="flex flex-col gap-[1rem]">
           {adjustInputs ? (
@@ -101,7 +103,9 @@ const Customize: React.FC = () => {
               />
               <CustomSwitch
                 checked={adjustInputs.isNameInputReq}
-                setChecked={(value) => handleSwitchChange("isNameInputReq", value)}
+                setChecked={(value) =>
+                  handleSwitchChange("isNameInputReq", value)
+                }
                 label="Make NAME input visible for customer"
               />
               <CustomSwitch
@@ -114,11 +118,14 @@ const Customize: React.FC = () => {
             <p>Loading form settings...</p>
           )}
           <div className="w-[2rem]">
-            <CustomButton label="Save" disabled={isDisable} onClick={updateAdjustForm} />
+            <CustomButton
+              label="Save"
+              disabled={isDisable}
+              onClick={updateAdjustForm}
+            />
           </div>
         </div>
       </div>
-    </DashboardLayout>
     </Suspense>
   );
 };

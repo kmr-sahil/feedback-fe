@@ -3,12 +3,12 @@ import React, { useState, useEffect, useCallback, Suspense } from "react";
 import axios from "axios";
 import ReviewContainer from "@/components/ReviewContainer";
 import DashboardLayout from "@/components/DashboardLayout";
-import CustomLoader from "../../components/CustomLoader";
+import CustomLoader from "@/components/CustomLoader";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import withAuth from "@/components/WithAuth";
 import { useSearchParams } from "next/navigation";
-import { useProjectContext } from "../projectContext";
+import { useProjectContext } from "@/app/projectContext";
 
 const InboxPage = () => {
   const searchParams = useSearchParams();
@@ -65,8 +65,7 @@ const InboxPage = () => {
 
   return (
     <Suspense fallback={<CustomLoader />}>
-      <div className="w-full max-w-[70rem] mx-auto">
-    <DashboardLayout>
+
       <div className=" w-[100%] flex flex-col gap-[1.25rem] customscroll">
         <div className="flex gap-[1rem] items-center justify-start">
           <CustomInput label={""} type={"text"} placeholder="Search" />
@@ -99,8 +98,7 @@ const InboxPage = () => {
           )}
         </div>
       </div>
-    </DashboardLayout>
-    </div>
+    
     </Suspense>
   );
 };
