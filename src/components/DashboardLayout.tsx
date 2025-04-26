@@ -281,8 +281,7 @@ export default function DashboardLayout({ children }: any) {
                             {},
                             { withCredentials: true }
                           );
-                          localStorage.clear();
-                          router.push("/business/signin");
+                          router.push("/");
                         } catch (error) {
                           console.error("Logout failed:", error);
                         }

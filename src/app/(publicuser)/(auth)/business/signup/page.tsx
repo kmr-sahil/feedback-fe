@@ -6,9 +6,11 @@ import CustomButton from "@/components/CustomButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useProjectContext } from "@/app/projectContext";
 
 function SignupPage() {
   const router = useRouter();
+  const { setIsAuth } = useProjectContext();
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -67,12 +69,12 @@ function SignupPage() {
       localStorage.setItem("isLogin", currentDate);
       localStorage.setItem("isBusiness", "true");
 
-      const userId = response.data.verified.user.userId;
-      const name = response.data.verified.user.name;
+      const userId = response.data.verified.userId;
+      const name = response.data.verified.name;
 
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
-
+      setIsAuth(true)
 
       router.push("/getstarted");
       setLoading(false)

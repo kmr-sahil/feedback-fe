@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface ProjectContextProps {
   isAuth: boolean;
+  setIsAuth: (isAuth: boolean) => void;
   loading: boolean;
   activeProject: string | null;
   setActiveProject: (
@@ -102,6 +103,7 @@ export const ProjectProvider = ({
     <ProjectContext.Provider
       value={{
         isAuth,
+        setIsAuth,
         loading,
         activeProject,
         setActiveProject,

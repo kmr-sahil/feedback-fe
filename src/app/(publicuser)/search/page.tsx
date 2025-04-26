@@ -125,7 +125,7 @@ export default function CompanySearch() {
   return (
     <div className="flex flex-col relative gap-[1rem] justify-center items-center px-[1rem]">
       <div className=" relative w-full flex flex-col justify-center items-center space-y-4 bg-[#379777] px-[1rem] pb-[2rem] sm:px-[4rem] lg:px-[16rem] mt-[6rem] md:pb-[3rem] text-white rounded-[1rem]">
-        <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:my-[2rem] md:my-[3rem] md:leading-[3rem] mx-auto">
+        <h2 className="text-2xl text-center md:text-4xl font-bold my-[2rem] sm:mt-[2rem] md:leading-[3rem] mx-auto">
           <Balancer>
             Browse{" "}
             <span className="bg-[#F4CE14] px-[0.75rem] rounded-[8px] text-[#805f1c]">

@@ -10,6 +10,7 @@ import { useProjectContext } from "@/app/projectContext";
 
 function SigninPage() {
   const router = useRouter();
+  const { setIsAuth } = useProjectContext();
   const [details, setDetails] = useState({
     email: "",
     password: "",
@@ -56,7 +57,6 @@ function SigninPage() {
 
   const otpSubmit = async () => {
     try {
-      console.log("1")
       setLoading(true)
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`,
@@ -65,21 +65,19 @@ function SigninPage() {
           withCredentials: true,
         }
       );
-      console.log("2", response)
       toast.success("Login Successful");
       const currentDate = new Date().toISOString(); // Save date in ISO format
       localStorage.setItem("isLogin", currentDate);
       localStorage.setItem("isBusiness", "true");
-      console.log("3")
 
-      const userId = response.data.verified.user.userId;
-      const name = response.data.verified.user.name;
+      const userId = response.data.verified.userId;
+      const name = response.data.verified.name;
 
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
+      setIsAuth(true)
       setLoading(false)
       router.push("/inbox");
-      console.log(response.data);
     } catch (error: any) {
       console.error("Signin error:", error);
       //toast.error(`Error: ${error.response.data.message}`);

@@ -63,11 +63,12 @@ function SigninPage() {
       const currentDate = new Date().toISOString(); // Save date in ISO format
       localStorage.setItem("isLogin", currentDate);
 
-      const userId = response.data.verified.user.userId;
-      const name = response.data.verified.user.name;
+      const userId = response.data.verified.userId;
+      const name = response.data.verified.name;
 
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
+
       router.push(`/user/${userId}`);
       setLoading(false);
       console.log(response.data);
