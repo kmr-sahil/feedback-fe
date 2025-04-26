@@ -17,6 +17,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import CreateProject from "./CreateProject";
 import toast from "react-hot-toast";
 import { useProjectContext } from "../app/projectContext";
+import axios from "axios";
 
 export default function DashboardLayout({ children }: any) {
   const router = useRouter();
@@ -213,23 +214,28 @@ export default function DashboardLayout({ children }: any) {
             <h1 className="font-semibold"></h1>
             <div className="flex items-center space-x-4 text-zinc-700">
               <ThemeSwitch />
-              <button className="relative" onClick={() => setIsVisible(isVisible == "help" ? "" : "help")}>
+              <button
+                className="relative"
+                onClick={() => setIsVisible(isVisible == "help" ? "" : "help")}
+              >
                 <Question size={24} />
-                { isVisible == "help" && <div className="absolute z-50 right-0 max-w-[13rem] bg-zinc-50 rounded-md shadow-sm p-[0.5rem] border-2 border-zinc-200 text-sm">
-                  <p className="text-start text-xs">
-                    Need help with intergration, understanding or anything ?
-                    Mail us, we try to solve within 3 hours.{" "}
-                  </p>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText("trustflag.in@gmail.com");
-                      toast.success("Email Copied");
-                    }}
-                    className="mt-[1rem] bg-[#379777] px-[0.5rem] py-[0.4rem] text-white rounded-[6px] text-[0.75rem] flex gap-[0.35rem] justify-center items-center"
-                  >
-                    trustflag.in@gmail.com <PaperPlaneTilt size={12} />
-                  </button>
-                </div>}
+                {isVisible == "help" && (
+                  <div className="absolute z-50 right-0 max-w-[13rem] bg-zinc-50 rounded-md shadow-sm p-[0.5rem] border-2 border-zinc-200 text-sm">
+                    <p className="text-start text-xs">
+                      Need help with intergration, understanding or anything ?
+                      Mail us, we try to solve within 3 hours.{" "}
+                    </p>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText("trustflag.in@gmail.com");
+                        toast.success("Email Copied");
+                      }}
+                      className="mt-[1rem] bg-[#379777] px-[0.5rem] py-[0.4rem] text-white rounded-[6px] text-[0.75rem] flex gap-[0.35rem] justify-center items-center"
+                    >
+                      trustflag.in@gmail.com <PaperPlaneTilt size={12} />
+                    </button>
+                  </div>
+                )}
               </button>
               <button className="">
                 <Bell size={24} />
@@ -237,7 +243,9 @@ export default function DashboardLayout({ children }: any) {
 
               <div className="relative">
                 <button
-                  onClick={() => setIsVisible(isVisible == "profile" ? "" : "profile")}
+                  onClick={() =>
+                    setIsVisible(isVisible == "profile" ? "" : "profile")
+                  }
                   className="flex items-center "
                 >
                   <UserCircle size={24} />
@@ -249,13 +257,15 @@ export default function DashboardLayout({ children }: any) {
                       onClick={() => router.push("/account/setting")}
                       className="flex items-center gap-[0.35rem] w-[100%] px-[0.5rem] py-[0.35rem] text-[0.8rem] text-end text-zinc-700 hover:bg-zinc-100 rounded-[6px]"
                     >
-                      <Gear size={14} />Account Setting
+                      <Gear size={14} />
+                      Account Setting
                     </button>
                     <button
                       onClick={() => router.push("/account/plan")}
                       className="flex items-center gap-[0.35rem] w-[100%] px-[0.5rem] py-[0.35rem] text-[0.8rem] text-start text-zinc-700 hover:bg-zinc-100 rounded-[6px]"
                     >
-                      <MoneyWavy size={14} />Manage Plan
+                      <MoneyWavy size={14} />
+                      Manage Plan
                     </button>
                     <button
                       onClick={() => router.push("/account/project")}
@@ -264,10 +274,18 @@ export default function DashboardLayout({ children }: any) {
                       <Newspaper size={14} /> Project
                     </button>
                     <button
-                      onClick={() => {
-                        // Handle logout logic
-                        localStorage.clear();
-                        router.push("/business/signin");
+                      onClick={async () => {
+                        try {
+                          await axios.post(
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+                            {},
+                            { withCredentials: true }
+                          );
+                          localStorage.clear();
+                          router.push("/business/signin");
+                        } catch (error) {
+                          console.error("Logout failed:", error);
+                        }
                       }}
                       className="flex items-center gap-[0.35rem] w-[100%] px-[0.5rem] py-[0.35rem] text-[0.8rem] text-start text-zinc-700 hover:bg-zinc-100 rounded-[6px]"
                     >
