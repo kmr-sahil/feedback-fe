@@ -13,18 +13,18 @@ import { useProjectContext } from "@/app/projectContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // Mobile sheet state
-  const { isAuth, loading } = useProjectContext();
+  const { isAuth, setIsAuth, loading } = useProjectContext();
 
   const [isProfileOpen, setIsProfileOpen] = useState(false); // Profile dropdown state
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Check login status from localStorage
-  useEffect(() => {
-    if (isAuth && !loading) {
-      setIsLoggedIn(true);
-    }
-  }, [isAuth, loading]);
+  // useEffect(() => {
+  //   if (isAuth && !loading) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, [isAuth, loading]);
 
 
   const handleReviewRoute = async () => {
@@ -79,7 +79,7 @@ export default function Navbar() {
               Write a Review
             </Button>
 
-            {isLoggedIn ? (
+            {isAuth ? (
               <div className="relative">
                 {/* Profile Icon with Dropdown */}
                 <button
@@ -104,10 +104,19 @@ export default function Navbar() {
                       <GearSix size={14} /> Settings
                     </Link>
                     <button
-                      onClick={() => {
-                        localStorage.clear();
-                        setIsLoggedIn(false);
-                        router.push("/signin");
+                      onClick={async () => {
+                        try {
+                          await axios.post(
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+                            {},
+                            { withCredentials: true }
+                          );
+                          setIsAuth(false);
+                          localStorage.clear();
+                          router.push("/");
+                        } catch (error) {
+                          console.error("Logout failed:", error);
+                        }
                       }}
                       className="flex items-center gap-[0.35rem] px-1 py-[0.35rem] text-sm hover:bg-zinc-100 w-full text-left"
                     >
@@ -166,11 +175,18 @@ export default function Navbar() {
                         Settings
                       </Link>
                       <button
-                        onClick={() => {
-                          localStorage.removeItem("isLogin");
-                          setIsLoggedIn(false);
-                          setIsOpen(false);
-                          router.push("/login");
+                        onClick={async () => {
+                          try {
+                            await axios.post(
+                              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+                              {},
+                              { withCredentials: true }
+                            );
+                            setIsAuth(false);
+                            router.push("/");
+                          } catch (error) {
+                            console.error("Logout failed:", error);
+                          }
                         }}
                         className="text-sm text-left"
                       >

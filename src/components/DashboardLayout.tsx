@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }: any) {
   const [filter, setFilter] = useState<any>("");
   const [isVisible, setIsVisible] = useState("");
 
-  const { activeProject, setActiveProject, projects, stats } =
+  const { activeProject, setIsAuth, setActiveProject, projects, stats } =
     useProjectContext();
   const [isCreate, setIsCreate] = React.useState(false);
 
@@ -87,7 +87,10 @@ export default function DashboardLayout({ children }: any) {
 
       {/* Sidebar */}
       <aside className="w-[100%] min-w-[10rem] max-w-[17rem] border-r-2 border-r-backgroundThree p-[1rem] overflow-y-scroll customscroll text-sm">
-        <h1 className="text-lg font-semibold mb-[2rem] flex gap-[0.5rem] ">
+        <h1
+          onClick={() => router.push("/")}
+          className="text-lg font-semibold mb-[2rem] flex gap-[0.5rem] "
+        >
           <img src="/images/logo.svg" alt="" />
           TrustFlag.in
         </h1>
@@ -281,6 +284,8 @@ export default function DashboardLayout({ children }: any) {
                             {},
                             { withCredentials: true }
                           );
+                          localStorage.clear();
+                          setIsAuth(false);
                           router.push("/");
                         } catch (error) {
                           console.error("Logout failed:", error);

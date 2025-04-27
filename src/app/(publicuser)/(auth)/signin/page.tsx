@@ -18,7 +18,7 @@ function SigninPage() {
 
   const [loading, setLoading] = useState(false);
   const [isSignupDone, setIsSignupDone] = useState(false);
-  const { isAuth, loading: load } = useProjectContext();
+  const { isAuth, setIsAuth, loading: load } = useProjectContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,6 +69,7 @@ function SigninPage() {
       localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
 
+      setIsAuth(true);
       router.push(`/user/${userId}`);
       setLoading(false);
       console.log(response.data);
@@ -88,7 +89,7 @@ function SigninPage() {
   }, [isAuth, load]);
 
   return (
-    <div className="mt-[4rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
+    <div className="mt-[8rem] mx-auto max-w-[24rem] flex flex-col gap-[1rem] bg-backgroundOne border-special border-backgroundTwo p-[2rem] rounded-[12px]">
       <h3 className="text-[1.5rem] font-semibold mb-[0.5rem] text-textTwo">
         Welcome Back
       </h3>
