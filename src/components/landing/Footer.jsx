@@ -3,9 +3,9 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="bg-[#18191b] text-gray-200 py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-[2rem] sm:px-[6rem]">
+    <footer className="bg-[#18191b] text-gray-200 py-16 w-screen mt-[4rem]">
+      <div className="container mx-auto max-w-[64rem] px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-[2rem] sm:px-[6rem]">
           {/* About Column */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold mb-6">About</h2>
