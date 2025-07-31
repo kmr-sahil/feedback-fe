@@ -1,37 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TrustFlag.in 🚩 — A Trustpilot-like Review Platform
 
-## Getting Started
+**TrustFlag.in** was an independent review platform aimed to bring transparent, user-generated feedback for businesses, similar to what Trustpilot offers.  
+The platform allowed users to sign in with Google, search and review companies, and read customer feedback with ease.
 
-First, run the development server:
+Although the project has been discontinued due to lack of user traction, it remains a solid technical example of building a scalable review system using **Next.js**, **Tailwind**, **NextAuth**, and a Node.js backend.
 
-```bash
-npm run dev
-# or 
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+- Company & category browsing
+- Search and review system
+- Star rating support
+- Google Sign-In using NextAuth
+- API integration with backend
+- Fully responsive UI with Tailwind CSS
+
+---
+
+## 🛠️ Getting Started
+
+Clone the repo and install dependencies:
+
 ```
+npm install
+Then create a .env file in the root and add the following environment variables:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+env
+Copy
+Edit
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8080/v1
+NEXT_PUBLIC_FRONTEND_URL=http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+BACKEND_URL=http://localhost:8080
+NEXTAUTH_SECRET=secret12
+JWT_SECRET=secret12
+NODE_ENV=production
+NEXTAUTH_URL=http://localhost:3000
+▶️ Running the Dev Server
 
-## Learn More
+npm run dev
+The app will start on http://localhost:3000 
+```
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# feedback-fe
+The backend server for this project is available here:
+👉 https://trustflag-backend.example.com
